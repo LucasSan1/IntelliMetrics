@@ -10,14 +10,17 @@ app.use(express.json());
 
 
 //Rotas
-const rotas_usuario = require('./routes/usuarios');
+const rotas_clientes = require('./routes/clientes');
+app.use("", rotas_clientes); 
 
-app.use("", rotas_usuario); 
+const rotas_pecas = require('./routes/pecas');
+app.use("", rotas_pecas); 
+
 
 app.use("/", (req, res) => {
     res.json("Ta rodando a API, está é a /home");
   });
 
 app.listen(port, () => {
-    console.log(`Conectado na porta: ${port}`)
+    console.log(`Conectado na porta ${port}`)
 });
