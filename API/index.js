@@ -11,8 +11,10 @@ app.use(express.json());
 
 //Rotas
 const rotas_usuario = require('./routes/usuarios');
+const rotas_ordemCalibra = require('./routes/ordemCalibra')
 
 app.use("", rotas_usuario); 
+app.use("", rotas_ordemCalibra)
 
 app.use("/", (req, res) => {
     res.json("Ta rodando a API, está é a /home");
