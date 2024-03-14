@@ -68,6 +68,7 @@ const getUserByID = async (id_user) => {
 }
     
 const deleteUser = async (id_user) =>{
+  
   return new Promise((resolve, reject) => {
     db.query(`Delete FROM usuarios WHERE pk_idUsuario = ${id_user}`,
         (erro, results) => {
