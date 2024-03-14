@@ -1,4 +1,5 @@
 const router = require('express').Router();
+
 const { registerPeca, getAllPecas, getPecaById } = require('../controllers/controllerPecas');
 
 router.post("/cadastroPeca", async(req, res) => {
