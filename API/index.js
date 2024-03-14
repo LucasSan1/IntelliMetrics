@@ -21,10 +21,13 @@ app.use("", rotas_clientes);
 app.use("", rotas_usuario); 
 app.use("", rotas_ordemCalibra)
 
+
 app.use("/", (req, res) => {
     res.json("Ta rodando a API, está é a /home");
   });
 
 app.listen(port, () => {
-    console.log(`Conectado na porta: ${port}`)
+
+    console.log(`Conectado na porta ${port}`)
 });
+
