@@ -1,6 +1,6 @@
 const db = require('../connector/conn');
 
-const registerCliente = async(pk_idCliente, nome, representante, email, telefone, endereço, cnpj) => {
+const registerCliente = async(nome, representante, email, telefone, endereço, cnpj) => {
     try {
         const existingCliente = await new Promise((resolve, reject) =>{
             db.query(`SELECT * FROM clientes WHERE email = '${email}'`),
@@ -13,7 +13,9 @@ const registerCliente = async(pk_idCliente, nome, representante, email, telefone
             }
         })
  
-        const save = db.query(`INSERT INTO clientes (pk_idCliente, nome, representante, email, telefone, endereço, cnpj) value ('${pk_idCliente}', '${nome}', '${representante}', '${email}', '${telefone}', '${endereço}', '${cnpj}') `)
+        const save = db.query(`
+        INSERT INTO clientes (nome, representante, email, telefone, endereço, cnpj)
+        values ('${nome}', '${representante}', '${email}', '${telefone}', '${endereço}', '${cnpj}') `)
 
         if (!save){
             return 400;
@@ -42,9 +44,9 @@ const getClientes = async () => {
 }
 
 
-const getClienteById = async (pk_idCliente) => {
+const getClienteById = async (id_cliente) => {
     return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM clientes WHERE pk_idCliente = ${pk_idCliente}`,
+        db.query(`SELECT * FROM clientes WHERE pk_idCliente = ${id_cliente}`,
         (error, results) => {
             if (error) {
                 reject(error);
@@ -57,9 +59,9 @@ const getClienteById = async (pk_idCliente) => {
     }) 
 }
 
-const deleteCliente = async (pk_idCliente) => {
+const deleteCliente = async (id_cliente) => {
     return new Promise((resolve, reject) => {
-        db.query(`DELETE FROM clientes WHERE pk_idCliente = ${pk_idCliente}`,
+        db.query(`DELETE FROM clientes WHERE pk_idCliente = ${id_cliente}`,
         (error, results) => {
             if (error) {
                 reject (error);
@@ -72,9 +74,31 @@ const deleteCliente = async (pk_idCliente) => {
     })
 }
 
+const updateCliente = async(id_cliente, nome, representante, email, telefone, endereço, cnpj) => {
+    const update = await db.query(`
+    UPDATE clientes
+    SET nome = ${nome},
+        representante = ${representante},
+        email = ${email},
+        telefone = ${telefone},
+        endereço = ${endereço},
+        cnpj = ${cnpj}
+    WHERE pk_idCliente = ${id_cliente}
+    `)
+
+    if (update.affectedRows === 0) {
+        return 404;
+    } else {
+        return 200;
+    }
+
+}
+
+
 module.exports = {
     registerCliente,
     getClientes,
     getClienteById,
-    deleteCliente
+    deleteCliente,
+    updateCliente
 }

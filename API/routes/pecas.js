@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { registerPeca, getAllPecas } = require('../controllers/controllerPecas');
+const { registerPeca, getAllPecas, getPecaById } = require('../controllers/controllerPecas');
 
 router.post("/cadastroPeca", async(req, res) => {
     try {
@@ -40,6 +40,18 @@ router.get("/pecas", async(req, res) => {
         res.status(200).json(pecas);
 
     } catch (error) {
+        console.log(error);
+        res.status(500).json("Erro interno do servidor");
+    }
+})
+
+router.get("pecas/:id", async(req, res) => {
+    const id_peca = req.params.id;
+
+    try {
+        const peca = await getPecaById(id_peca);
+        res.status(200).json(peca);
+    } catch(error) {
         console.log(error);
         res.status(500).json("Erro interno do servidor");
     }
