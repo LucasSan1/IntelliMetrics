@@ -12,7 +12,12 @@ app.use(express.json());
 //Rotas
 const rotas_usuario = require('./routes/usuarios');
 const rotas_ordemCalibra = require('./routes/ordemCalibra')
+const rotas_clientes = require('./routes/clientes'); 
+const rotas_pecas = require('./routes/pecas');
 
+
+app.use("", rotas_pecas); 
+app.use("", rotas_clientes);
 app.use("", rotas_usuario); 
 app.use("", rotas_ordemCalibra)
 
