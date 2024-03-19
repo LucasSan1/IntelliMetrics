@@ -1,10 +1,9 @@
 // import { Router } from "express";
 const router = require('express').Router();
-const { registerCliente, getClientes, getClienteById, deleteCliente } = require('../controllers/controllerCliente')
+const { registerCliente, getClientes, getClienteById, deleteCliente, updateCliente } = require('../controllers/controllerCliente');
 
 router.post("/cadastroCliente", async(req, res) => {
     try {
-        const pk_idCliente = req.params.id;
         const nome = req.body.nome;
         const representante = req.body.representante;
         const email = req.body.email;
@@ -13,7 +12,6 @@ router.post("/cadastroCliente", async(req, res) => {
         const cnpj = req.body.cnpj;
 
         let resultCad = await registerCliente(
-            pk_idCliente,
             nome,
             representante,
             email,
@@ -37,7 +35,7 @@ router.post("/cadastroCliente", async(req, res) => {
         }
 
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 })
  
@@ -55,10 +53,10 @@ router.get("/clientes", async(req, res) => {
 
 
 router.get("/clientes/:id", async(req, res) => {
-    const pk_idCliente = req.params.id;
+    const id_cliente = req.params.id;
 
     try {
-        const cliente = await getClienteById(pk_idCliente);
+        const cliente = await getClienteById(id_cliente);
         res.status(200).json(cliente);
 
     } catch (error) {
@@ -69,10 +67,10 @@ router.get("/clientes/:id", async(req, res) => {
 
 
 router.delete("/clientes/:id", async(req, res) => {
-    const pk_idCliente = req.params.id;
+    const id_cliente = req.params.id;
 
     try {
-        const cliente = await deleteCliente(pk_idCliente);
+        const cliente = await deleteCliente(id_cliente);
         res.status(200).json("Cliente deletado com sucesso");
 
     } catch (error) {
@@ -81,5 +79,40 @@ router.delete("/clientes/:id", async(req, res) => {
     }
 })
 
+router.put("/clientes/:id", async (req, res) => {
+    try {
+        const id_cliente = req.params.id;
+        const nome = req.body.nome;
+        const representante = req.body.representante;
+        const email = req.body.email;
+        const telefone = req.body.telefone;
+        const endereço = req.body.endereço;
+        const cnpj = req.body.cnpj;
+
+        let resultUpdate = await updateCliente(
+            id_cliente,
+            nome,
+            representante,
+            email,
+            telefone,
+            endereço,
+            cnpj
+        )
+        
+        switch(resultUpdate){
+            case 200:
+                res.status(200).json('Instrumento atualizado')
+                break;
+            case 400:
+                res.status(400).json('Erro ao atualizar instrumento')
+                break;
+            default:
+                res.status(500).json('Erro interno do servidor')
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 module.exports = router;
