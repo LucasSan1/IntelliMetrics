@@ -1,21 +1,26 @@
 const db = require('../connector/conn');
 
-const registerCliente = async(nome, representante, email, telefone, endereço, cnpj) => {
+const registerCliente = async(nomeEmpresa, representante, email, telefone, endereco, cnpj) => {
+   
     try {
         const existingCliente = await new Promise((resolve, reject) =>{
-            db.query(`SELECT * FROM clientes WHERE email = '${email}'`),
+            db.query(`SELECT * FROM clientes WHERE email = '${email}'`,
             (error, results) => {
                 if (error) {
                     reject(error);
                     return;
                 }
                 resolve(results);
-            }
+            });
         })
+
+        if (existingCliente.length > 0) {
+            return 409;
+          }   
  
         const save = db.query(`
         INSERT INTO clientes (nome, representante, email, telefone, endereço, cnpj)
-        values ('${nome}', '${representante}', '${email}', '${telefone}', '${endereço}', '${cnpj}') `)
+        values ('${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}') `)
 
         if (!save){
             return 400;
@@ -69,31 +74,28 @@ const deleteCliente = async (id_cliente) => {
             } else {
                 resolve (results);
             }
-        }
-        )
+        })
     })
 }
 
 const updateCliente = async(id_cliente, nome, representante, email, telefone, endereço, cnpj) => {
-    const update = await db.query(`
-    UPDATE clientes
-    SET nome = ${nome},
-        representante = ${representante},
-        email = ${email},
-        telefone = ${telefone},
-        endereço = ${endereço},
-        cnpj = ${cnpj}
-    WHERE pk_idCliente = ${id_cliente}
-    `)
 
-    if (update.affectedRows === 0) {
-        return 404;
-    } else {
-        return 200;
-    }
-
+    return new Promise((resolve, reject) => {
+        db.query(`UPDATE clientes SET nome = "${nome}", representante = "${representante}", email = "${email}", telefone = "${telefone}", endereço = "${endereço}", cnpj = "${cnpj}" WHERE pk_idCliente = "${id_cliente}"`,
+        (error, results) => {
+            if (error) {
+                reject (error);
+                return;
+            } else {
+                resolve (results);
+            }
+            
+        })
+    })
 }
 
+     
+        
 
 module.exports = {
     registerCliente,
