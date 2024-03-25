@@ -1,8 +1,12 @@
 const db = require('../connector/conn');
 
+
+// Função para registrar um novo cliente no banco de dados
+
 const registerCliente = async(nomeEmpresa, representante, email, telefone, endereco, cnpj) => {
    
     try {
+         // Verifica se já existe um cliente com o mesmo endereço de e-mail
         const existingCliente = await new Promise((resolve, reject) =>{
             db.query(`SELECT * FROM clientes WHERE email = '${email}'`,
             (error, results) => {
@@ -14,6 +18,8 @@ const registerCliente = async(nomeEmpresa, representante, email, telefone, ender
             });
         })
 
+
+
         if (existingCliente.length > 0) {
             return 409;
           }   
@@ -21,7 +27,18 @@ const registerCliente = async(nomeEmpresa, representante, email, telefone, ender
         const save = db.query(`
         INSERT INTO clientes (nome, representante, email, telefone, endereço, cnpj)
         values ('${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}') `)
+        
+        // Se já existir um cliente com o mesmo e-mail, retorna 409 (Conflito)
+        if (existingCliente.length > 0) {
+            return 409;
+          }   
+          
+        // Insere os detalhes do novo cliente no banco de dados
+        const save = db.query(`
+        INSERT INTO clientes (nome, representante, email, telefone, endereço, cnpj)
+        values ('${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}') `)
 
+        // Retorna 200 (OK) se a operação for bem-sucedida, caso contrário, retorna 400 (Bad Request)
         if (!save){
             return 400;
         } else {
@@ -29,6 +46,7 @@ const registerCliente = async(nomeEmpresa, representante, email, telefone, ender
         }
 
     } catch (error) {
+         // Retorna 500 (Internal Server Error) se ocorrer algum erro durante a operação
         console.log(error);
         return 500;
     }

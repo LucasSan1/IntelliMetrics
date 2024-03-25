@@ -1,4 +1,3 @@
-// import { Router } from "express";
 const router = require('express').Router();
 
 const { registerCliente, getClientes, getClienteById, deleteCliente, updateCliente } = require('../controllers/controllerCliente');
