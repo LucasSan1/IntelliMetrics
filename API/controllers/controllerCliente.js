@@ -18,17 +18,6 @@ const registerCliente = async(nomeEmpresa, representante, email, telefone, ender
             });
         })
 
-
-
-        if (existingCliente.length > 0) {
-            return 409;
-          }   
- 
-        const save = db.query(`
-        INSERT INTO clientes (nome, representante, email, telefone, endereço, cnpj)
-        values ('${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}') `)
-        
-        // Se já existir um cliente com o mesmo e-mail, retorna 409 (Conflito)
         if (existingCliente.length > 0) {
             return 409;
           }   
