@@ -27,10 +27,6 @@ app.use("", rotas_ordemRelatorio)
 app.use("", med_paquimetro)
 app.use("", rotas_instrumentos); 
 
-
-const rotas_instrumentos = require('./routes/instrumentos');
-app.use("", rotas_instrumentos); 
-
 app.use("/", (req, res) => {
     res.json("Ta rodando a API, está é a /home");
   });
