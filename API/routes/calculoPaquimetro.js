@@ -7,22 +7,22 @@ router
     .post("/dadosPaquimetro", async(req, res) => {
         try{
 
-            const arrayDeDados = req.body.dados;
-            const arrayDeDados2 = req.body.dados2;
-            const arrayDeDados3 = req.body.dados3;
-            const arrayDeDados4 = req.body.dados4;
-            const arrayDeDados5 = req.body.dados5;
-            const arrayDeDados6 = req.body.dados6;
-            const arrayDeDados7 = req.body.dados7;
+            const arrayPrimeiraLinha = req.body.dados;
+            const arraySegundaLinha = req.body.dados2;
+            const arrayTerceiraLinha = req.body.dados3;
+            const arrayQuartaLinha = req.body.dados4;
+            const arrayQuintaLinha = req.body.dados5;
+            const arraySextaLinha = req.body.dados6;
+            const arraySetimaLinha = req.body.dados7;
 
             let calcular = await calculoTendenciaExterna(
-                arrayDeDados,
-                arrayDeDados2,
-                arrayDeDados3,
-                arrayDeDados4,
-                arrayDeDados5,
-                arrayDeDados6,
-                arrayDeDados7
+                arrayPrimeiraLinha,
+                arraySegundaLinha,
+                arrayTerceiraLinha,
+                arrayQuartaLinha,
+                arrayQuintaLinha,
+                arraySextaLinha,
+                arraySetimaLinha
             )
 
             if(calcular){
