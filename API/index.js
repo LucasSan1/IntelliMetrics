@@ -29,6 +29,7 @@ app.use("", rotas_instrumentos);
 app.use("", certificado_paquimetro)
 app.use("", certificado_micrometro)
 
+
 app.use("/", (req, res) => {
     res.json("Ta rodando a API, está é a /home");
   });

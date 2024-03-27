@@ -4,7 +4,7 @@ const { calculoTendenciaExterna } = require("../util/calculosPaquimetro")
 
 router
 
-    .post("/dadosPaquimetro", async(req, res) => {
+    .post("/tendenciaPaquimetro", async(req, res) => {
         try{
 
             const arrayPrimeiraLinha = req.body.dados;
