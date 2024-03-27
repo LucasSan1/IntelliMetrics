@@ -1,9 +1,9 @@
-const calculoTendenciaExterna = ( arrayDeDados, arrayDeDados2, arrayDeDados3, arrayDeDados4, arrayDeDados5, arrayDeDados6, arrayDeDados7) => {
+function calculoTendenciaExterna( arrayPrimeiraLinha, arraySegundaLinha, arrayTerceiraLinha, arrayQuartaLinha, arrayQuintaLinha, arraySextaLinha, arraySetimaLinha){
 
     // Cria micro-funçoes para calcular seus respectivos arrays de valores medidos
-    const calculo1 = (arrayDeDados) => {
-        const ValorNominal = arrayDeDados[0] //0 é o indice do valor nominal
-        const media = (arrayDeDados[1] + arrayDeDados[2] + arrayDeDados[3])/3
+    function primeiraLinhaTabela(arrayPrimeiraLinha) {
+        const ValorNominal = arrayPrimeiraLinha[0] //0 é o indice do valor nominal
+        const media = (arrayPrimeiraLinha[1] + arrayPrimeiraLinha[2] + arrayPrimeiraLinha[3])/3
 
         const tendencia = media - ValorNominal
         const tendenciaArredondada = tendencia.toFixed(2)  
@@ -12,9 +12,9 @@ const calculoTendenciaExterna = ( arrayDeDados, arrayDeDados2, arrayDeDados3, ar
 
     }
 
-    const calculo2 = (arrayDeDados2) => {
-        const ValorNominal = arrayDeDados2[0]
-        const media = (arrayDeDados2[1] + arrayDeDados2[2] + arrayDeDados2[3])/3
+    function segundaLinhaTabela(arraySegundaLinha) {
+        const ValorNominal = arraySegundaLinha[0]
+        const media = (arraySegundaLinha[1] + arraySegundaLinha[2] + arraySegundaLinha[3])/3
 
         const tendencia = media - ValorNominal
         const tendenciaArredondada = tendencia.toFixed(2)  
@@ -23,9 +23,9 @@ const calculoTendenciaExterna = ( arrayDeDados, arrayDeDados2, arrayDeDados3, ar
 
     }
 
-    const calculo3 = (arrayDeDados3) => {
-        const ValorNominal = arrayDeDados3[0]
-        const media = (arrayDeDados3[1] + arrayDeDados3[2] + arrayDeDados3[3])/3
+    function terceiraLinhaTabela(arrayTerceiraLinha) {
+        const ValorNominal = arrayTerceiraLinha[0]
+        const media = (arrayTerceiraLinha[1] + arrayTerceiraLinha[2] + arrayTerceiraLinha[3])/3
 
         const tendencia = media - ValorNominal
         const tendenciaArredondada = tendencia.toFixed(2)  
@@ -34,9 +34,9 @@ const calculoTendenciaExterna = ( arrayDeDados, arrayDeDados2, arrayDeDados3, ar
 
     }
 
-    const calculo4 = (arrayDeDados4) => {
-        const ValorNominal = arrayDeDados4[0]
-        const media = (arrayDeDados4[1] + arrayDeDados4[2] + arrayDeDados4[3])/3
+    function quartaLinhaTabela(arrayQuartaLinha) {
+        const ValorNominal = arrayQuartaLinha[0]
+        const media = (arrayQuartaLinha[1] + arrayQuartaLinha[2] + arrayQuartaLinha[3])/3
 
         const tendencia = media - ValorNominal
         const tendenciaArredondada = tendencia.toFixed(2)  
@@ -45,9 +45,9 @@ const calculoTendenciaExterna = ( arrayDeDados, arrayDeDados2, arrayDeDados3, ar
 
     }
 
-    const calculo5 = (arrayDeDados5) => {
-        const ValorNominal = arrayDeDados5[0]
-        const media = (arrayDeDados5[1] + arrayDeDados5[2] + arrayDeDados5[3])/3
+    function quintaLinhaTabela(arrayQuintaLinha) {
+        const ValorNominal = arrayQuintaLinha[0]
+        const media = (arrayQuintaLinha[1] + arrayQuintaLinha[2] + arrayQuintaLinha[3])/3
 
         const tendencia = media - ValorNominal
         const tendenciaArredondada = tendencia.toFixed(2)  
@@ -56,9 +56,9 @@ const calculoTendenciaExterna = ( arrayDeDados, arrayDeDados2, arrayDeDados3, ar
 
     }
 
-    const calculo6 = (arrayDeDados6) => {
-        const ValorNominal = arrayDeDados6[0]
-        const media = (arrayDeDados6[1] + arrayDeDados6[2] + arrayDeDados6[3])/3
+    function sextaLinhaTabela(arraySextaLinha) {
+        const ValorNominal = arraySextaLinha[0]
+        const media = (arraySextaLinha[1] + arraySextaLinha[2] + arraySextaLinha[3])/3
 
         const tendencia = media - ValorNominal
         const tendenciaArredondada = tendencia.toFixed(2)  
@@ -67,9 +67,9 @@ const calculoTendenciaExterna = ( arrayDeDados, arrayDeDados2, arrayDeDados3, ar
 
     }
 
-    const calculo7 = (arrayDeDados7) => {
-        const ValorNominal = arrayDeDados7[0]
-        const media = (arrayDeDados7[1] + arrayDeDados7[2] + arrayDeDados7[3])/3
+    function setimaLinhaTabela(arraySetimaLinha) {
+        const ValorNominal = arraySetimaLinha[0]
+        const media = (arraySetimaLinha[1] + arraySetimaLinha[2] + arraySetimaLinha[3])/3
 
         const tendencia = media - ValorNominal
         const tendenciaArredondada = tendencia.toFixed(2)  
@@ -80,13 +80,13 @@ const calculoTendenciaExterna = ( arrayDeDados, arrayDeDados2, arrayDeDados3, ar
 
 
     // Chama todas as funçoes de calculo passando seu respectivos arrays de valores
-    const resultadoCalculo1 = calculo1(arrayDeDados);
-    const resultadoCalculo2 = calculo2(arrayDeDados2);
-    const resultadoCalculo3 = calculo3(arrayDeDados3);
-    const resultadoCalculo4 = calculo4(arrayDeDados4);
-    const resultadoCalculo5 = calculo5(arrayDeDados5);
-    const resultadoCalculo6 = calculo6(arrayDeDados6);
-    const resultadoCalculo7 = calculo7(arrayDeDados7);
+    const resultadoCalculo1 = primeiraLinhaTabela(arrayPrimeiraLinha);
+    const resultadoCalculo2 = segundaLinhaTabela(arraySegundaLinha);
+    const resultadoCalculo3 = terceiraLinhaTabela(arrayTerceiraLinha);
+    const resultadoCalculo4 = quartaLinhaTabela(arrayQuartaLinha);
+    const resultadoCalculo5 = quintaLinhaTabela(arrayQuintaLinha);
+    const resultadoCalculo6 = sextaLinhaTabela(arraySextaLinha);
+    const resultadoCalculo7 = setimaLinhaTabela(arraySetimaLinha);
 
     // Salva os resultados em um json e retorna o json para a rota
     const resultados = {
@@ -102,7 +102,6 @@ const calculoTendenciaExterna = ( arrayDeDados, arrayDeDados2, arrayDeDados3, ar
     return resultados;
  
 }
-
 
 module.exports = {
     calculoTendenciaExterna
