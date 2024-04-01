@@ -44,7 +44,25 @@ function calculoPlaneza(CMovel, CFixo) {
 
 }
 
+function calculoParalelismo(valoresNominais, dados){
+
+  const valororNominal = valoresNominais
+  // const contagemFranja = dados
+
+  const media = dados.reduce((acc, val) => acc + val, dados[3]) / 3;
+
+  const resultados = [dados[0], dados[1], dados[2], media];
+
+  const NFranjas = Math.max(resultados)
+  const valormm = NFranjas * 0.0003;
+  
+  console.log("valor",valormm)
+  console.log("NFrajas", NFranjas)
+
+}
+
 
 module.exports = {
   calculoPlaneza,
+  calculoParalelismo
 };
