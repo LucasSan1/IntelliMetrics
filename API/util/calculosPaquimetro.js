@@ -103,6 +103,82 @@ function calculoTendenciaExterna( arrayPrimeiraLinha, arraySegundaLinha, arrayTe
  
 }
 
+function calculoParalelismo(arrayPrimeiraLinhaParalelismo, arraySegundaLinhaParalelismo, arrayTerceiraLinhaParalelismo, arrayQuartaLinhaParalelismo){}
+
+    function valorProxOrelhas (arrayPrimeiraLinhaParalelismo) {
+        const ValorNominal = arrayPrimeiraLinhaParalelismo[0]
+
+        const tendenciaLinha1 = ((arrayPrimeiraLinhaParalelismo[1] + arrayPrimeiraLinhaParalelismo[2] + arrayPrimeiraLinhaParalelismo[3]) / 3) - ValorNominal
+
+        console.log(tendenciaLinha1);
+
+        return tendenciaLinha1;
+    }
+
+    function valorAfastOrelhas(arraySegundaLinhaParalelismo){
+        const ValorNominal = arraySegundaLinhaParalelismo[0]
+
+        const tendenciaLinha2 = ((arraySegundaLinhaParalelismo[1] + arraySegundaLinhaParalelismo[2] + arraySegundaLinhaParalelismo[3]) / 3) - ValorNominal
+
+        console.log(tendenciaLinha2);
+
+        return tendenciaLinha2;
+    }
+
+    function paralelismoOrelhas (tendenciaLinha1, tendenciaLinha2) {
+
+        const maximo = Math.max(tendenciaLinha1, tendenciaLinha2);
+
+        const minimo = Math.min(tendenciaLinha1, tendenciaLinha2);
+
+        const ResultParalelismoOrelhas = maximo - minimo;
+
+        console.log(ResultParalelismoOrelhas)
+
+        return ResultParalelismoOrelhas;
+    }
+
+    function valorProxBicos (arrayTerceiraLinhaParalelismo) {
+        const ValorNominal = arrayTerceiraLinhaParalelismo[0]
+
+        const tendenciaLinha3 = ((arrayTerceiraLinhaParalelismo[1] + arrayTerceiraLinhaParalelismo[2] + arrayTerceiraLinhaParalelismo[3]) / 3) - ValorNominal
+
+        console.log(tendenciaLinha3);
+
+        return tendenciaLinha3;
+    }
+    
+    function valorAfastBicos (arrayQuartaLinhaParalelismo) {
+        const ValorNominal = arrayQuartaLinhaParalelismo[0]
+
+        const tendenciaLinha4 = ((arrayQuartaLinhaParalelismo[1] + arrayQuartaLinhaParalelismo[2] + arrayQuartaLinhaParalelismo[3]) / 3) - ValorNominal
+
+        console.log(tendenciaLinha4);
+
+        return tendenciaLinha4;
+    }
+
+    function paralelismoBicos (tendenciaLinha3, tendenciaLinha4) {
+
+        const maximo = Math.max(tendenciaLinha3, tendenciaLinha4);
+
+        const minimo = Math.min(tendenciaLinha3, tendenciaLinha4);
+
+        const ResultParalelismoBicos = maximo - minimo;
+
+        console.log(ResultParalelismoBicos)
+
+        return ResultParalelismoBicos;
+    }
+    
+    
+    // 
+    
+    const num1 = valorProxBicos([50, 40, 30, 40])
+    const num2 = valorAfastBicos([50, 60, 70, 60])
+    paralelismoBicos(num1,num2)
+
+
 module.exports = {
     calculoTendenciaExterna
 }
