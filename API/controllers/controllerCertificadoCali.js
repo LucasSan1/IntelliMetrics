@@ -1,5 +1,6 @@
 const db = require('../connector/conn')
 
+// Função para registrar uma nova ordem de calibração
 const registerOrder = async( fk_idCliente, fk_iUsuario, titulo, descricao, dataInicio, dataTermino, contratante, telefone, email)  => {
     try{
 
@@ -15,34 +16,37 @@ const registerOrder = async( fk_idCliente, fk_iUsuario, titulo, descricao, dataI
     //     );
     //   });
 
+     // Verificar se a inserção foi bem-sucedida
         if(!save){
-            return 400;
+            return 400; // Retorna status 400 se não foi bem-sucedido
         } else {
-            return 200;
+            return 200; // Retorna status 200 se foi bem-sucedido
         }
 
     } catch(error){
         console.log(error)
-        return 500;
+        return 500; // Retorna status 500 em caso de erro
     }
     
 }
 
+// Função para obter todas as ordens de calibração
 const getCertificateOrders = async() => {
 
     return new Promise((resolve, reject) => {
         db.query(`SELECT * FROM ordensCalibracao`,
           (erro, results) => {
             if (erro) {
-              reject(erro);
+              reject(erro); // Rejeita a promessa em caso de erro
               return;
             }
-            resolve(results);
+            resolve(results); // Resolve a promessa com os resultados
           }
         );
       });
 }
 
+// Função para obter uma ordem de calibração pelo seu ID 
 const getOrdersById = async(id_certificate) => {
 
     return new Promise((resolve, reject) => {

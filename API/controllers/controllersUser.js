@@ -1,90 +1,91 @@
-const db = require('../connector/conn')
+const db = require('../connector/conn');
 
+// Função para registrar um novo usuário
 const registerUser = async(nome, email, cargo) => {
     try{
-
-      // Verificar se um usuário com o e-mail fornecido já existe
-      const existingUser = await new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM usuarios WHERE email = '${email}'`,
-            (error, results) => {
-                if (error) {
-                    reject(error);
-                    return;
+        // Verificar se um usuário com o e-mail fornecido já existe
+        const existingUser = await new Promise((resolve, reject) => {
+            db.query(`SELECT * FROM usuarios WHERE email = '${email}'`,
+                (error, results) => {
+                    if (error) {
+                        reject(error); // Rejeita a promessa em caso de erro
+                        return;
+                    }
+                    resolve(results); // Resolve a promessa com os resultados
                 }
-                resolve(results);
-            }
-        );
-      });
+            );
+        });
 
-      if (existingUser.length > 0) {
-        return 409;
-      }   
+        // Se já existir um usuário com o mesmo e-mail, retorna 409 (Conflito)
+        if (existingUser.length > 0) {
+            return 409;
+        }
 
-      //Se não existir nenhum usuario com esse email cadastrado, inserir os dados do novo usuario 
-        const save = db.query(`INSERT INTO usuarios (nome, email, cargo) value ('${nome}', '${email}', '${cargo}')`)
+        // Se não existir nenhum usuário com esse e-mail cadastrado, inserir os dados do novo usuário 
+        const save = db.query(`INSERT INTO usuarios (nome, email, cargo) value ('${nome}', '${email}', '${cargo}')`);
 
+        // Verifica se a inserção foi bem-sucedida
         if(!save){
-            return 400;
-        } else{
-            return 200;
+            return 400; // Retorna 400 se não foi bem-sucedida
+        } else {
+            return 200; // Retorna 200 se foi bem-sucedida
         }
 
     } catch(error) {
-        console.log(error)
-        return 500;
+        console.log(error); // Registra o erro no console
+        return 500; // Retorna 500 em caso de erro
     }
 
 }
 
+// Função para obter todos os usuários
 const getUsers = async () => {
-
     return new Promise((resolve, reject) => {
         db.query(`SELECT * FROM usuarios`,
-          (erro, results) => {
-            if (erro) {
-              reject(erro);
-              return;
+            (erro, results) => {
+                if (erro) {
+                    reject(erro); // Rejeita a promessa em caso de erro
+                    return;
+                }
+                resolve(results); // Resolve a promessa com os resultados
             }
-            resolve(results);
-          }
         );
-      });
+    });
 }
 
+// Função para obter um usuário pelo seu ID
 const getUserByID = async (id_user) => {
-
-  return new Promise((resolve, reject) => {
-    db.query(`SELECT * FROM usuarios WHERE pk_idUsuario = ${id_user}`,
-        (erro, results) => {
-            if (erro) {
-                reject(erro);
-                return;
+    return new Promise((resolve, reject) => {
+        db.query(`SELECT * FROM usuarios WHERE pk_idUsuario = ${id_user}`,
+            (erro, results) => {
+                if (erro) {
+                    reject(erro); // Rejeita a promessa em caso de erro
+                    return;
+                }
+                resolve(results); // Resolve a promessa com os resultados
             }
-            resolve(results);
-        }
-    );
-  });
-
+        );
+    });
 }
-    
+
+// Função para deletar um usuário pelo seu ID
 const deleteUser = async (id_user) =>{
-  
-  return new Promise((resolve, reject) => {
-    db.query(`Delete FROM usuarios WHERE pk_idUsuario = ${id_user}`,
-        (erro, results) => {
-            if (erro) {
-                reject(erro);
-                return;
+    return new Promise((resolve, reject) => {
+        db.query(`Delete FROM usuarios WHERE pk_idUsuario = ${id_user}`,
+            (erro, results) => {
+                if (erro) {
+                    reject(erro); // Rejeita a promessa em caso de erro
+                    return;
+                }
+                resolve(results); // Resolve a promessa com os resultados
             }
-            resolve(results);
-        }
-    );
-  });
+        );
+    });
 }
 
 module.exports = { 
-  registerUser,
-  getUsers,
-  getUserByID,
-  deleteUser
+    registerUser,
+    getUsers,
+    getUserByID,
+    deleteUser
 };

@@ -1,74 +1,77 @@
 const router = require('express').Router();
 
-const{ getUsers, registerUser, getUserByID, deleteUser } = require("../controllers/controllersUser");
+// Importa as funções do controlador de usuários
+const { getUsers, registerUser, getUserByID, deleteUser } = require("../controllers/controllersUser");
 
-//Rotas de usuarios
+// Rotas de usuários
 router
-
+    // Rota para cadastrar um novo usuário
     .post("/cadastroMembro", async(req, res) => {
-
-        try{
+        try {
+            // Extrai os dados do corpo da requisição
             const nome = req.body.nome;
             const email = req.body.email;
             const cargo = req.body.cargo;
 
-            let resultCad= await registerUser(
-            nome,
-            email,
-            cargo
-            );
+            // Chama a função para cadastrar um novo usuário
+            let resultCad = await registerUser(nome, email, cargo);
 
-            switch(resultCad){
+            // Verifica o resultado do cadastro e retorna a resposta adequada
+            switch(resultCad) {
                 case 200:
-                    res.status(200).json('Usuario cadastrado')
+                    res.status(200).json('Usuário cadastrado');
                     break;
                 case 400:
-                    res.status(400).json('Erro ao cadastrar usuario')
+                    res.status(400).json('Erro ao cadastrar usuário');
                     break;
                 case 409:
-                    res.status(409).json('Este e-mail já está em uso')
+                    res.status(409).json('Este e-mail já está em uso');
                     break;
                 default:
-                    res.status(500).json('Erro interno do servidor')
+                    res.status(500).json('Erro interno do servidor');
             }
-        
-        } catch(error){
-            console.log(error)
+        } catch(error) {
+            console.log(error); // Registra o erro no console
         }
-
     })
 
+    // Rota para obter todos os usuários
     .get("/usuarios", async (req, res) => {
         try {
+            // Chama a função para obter todos os usuários
             const users = await getUsers();
             res.status(200).json(users);
         } catch (error) {
-            console.log(error);
+            console.log(error); // Registra o erro no console
             res.status(500).json('Erro interno do servidor');
         }
     })
 
+    // Rota para obter um usuário pelo seu ID
     .get("/usuario/:id", async (req, res) => {
-        const id_user = req.params.id
+        const id_user = req.params.id;
 
         try {
+            // Chama a função para obter um usuário pelo ID
             const usuario = await getUserByID(id_user);
-            res.status(200).json(usuario)
+            res.status(200).json(usuario);
         } catch(error) {
-            console.log(error);
-            res.status(500).json('Erro interno do servidor'); 
+            console.log(error); // Registra o erro no console
+            res.status(500).json('Erro interno do servidor');
         }
     })
 
+    // Rota para deletar um usuário pelo seu ID
     .delete('/usuario/:id', async(req, res) => {
         const id_user = req.params.id;
 
-        try{
+        try {
+            // Chama a função para deletar um usuário pelo ID
             const deletar = await deleteUser(id_user);
-            res.status(200).json("Usuario deletado com sucesso");
+            res.status(200).json("Usuário deletado com sucesso");
         } catch(error) {
-            console.log(error);
-            res.status(500).json('Erro interno do servidor'); 
+            console.log(error); // Registra o erro no console
+            res.status(500).json('Erro interno do servidor');
         }
     })
 

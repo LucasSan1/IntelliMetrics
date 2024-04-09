@@ -1,39 +1,23 @@
 const router = require('express').Router();
 
-const { calculoTendenciaExterna } = require("../util/calculosPaquimetro")
+// Importa a função de cálculo de tendência externa do paquímetro
+const { calculoTendenciaExterna, calculosPararelismo } = require("../util/calculosPaquimetro");
 
 router
-
+    // Rota para calcular a tendência externa do paquímetro
     .post("/tendenciaPaquimetro", async(req, res) => {
-        try{
 
-            const arrayPrimeiraLinha = req.body.dados;
-            const arraySegundaLinha = req.body.dados2;
-            const arrayTerceiraLinha = req.body.dados3;
-            const arrayQuartaLinha = req.body.dados4;
-            const arrayQuintaLinha = req.body.dados5;
-            const arraySextaLinha = req.body.dados6;
-            const arraySetimaLinha = req.body.dados7;
+        const {valorNominal, valorIndicado} = req.body
+      
+        try {
+            const resposta = {}
 
-            let calcular = await calculoTendenciaExterna(
-                arrayPrimeiraLinha,
-                arraySegundaLinha,
-                arrayTerceiraLinha,
-                arrayQuartaLinha,
-                arrayQuintaLinha,
-                arraySextaLinha,
-                arraySetimaLinha
-            )
-
-            if(calcular){
-                res.status(200).json(calcular)  
-            } else{
-                res.status(500).json("Erro interno do servidor")
-            }
+            !!valorNominal == true && !!valorIndicado == true ? resposta.medicaoExterna = calculoTendenciaExterna(valorIndicado, valorNominal) : resposta.medicaoExterna = "Sem dados"
+            // !!pararelismo == true ? resposta.calculosPararelismo = calculosPararelismo(pararelismo) : resposta.calculosPararelismo = "Sem dados"
 
         } catch(error) {
-            console.log(error)
+            console.log(error); // Registra o erro no console
         }
-    })
+    });
 
 module.exports = router;
