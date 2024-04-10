@@ -37,6 +37,7 @@ const getAllReports = async() => {
 
     return new Promise((resolve, reject) => {
         db.query(`SELECT * FROM ---Nome tabela---`,
+        // call --nome da procedure-- (parametros)
           (erro, results) => {
             if (erro) {
               reject(erro);

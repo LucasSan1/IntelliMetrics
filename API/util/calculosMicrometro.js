@@ -7,6 +7,7 @@ function calculoPlaneza(CMovel, CFixo) {
 
   // Desvio padrao do CMovel
   // Calcula a média dos valores
+
   const mediaCM = media(CMovel);
 
   // Calcula o desvio padrãzo da amostra
