@@ -7,7 +7,7 @@ router
      // Rota para calcular a planicidade do micrômetro
     .post("/planezaMicrometro", async (req, res) => {
 
-        const {cMovel, cFixo, dadosParalelismo, dadosControle} = req.body
+        const {cMovel, cFixo, dadosParalelismo, dadosControle, valorPadrao} = req.body
 
         try {
   
@@ -15,7 +15,7 @@ router
 
             !!dadosParalelismo == true ? response.calculoParalelismo =  calculoParalelismo(dadosParalelismo) : response.calculoParalelismo = "Sem dados" 
             !!cMovel == true && !!cFixo == true ? response.calculoPlaneza = calculoPlaneza(cFixo, cMovel) : response.calculoParalelismo = "Sem dados"
-            !!dadosControle == true ? response.controleDimensional = controleDimensional(dadosControle) : response.controleDimensional = "Sem dados"
+            !!dadosControle == true && !!valorPadrao ? response.controleDimensional = controleDimensional(dadosControle, valorPadrao) : response.controleDimensional = "Sem dados"
 
             return res.status(200).json(response)
             

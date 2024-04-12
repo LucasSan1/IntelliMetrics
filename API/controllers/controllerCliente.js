@@ -1,11 +1,10 @@
 const db = require('../connector/conn');
 
-
 // Função para registrar um novo cliente no banco de dados
 const registerCliente = async(nomeEmpresa, representante, email, telefone, endereco, cnpj) => {
    
+    // Verifica se já existe um cliente com o mesmo endereço de e-mail
     try {
-         // Verifica se já existe um cliente com o mesmo endereço de e-mail
         const existingCliente = await new Promise((resolve, reject) =>{
             db.query(`SELECT * FROM clientes WHERE email = '${email}'`,
             (error, results) => {
@@ -20,11 +19,10 @@ const registerCliente = async(nomeEmpresa, representante, email, telefone, ender
         if (existingCliente.length > 0) {
             return 409;
           }   
-          
+
         // Insere os detalhes do novo cliente no banco de dados
         const save = db.query(`
-        INSERT INTO clientes (nome, representante, email, telefone, endereço, cnpj)
-        values ('${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}') `)
+        CALL criarCliente ( '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj} ') `)
 
         if (!save){
             return 400; // Retorna 400 (Bad Request) se a operação der errado
@@ -53,10 +51,12 @@ const getClientes = async () => {
     })
 }
 
+// SELECT * FROM clientes WHERE pk_idCliente = ${id_cliente}`,
 // Função para obter um cliente pelo seu ID
 const getClienteById = async (id_cliente) => {
     return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM clientes WHERE pk_idCliente = ${id_cliente}`,
+        db.query(`
+        CALL infosClientes (${id_cliente})`),
         (error, results) => {
             if (error) {
                 reject(error);
@@ -65,14 +65,16 @@ const getClienteById = async (id_cliente) => {
                 resolve(results);
             }
         }
-        )
+    //   )
     }) 
 }
 
 // Função para deletar um cliente pelo seu ID
+// DELETE FROM clientes WHERE pk_idCliente = 
 const deleteCliente = async (id_cliente) => {
     return new Promise((resolve, reject) => {
-        db.query(`DELETE FROM clientes WHERE pk_idCliente = ${id_cliente}`,
+        db.query(`
+        CALL exlcuirCliente ('${id_cliente}'`),
         (error, results) => {
             if (error) {
                 reject (error);
@@ -80,15 +82,17 @@ const deleteCliente = async (id_cliente) => {
             } else {
                 resolve (results);
             }
-        })
+        }//)
     })
 }
 
 // Função para atualizar informações de um cliente pelo seu ID
-const updateCliente = async(id_cliente, nome, representante, email, telefone, endereço, cnpj) => {
-
+const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telefone, endereco, cnpj) => {
+    // UPDATE clientes SET nome = "${nome}", representante = "${representante}", email = "${email}", telefone = "${telefone}", endereço = "${endereço}", cnpj = "${cnpj}" WHERE pk_idCliente = "${id_cliente}"`,
     return new Promise((resolve, reject) => {
-        db.query(`UPDATE clientes SET nome = "${nome}", representante = "${representante}", email = "${email}", telefone = "${telefone}", endereço = "${endereço}", cnpj = "${cnpj}" WHERE pk_idCliente = "${id_cliente}"`,
+        db.query(`
+        CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}') `),
+        
         (error, results) => {
             if (error) {
                 reject (error);
@@ -97,7 +101,7 @@ const updateCliente = async(id_cliente, nome, representante, email, telefone, en
                 resolve (results);
             }
             
-        })
+        }//)
     })
 }
 
