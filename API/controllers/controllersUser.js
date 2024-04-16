@@ -56,7 +56,8 @@ const getUsers = async () => {
 // Função para obter um usuário pelo seu ID
 const getUserByID = async (id_user) => {
     return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM usuarios WHERE pk_idUsuario = ${id_user}`,
+        db.query(
+            `SELECT * FROM usuarios WHERE pk_idUsuario = ${id_user}`,
             (erro, results) => {
                 if (erro) {
                     reject(erro); // Rejeita a promessa em caso de erro

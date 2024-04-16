@@ -1,37 +1,39 @@
 {
     "client": "Thunder Client",
     "collectionName": "Intelli",
-    "dateExported": "2024-04-16T19:35:32.620Z",
+    "dateExported": "2024-04-12T20:09:37.094Z",
     "version": "1.1",
     "folders": [],
     "requests": [
         {
-            "_id": "d919468d-e284-4073-bc13-671637d4a6ad",
-            "colId": "d0982926-a4ed-416a-86f1-4cba86b55f7e",
+            "_id": "e1cd59b4-6b3b-46d3-8eba-995170ec5ba0",
+            "colId": "78851407-d6cc-4c61-96ed-3d92b9a74a44",
             "containerId": "",
             "name": "calcPaquimetro",
             "url": "http://localhost:3000/calcPaquimetro",
             "method": "POST",
             "sortNum": 10000,
-            "created": "2024-04-16T17:33:54.698Z",
-            "modified": "2024-04-16T19:35:27.560Z",
+            "created": "2024-04-12T17:32:28.949Z",
+            "modified": "2024-04-12T20:08:02.510Z",
             "headers": [],
+            "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"valorIndicado\": [\n  [1,2,3],\n  [1,2,3],\n  [1,2,3],\n  [1,2,3]\n  ],\n  \n  \"valorNominalMedExterna\": [\n  0,\n  1.30,\n  1.40,\n  20\n  ],\n  \n  \"valorIndicadoProxOrelhas\": [ [1,4,3] ],\n  \"valorIndicadoAfasOrelhas\": [ [1,2,3] ],\n  \n  \"valorNominalPara\": [ 50, 60 ],\n  \n  \"valorIndicadoProxBicos\": [ [1,4,3] ],\n  \"valorIndicadoAfasBicos\": [ [1,2,3] ],\n  \n  \"valorIndicadoMedInterna\": [\n    [1,2,3],\n    [1,2,3],\n    [1,2,3]\n  ],\n  \"valorNominalMedInterna\": [50, 40 , 30],\n  \n  \"valorNominalMedRessalto\": [50, 40, 30],\n  \"valorIndicadoMedRessalto\": [\n   [1,2,3],\n   [1,2,3],\n   [1,2,3]\n  ],\n  \n  \"valorNominalMedProf\": [ 50,40,30],\n  \"valorIndicadoMedProf\": [\n   [1,2,3],\n   [1,2,3],\n   [1,2,3]\n  ]\n}",
+                "raw": "{\n  \"valorIndicado\": [\n  [1,2,3],\n  [1,2,3],\n  [1,2,3],\n  [1,2,3]\n  ],\n  \"valorNominalMedExterna\": [\n  0,\n  1.30,\n  1.40,\n  20\n  ],\n  \"valorIndicadoProxOrelhas\": [\n    [1,4,3]\n  ],\n  \"valorIndicadoAfasOrelhas\": [\n    [1,2,3]\n  ],\n  \"valorNominalPara\": [\n    50,\n    60\n  ]\n}",
                 "form": []
-            }
+            },
+            "tests": []
         },
         {
-            "_id": "bf6c8a96-e11c-4edf-a030-281da0e2df61",
-            "colId": "d0982926-a4ed-416a-86f1-4cba86b55f7e",
+            "_id": "9c073720-23ed-46a5-9d0d-e748f981d878",
+            "colId": "78851407-d6cc-4c61-96ed-3d92b9a74a44",
             "containerId": "",
             "name": "calcMicrometro]",
             "url": "http://localhost:3000/calcMicrometro",
             "method": "POST",
             "sortNum": 20000,
-            "created": "2024-04-16T17:33:54.699Z",
-            "modified": "2024-04-16T17:33:54.699Z",
+            "created": "2024-04-12T17:58:16.584Z",
+            "modified": "2024-04-12T18:26:43.628Z",
             "headers": [],
             "params": [],
             "body": {

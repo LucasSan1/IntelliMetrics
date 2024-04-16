@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 // Importa as funções do controlador relacionadas às peças
-const { registerPeca, getAllPecas, getPecaById } = require('../controllers/controllerPecas');
+const { registerPeca, getAllPecas, getPecaById, updatePeca } = require('../controllers/controllerPecas');
 
 router
     // Rota para cadastrar uma nova peça
@@ -66,5 +66,21 @@ router
             res.status(500).json("Erro interno do servidor");
         }
     })
+
+
+    // atualizar cadastro peça
+    .put("/pecasUpdate/:id"), async(req, res) =>{
+        const idPeca = req.params.id;
+
+        try{
+            const update = await updatePeca(idPeca);
+            res.status(200).json(update);
+        }catch(error){
+            console.log(error);
+            res.status(500).json("error no servidor");
+        }
+    }
+
+    
 
 module.exports = router;

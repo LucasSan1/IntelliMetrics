@@ -1,6 +1,8 @@
 // Função para registrar um novo instrumento
 const registerInstrumento = async(fk_idCliente, fk_idOsCalibracao, fk_idTipo, nSerie, fabricante, resolucao, unidadeMedida, faixaNominal) => {
-    const save = db.query(` INSERT INTO instrumentos(fk_idCliente, fk_idOsCalibracao, fk_idTipo, nSerie, fabricante, resolucao, unidadeMedida, faixaNominal) values ( '${fk_idCliente}', '${fk_idOsCalibracao}', '${fk_idTipo}', '${nSerie}', '${fabricante}', '${resolucao}', '${unidadeMedida}', '${faixaNominal}')`);
+    // INSERT INTO instrumentos(fk_idCliente, fk_idOsCalibracao, fk_idTipo, nSerie, fabricante, resolucao, unidadeMedida, faixaNominal) values
+    const save = db.query(`
+    CALL cadastrarInstrumento( '${fk_idCliente}', '${fk_idOsCalibracao}', '${fk_idTipo}', '${nSerie}', '${fabricante}', '${resolucao}', '${unidadeMedida}', '${faixaNominal} ') `);
 
     // Verifica se a inserção foi bem-sucedida
     if (!save){
@@ -11,52 +13,30 @@ const registerInstrumento = async(fk_idCliente, fk_idOsCalibracao, fk_idTipo, nS
 }
 
 // Função para obter todos os instrumentos
-const getAllInstrumentos = async () => {
+const getInstrumentoById = async (id_instrumento) => {
     return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM instrumentos`,
+        db.query(`
+        CALL infosInstrumentos (${id_instrumento}) `),
         (error, results) => {
             if(error) {
                 reject(error); // Rejeita a promessa em caso de erro
                 return;
             }
             resolve(results); // Resolve a promessa com os resultados
-        });
+        };
     });
 }
 
-// Função para deletar um instrumento pelo seu ID
-const deleteInstrumento = async (id_instrumento) => {
-    return new Promise((resolve, reject) => {
-        db.query(`DELETE FROM instrumentos WHERE pk_idinstrumento = ${id_instrumento}`,
-        (error, results) =>{
-            if (error) {
-                reject(error); // Rejeita a promessa em caso de erro
-                return;
-            }
-            resolve(results); // Resolve a promessa com os resultados
-        });
-    });
-}
 
 // Função para atualizar informações de um instrumento pelo seu ID
 const updateInstrumento = async(id_instrumento, fk_idCliente, fk_idOsCalibracao, fk_idTipo, nSerie, fabricante, resolucao, unidadeMedida, faixaNominal) => {
-
+    // UPDATE instrumentos SET fk_idCliente = ${fk_idCliente}, fk_idOsCalibracao = ${fk_idOsCalibracao}, fk_idTipo = ${fk_idTipo}, nSerie = ${nSerie}, fabricante = ${fabricante}, resolucao = ${resolucao}, unidadeMedida = ${unidadeMedida}, faixaNominal = ${faixaNominal} WHERE pk_idinstrumento = ${id_instrumento}
     const update = await db.query(`
-    UPDATE instrumentos
-    SET fk_idCliente = ${fk_idCliente},
-        fk_idOsCalibracao = ${fk_idOsCalibracao},
-        fk_idTipo = ${fk_idTipo},
-        nSerie = ${nSerie},
-        fabricante = ${fabricante}, 
-        resolucao = ${resolucao},
-        unidadeMedida = ${unidadeMedida},
-        faixaNominal = ${faixaNominal}         
-    WHERE pk_idinstrumento = ${id_instrumento}
-    `);
+    CALL modificarInstrumento ('${id_instrumento}', '${fk_idCliente}', '${fk_idOsCalibracao}', '${fk_idTipo}', '${nSerie}', '${fabricante}', '${resolucao}', '${unidadeMedida}', '${faixaNominal} ') `);
 
     // Verifica se a atualização foi bem-sucedida
     if (update.affectedRows === 0) {
-        return 404; // Retorna status 404 se não foi possível encontrar o instrumento para atualização
+        return 404; // Retorna status 404fabricante se não foi possível encontrar o instrumento para atualização
     } else {
         return 200; // Retorna status 200 se foi bem-sucedido
     }
@@ -66,5 +46,6 @@ module.exports = {
     registerInstrumento,
     getAllInstrumentos,
     deleteInstrumento,
-    updateInstrumento
+    updateInstrumento,
+    getInstrumentoById
 };
