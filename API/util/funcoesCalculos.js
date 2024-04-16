@@ -40,7 +40,6 @@ function tendenciaPaq(dados, valoresNominais){
     return tencendias
 }
 
-
 module.exports = {
     media, 
     desvpad

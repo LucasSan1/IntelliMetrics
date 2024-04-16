@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 // Importa a função de cálculo de tendência externa do paquímetro
+
 const { calculoTendenciaExterna, calculoParalelismoOrelhas } = require("../util/calculosPaquimetro");
 
 router
