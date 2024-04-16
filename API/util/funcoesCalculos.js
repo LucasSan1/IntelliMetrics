@@ -27,6 +27,18 @@ function desvpad(dados) {
     return desvioTratado;
 }
 
+function tendenciaPaq(dados, valoresNominais){
+
+    const media = dados.reduce((acc, val) => acc + val, 0) / dados.length;
+    let tencendias = []
+    
+    for(let i = 0; i < valoresNominais.length; i++){
+
+        const tendencia = media - valoresNominais[i]
+        tendencias.push(tendencia)
+    }
+    return tencendias
+}
 
 module.exports = {
     media, 

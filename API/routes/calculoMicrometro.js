@@ -5,7 +5,7 @@ const { calculoPlaneza, calculoParalelismo, controleDimensional } = require("../
 
 router
      // Rota para calcular a planicidade do micrômetro
-    .post("/planezaMicrometro", async (req, res) => {
+    .post("/calcMicrometro", async (req, res) => {
 
         const {cMovel, cFixo, dadosParalelismo, dadosControle, valorPadrao} = req.body
 

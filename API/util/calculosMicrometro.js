@@ -60,6 +60,7 @@ function calculoParalelismo(dadosParalelismo) {
 }
 
 function controleDimensional(dadosControle, valorPadrao) {
+
   const mediaValor = [];
   const desvioP = [];
   const tendencias = [];
