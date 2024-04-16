@@ -2,17 +2,25 @@ const router = require('express').Router();
 
 // Importa as funções do controlador relacionadas às peças
 const { registerPeca, getAllPecas, getPecaById } = require('../controllers/controllerPecas');
+const validacaoPecas = require('../validation/pecasVal');
 
 router
     // Rota para cadastrar uma nova peça
     .post("/cadastroPeca", async(req, res) => {
         try {
             // Extrai os dados do corpo da requisição
-            const fk_idOsMedicao = req.body.fk_idOsMedicao;
-            const fk_idCliente = req.body.fk_idCliente;
-            const nome = req.body.nome;
-            const material = req.body.material;
-            const nDesehno = req.body.nDesehno;
+            const {fk_idOsMedicao, fk_idCliente, nome, material, nDesenho, descricao} = req.body;
+
+            const valPeca = {
+                fk_idOsMedicao,
+                fk_idCliente,
+                nome,
+                material,
+                nDesenho,
+                descricao
+            }
+
+            const pecaValidada = validacaoPecas.parse(valPeca);
 
             // Chama a função para cadastrar uma nova peça
             let resultCad = await registerPeca(
@@ -20,7 +28,7 @@ router
                 fk_idCliente,
                 nome,
                 material,
-                nDesehno
+                nDesenho
             );
 
             // Verifica o resultado do cadastro e retorna a resposta adequada
