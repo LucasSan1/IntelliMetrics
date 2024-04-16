@@ -1,0 +1,45 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Intelli",
+    "dateExported": "2024-04-16T19:35:32.620Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "d919468d-e284-4073-bc13-671637d4a6ad",
+            "colId": "d0982926-a4ed-416a-86f1-4cba86b55f7e",
+            "containerId": "",
+            "name": "calcPaquimetro",
+            "url": "http://localhost:3000/calcPaquimetro",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-04-16T17:33:54.698Z",
+            "modified": "2024-04-16T19:35:27.560Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"valorIndicado\": [\n  [1,2,3],\n  [1,2,3],\n  [1,2,3],\n  [1,2,3]\n  ],\n  \n  \"valorNominalMedExterna\": [\n  0,\n  1.30,\n  1.40,\n  20\n  ],\n  \n  \"valorIndicadoProxOrelhas\": [ [1,4,3] ],\n  \"valorIndicadoAfasOrelhas\": [ [1,2,3] ],\n  \n  \"valorNominalPara\": [ 50, 60 ],\n  \n  \"valorIndicadoProxBicos\": [ [1,4,3] ],\n  \"valorIndicadoAfasBicos\": [ [1,2,3] ],\n  \n  \"valorIndicadoMedInterna\": [\n    [1,2,3],\n    [1,2,3],\n    [1,2,3]\n  ],\n  \"valorNominalMedInterna\": [50, 40 , 30],\n  \n  \"valorNominalMedRessalto\": [50, 40, 30],\n  \"valorIndicadoMedRessalto\": [\n   [1,2,3],\n   [1,2,3],\n   [1,2,3]\n  ],\n  \n  \"valorNominalMedProf\": [ 50,40,30],\n  \"valorIndicadoMedProf\": [\n   [1,2,3],\n   [1,2,3],\n   [1,2,3]\n  ]\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "bf6c8a96-e11c-4edf-a030-281da0e2df61",
+            "colId": "d0982926-a4ed-416a-86f1-4cba86b55f7e",
+            "containerId": "",
+            "name": "calcMicrometro]",
+            "url": "http://localhost:3000/calcMicrometro",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-04-16T17:33:54.699Z",
+            "modified": "2024-04-16T17:33:54.699Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"cMovel\": [1,2,3],\n  \"cFixo\": [1,2,3],\n  \"dadosParalelismo\": [\n    1,\n    2,\n    3,\n    1,2,3\n  ],\n  \"dadosControle\": [\n    [1,2,3],\n    [1,2,3],\n    [1,2,3],\n    [1,2,3]\n  ],\n  \"valorPadrao\": [\n    100,\n    102.500,\n    105.100,\n    107.700\n    \n  ]\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
