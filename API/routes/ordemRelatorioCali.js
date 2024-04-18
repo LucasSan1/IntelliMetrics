@@ -65,6 +65,16 @@ router
             res.status(500).json('Erro interno do servidor');
         }
     })
+    // rota que recupera as informações de dentro do relatório
+    .get("/allinfos", async(req, res)=>{
+        try{
+            const infos = await getInstrumentoById();
+            res.status(200).json(infos);
+        }catch(error){
+            console.log(error);
+            res.status(500).json('erro interno do servidor');
+        }
+    })
 
     // Rota para obter um relatório de calibração pelo seu ID
     .get("/report/:id", async(req, res) => {

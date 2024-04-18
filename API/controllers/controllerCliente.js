@@ -1,11 +1,11 @@
 const db = require('../connector/conn');
+
 // Função para registrar um novo cliente no banco de dados
 const registerCliente = async(nomeEmpresa, representante, email, telefone, endereco, cnpj, status) => {
    
     // Verifica se já existe um cliente com o mesmo endereço de e-mail
     try {
-        
-        
+
         const existingCliente = await new Promise((resolve, reject) =>{
             db.query(`SELECT * FROM clientes WHERE email = '${email}'`,
             (error, results) => {
@@ -92,8 +92,7 @@ const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telef
     // UPDATE clientes SET nome = "${nome}", representante = "${representante}", email = "${email}", telefone = "${telefone}", endereço = "${endereço}", cnpj = "${cnpj}" WHERE pk_idCliente = "${id_cliente}"`,
     return new Promise((resolve, reject) => {
         db.query(`
-        CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}', '${status}') `),
-        
+        CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}', '${status}') `)   
         (error, results) => {
             if (error) {
                 reject (error);

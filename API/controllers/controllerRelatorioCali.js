@@ -5,18 +5,8 @@ const registerReport = async(  fk_idCliente, fk_idUsuario, titulo, codigoOrdem, 
     try{
 
         const save =  await //new Promise((resolve, reject) => { 
-            db.query(`INSERT INTO ---Nome tabela----(fk_idCliente, fk_idUsuario, titulo, codigoOrdem, responsavel, tipo, peca, dataInicio, dataTermino, descricao) VALUES('${fk_idCliente}', '${fk_idUsuario}', '${titulo}', '${codigoOrdem}', '${reponsavel}', '${tipo}', '${peca}' '${dataInicio}', '${dataTermino}', '${descricao}')`)
-    //         (error, results) => {
-    //             if (error) {
-    //                 reject(error);
-    //                 return;
-    //             }
-    //             resolve(results);
-    //         }
-    //     );
-    //   });
-
-        
+            db.query(`CALL criarRelatorio('${fk_idCliente}', '${fk_idUsuario}', '${titulo}', '${codigoOrdem}', '${reponsavel}', '${tipo}', '${peca}' '${dataInicio}', '${dataTermino}', '${descricao}')`)
+      
     // Verifica se a inserção foi bem-sucedida 
         if(!save){
             return 400; // Retorna 400 se não foi bem-sucedida
@@ -63,8 +53,24 @@ const getReportById = async(id_report) => {
             }
         );
       });
-    
+
+    }
+
+// função para obter as informações de dentro do relatório
+const getallinfos = async(idPeca, infoUsuario, InfoPeca, infoMaterial, InfoDesenho, infoDescricao) =>{
+    return new Promise((resolve, reject) => {
+        db.query(`CALL infoRelatorio (${idPeca, infoUsuario, InfoPeca, infoMaterial, InfoDesenho, infoDescricao})`),
+        (error, results) => {
+            if(error){
+                reject(error);
+                return;
+            }
+            resolve(results);
+        };
+    });
 }
+    
+
 
 
 module.exports = {

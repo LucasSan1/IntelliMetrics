@@ -46,5 +46,6 @@ module.exports = {
     registerInstrumento,
     getAllInstrumentos,
     deleteInstrumento,
-    updateInstrumento
+    updateInstrumento,
+    getInstrumentoById
 };
