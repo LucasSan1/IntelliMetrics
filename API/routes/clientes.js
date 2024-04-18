@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const {validacaoCliente} = require("../validation/clientesVal")
 
 // Importa as funções do controlador relacionadas aos clientes
 const { registerCliente, getClientes, getClienteById, deleteCliente, updateCliente } = require('../controllers/controllerCliente');
@@ -8,12 +9,19 @@ router
     .post("/cadastroCliente", async(req, res) => {
         try {
             // Extrai os dados do corpo da requisição
-            const nomeEmpresa = req.body.nome;
-            const representante = req.body.representante;
-            const email = req.body.email;
-            const telefone = req.body.telefone;
-            const endereco = req.body.endereco;
-            const cnpj = req.body.cnpj;
+            const {nomeEmpresa, representante, email, telefone, endereco , cnpj, status} = req.body
+            
+            const cliente = {
+                nomeEmpresa,
+                representante,
+                email,
+                telefone,
+                endereco,
+                cnpj,
+                status
+            }
+            
+            const clienteValidado = validacaoCliente.parse(cliente);
 
             // Chama a função para registrar um novo cliente
             let resultCad = await registerCliente(
@@ -22,7 +30,8 @@ router
                 email,
                 telefone,
                 endereco,
-                cnpj
+                cnpj,
+                status
             );
 
             // Verifica o resultado do cadastro e retorna a resposta adequada
@@ -98,6 +107,7 @@ router
             const telefone = req.body.telefone;
             const endereço = req.body.endereço;
             const cnpj = req.body.cnpj;
+            const status = req.body.status;
 
             // Chama a função para atualizar um cliente pelo ID
             let resultUpdate = await updateCliente(
@@ -107,7 +117,8 @@ router
                 email,
                 telefone,
                 endereço,
-                cnpj
+                cnpj,
+                status
             )
             
             // Verifica o resultado da atualização e retorna a resposta adequada

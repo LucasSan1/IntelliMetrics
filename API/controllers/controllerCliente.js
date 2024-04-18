@@ -1,10 +1,11 @@
 const db = require('../connector/conn');
 
 // Função para registrar um novo cliente no banco de dados
-const registerCliente = async(nomeEmpresa, representante, email, telefone, endereco, cnpj) => {
+const registerCliente = async(nomeEmpresa, representante, email, telefone, endereco, cnpj, status) => {
    
     // Verifica se já existe um cliente com o mesmo endereço de e-mail
     try {
+
         const existingCliente = await new Promise((resolve, reject) =>{
             db.query(`SELECT * FROM clientes WHERE email = '${email}'`,
             (error, results) => {
@@ -22,7 +23,7 @@ const registerCliente = async(nomeEmpresa, representante, email, telefone, ender
 
         // Insere os detalhes do novo cliente no banco de dados
         const save = db.query(`
-        CALL criarCliente ( '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj} ') `)
+        CALL criarCliente ( '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}', '${status}' ) `)
 
         if (!save){
             return 400; // Retorna 400 (Bad Request) se a operação der errado
@@ -87,12 +88,11 @@ const deleteCliente = async (id_cliente) => {
 }
 
 // Função para atualizar informações de um cliente pelo seu ID
-const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telefone, endereco, cnpj) => {
+const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telefone, endereco, cnpj, status) => {
     // UPDATE clientes SET nome = "${nome}", representante = "${representante}", email = "${email}", telefone = "${telefone}", endereço = "${endereço}", cnpj = "${cnpj}" WHERE pk_idCliente = "${id_cliente}"`,
     return new Promise((resolve, reject) => {
         db.query(`
-        CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}') `),
-        
+        CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}', '${status}') `)   
         (error, results) => {
             if (error) {
                 reject (error);

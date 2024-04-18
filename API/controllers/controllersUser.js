@@ -1,7 +1,7 @@
 const db = require('../connector/conn');
 
 // Função para registrar um novo usuário
-const registerUser = async(nome, email, cargo) => {
+const registerUser = async(nome, email, cargo, status) => {
     try{
         // Verificar se um usuário com o e-mail fornecido já existe
         const existingUser = await new Promise((resolve, reject) => {
@@ -22,7 +22,7 @@ const registerUser = async(nome, email, cargo) => {
         }
 
         // Se não existir nenhum usuário com esse e-mail cadastrado, inserir os dados do novo usuário 
-        const save = db.query(`INSERT INTO usuarios (nome, email, cargo) value ('${nome}', '${email}', '${cargo}')`);
+        const save = db.query(`INSERT INTO usuarios (nome, email, cargo, status) value ('${nome}', '${email}', '${cargo}', '${status}' )`);
 
         // Verifica se a inserção foi bem-sucedida
         if(!save){
