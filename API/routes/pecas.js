@@ -89,7 +89,6 @@ router
             res.status(500).json("error no servidor");
         }
     }
-
     
 
 module.exports = router;

@@ -11,7 +11,7 @@ router
             // Extrai os dados do corpo da requisição
             const {nomeEmpresa, representante, email, telefone, endereco , cnpj, status} = req.body
             
-            const cliente = {
+            const valCliente = {
                 nomeEmpresa,
                 representante,
                 email,
@@ -21,7 +21,7 @@ router
                 status
             }
             
-            const clienteValidado = validacaoCliente.parse(cliente);
+            const clienteValidado = validacaoCliente.parse(valCliente);
 
             // Chama a função para registrar um novo cliente
             let resultCad = await registerCliente(

@@ -66,7 +66,6 @@ const getClienteById = async (id_cliente) => {
                 resolve(results);
             }
         }
-    //   )
     }) 
 }
 
@@ -83,7 +82,7 @@ const deleteCliente = async (id_cliente) => {
             } else {
                 resolve (results);
             }
-        }//)
+        }
     })
 }
 
@@ -92,7 +91,7 @@ const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telef
     // UPDATE clientes SET nome = "${nome}", representante = "${representante}", email = "${email}", telefone = "${telefone}", endereço = "${endereço}", cnpj = "${cnpj}" WHERE pk_idCliente = "${id_cliente}"`,
     return new Promise((resolve, reject) => {
         db.query(`
-        CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}', '${status}') `),   
+        CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}', '${status}') `),
         (error, results) => {
             if (error) {
                 reject (error);
@@ -101,7 +100,7 @@ const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telef
                 resolve (results);
             }
             
-        }//)
+        }
     })
 }
 
