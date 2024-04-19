@@ -8,9 +8,9 @@ const validacaoInstrumentos  = z.object({
     nSerie: z.number(),
     identificacaoCliente: z.string().min(1).max(50),
     fabricante: z.string().min(1).max(60),
-    faixaNominalNum: z.decimal(4,2),
+    faixaNominalNum: z.number(),
     faixaNominalUni: z.enum(['mm', 'pol']),
-    divisaoResolucaoNum: z.decimal(4,2),
+    divisaoResolucaoNum: z.number(),
     divisaoResolucaoUni: z.enum(['mm', 'pol']),
     orgaoResponsavel: z.string().min().max(60)
 })
