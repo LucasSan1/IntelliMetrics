@@ -1,12 +1,12 @@
 const router = require("express").Router();
 
 // Importa a função de cálculo de tendência externa do paquímetro
-const { calculoTendenciaExterna, calculoParalelismoOrelhas, calculoParalelismoBicos, calculoMedInterna, calculoMedRessalto, calculoMedProfundidade } = require("../util/calculosPaquimetro");
+const { calculoTendenciaExterna, calculoParalelismoOrelhas, calculoParalelismoBicos, calculoMedInterna, calculoMedRessalto, calculoMedProfundidade, incertezaUA } = require("../util/calculosPaquimetro");
 
 router
   // Rota para calcular a tendência externa do paquímetro
   .post("/calcPaquimetro", async (req, res) => {
-    const { valorNominalMedExterna, valorIndicado, valorIndicadoProxOrelhas, valorIndicadoAfasOrelhas, valorNominalPara, valorIndicadoProxBicos, valorIndicadoAfasBicos, valorNominalMedInterna, valorIndicadoMedInterna, valorNominalMedRessalto, valorIndicadoMedRessalto, valorNominalMedProf, valorIndicadoMedProf} = req.body;
+    const { valorNominalMedExterna, valorIndicado, valorIndicadoProxOrelhas, valorIndicadoAfasOrelhas, valorNominalPara, valorIndicadoProxBicos, valorIndicadoAfasBicos, valorNominalMedInterna, valorIndicadoMedInterna, valorNominalMedRessalto, valorIndicadoMedRessalto, valorNominalMedProf, valorIndicadoMedProf, resolucao, desvpad} = req.body;
 
     try {
       const response = {};
@@ -22,12 +22,29 @@ router
       !!valorNominalMedRessalto == true && !!valorIndicadoMedRessalto == true ? response.tendenciasMedRessalto = calculoMedRessalto(valorNominalMedRessalto, valorIndicadoMedRessalto ) : response.tendenciasMedRessalto = "Sem dados"
 
       !!valorNominalMedProf == true && !!valorIndicadoMedProf ==  true ? response.tendenciasMedProfundidade = calculoMedProfundidade(valorIndicadoMedProf, valorNominalMedProf) : response.tendenciasMedProfundidade = "Sem dados"
-
+      
       return res.status(200).json(response)
 
     } catch (error) {
       console.log(error); // Registra o erro no console
     }
-  });
+  })
+
+  .post("/incertezaPaquimetro", async(req, res) =>{
+    
+    const {resolucao, desvpad} = req.body
+    
+    try{
+
+      const response = {}
+
+      !! desvpad == true && !!resolucao == true ? response.incertezaUA = incertezaUA(resolucao, desvpad) : response.incertezaUA = "Sem dados"
+
+      return res.status(200).json(response)
+
+    } catch (error) {
+      console.log(error); // Registra o erro no console
+    } 
+  })
 
 module.exports = router;

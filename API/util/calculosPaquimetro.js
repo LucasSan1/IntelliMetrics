@@ -1,5 +1,6 @@
 const { media, desvpad } = require("./funcoesCalculos");
 
+
 function calculoTendenciaExterna(valorIndicado, valorNominalMedExterna) {
   
   let tendencias = []
@@ -123,6 +124,8 @@ function calculoParalelismoBicos(valorIndicadoProxBicos, valorIndicadoAfasBicos,
   const response = {};
 
   response[`resultado Bicos`] = {"tendencia proximo": parseFloat(tendenciaProxT) , "tendencia afastado" : parseFloat(tendenciaAfastT), "paralelismoOrelhas": parseFloat(paralelismoOrelhasT), "desvpadAfast": parseFloat(desvioPadraoAfast), "desvpadProx": parseFloat(desvioPadraoProx)}
+  
+ 
 
   return response
 }
@@ -225,8 +228,27 @@ function calculoMedProfundidade(valorIndicadoMedProf, valorNominalMedProf) {
   return response
 }
 
-
 // calculos de incerteza paquimetro
+
+function incertezaUA(resolucao, desvpad){
+
+  let resultado = 0
+
+  const maximo = Math.max(desvpad) 
+ 
+  if (maximo > resolucao){
+    resultado +=  maximo / Math.sqrt(3)
+  
+  } else {
+    resultado += ((resolucao /4)/ Math.sqrt(3))
+  }
+
+  const contriIn = resultado / 1
+  
+  const response = {"estimativaUA": parseFloat(resolucao), "incertezaPadrao": parseFloat(resultado), "contribuiçaoIncerteza": contriIn}
+
+  return response
+}
 
 
 
@@ -237,4 +259,5 @@ module.exports = {
   calculoMedInterna,
   calculoMedRessalto,
   calculoMedProfundidade,
+  incertezaUA
 };
