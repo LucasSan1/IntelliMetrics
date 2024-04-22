@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 // Importa as funções do controlador relacionadas aos relatórios de calibração
-const { registerReport, getAllReports, getReportById  } = require("../controllers/controllerRelatorioCali")
+const { registerReport, getAllReports, getReportById, getAllInfos, updateReport  } = require("../controllers/controllerRelatorioCali")
 
 router
     // Rota para registrar um novo relatório de calibração
@@ -68,7 +68,7 @@ router
     // rota que recupera as informações de dentro do relatório
     .get("/allinfos", async(req, res)=>{
         try{
-            const infos = await getInstrumentoById();
+            const infos = await getAllInfos();
             res.status(200).json(infos);
         }catch(error){
             console.log(error);
@@ -78,7 +78,7 @@ router
 
     // Rota para obter um relatório de calibração pelo seu ID
     .get("/report/:id", async(req, res) => {
-        const id_report = req.params.id;
+        const id_report = req.params.id_report;
 
         try {
             // Chama a função para obter um relatório de calibração pelo ID
@@ -89,5 +89,51 @@ router
             res.status(500).json('Erro interno do servidor');
         }
     })
+
+    //rota para atualizar o relatório 
+    .put("/reportUp/:id", async(req,res)=> {
+        const id = req.params.id;
+
+        try {
+            const {antigoIdRelatorio, alterarIdRelatorio, idInstrumento, idUsuario, idPeca, alterarInicio, alterarTermino, alterarTempoTotal, alterarTemperaturaC, alterarUmidadeRelativa, alterarObservacoes, alterarLocalDaMedicao, alterarDia, alterarAssinatura} = req.body;
+            // Chama a função para atualizar  o relatorio
+            let resultUpdate = await updateReport(
+                antigoIdRelatorio,
+                alterarIdRelatorio,
+                idInstrumento,
+                idUsuario, idPeca,
+                alterarInicio, 
+                alterarTermino,
+                alterarTempoTotal,
+                alterarTemperaturaC, 
+                alterarUmidadeRelativa,
+                alterarObservacoes,
+                alterarLocalDaMedicao, 
+                alterarDia, 
+                alterarAssinatura
+            );
+
+            switch(resultUpdate){
+                case 200:
+                    res.status(200).json('Relatório atualizado');
+                    break;
+                case 400:
+                    res.status(400).json('Erro ao atualizar relatório');
+                    break;
+                default:
+                    res.status(500).json('Erro interno do servidor');
+            }
+
+        } catch (error) {
+            console.log(error); // Registra o erro no console
+        }
+    })
+
+
+    
+
+    
+
+
 
 module.exports = router;

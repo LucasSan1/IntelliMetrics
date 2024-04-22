@@ -57,7 +57,7 @@ const getReportById = async(id_report) => {
     }
 
 // função para obter as informações de dentro do relatório
-const getallinfos = async(idPeca, infoUsuario, InfoPeca, infoMaterial, InfoDesenho, infoDescricao) =>{
+const getAllInfos = async(idPeca, infoUsuario, InfoPeca, infoMaterial, InfoDesenho, infoDescricao) =>{
     return new Promise((resolve, reject) => {
         db.query(`CALL infoRelatorio (${idPeca, infoUsuario, InfoPeca, infoMaterial, InfoDesenho, infoDescricao})`),
         (error, results) => {
@@ -69,12 +69,26 @@ const getallinfos = async(idPeca, infoUsuario, InfoPeca, infoMaterial, InfoDesen
         };
     });
 }
-    
+
+// função para modificar o relatorio
+const updateReport = async (antigoIdRelatorio, alterarIdRelatorio, idInstrumento, idUsuario, idPeca, alterarInicio, alterarTermino, alterarTempoTotal, alterarTemperaturaC, alterarUmidadeRelativa, alterarObservacoes, alterarLocalDaMedicao, alterarDia, alterarAssinatura ) =>{
+    return new Promise((resolve, reject) => {
+        db.query(`CALL modificarRelatorio (${antigoIdRelatorio, alterarIdRelatorio, idInstrumento, idUsuario, idPeca, alterarInicio, alterarTermino, alterarTempoTotal, alterarTemperaturaC, alterarUmidadeRelativa, alterarObservacoes, alterarLocalDaMedicao, alterarDia, alterarAssinatura})`),
+        (error, results) => {
+            reject(error);
+            return;
+        };
+        results(results);
+    });
+} 
+
 
 
 
 module.exports = {
     registerReport,
     getAllReports,
-    getReportById
+    getReportById,
+    getAllInfos,
+    updateReport
 }
