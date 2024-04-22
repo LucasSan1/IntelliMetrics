@@ -342,10 +342,6 @@ function incertezaUC(faixaNominal){
 
 }
 
-
-
-
-
 module.exports = {
   calculoTendenciaExterna,
   calculoParalelismoOrelhas,
