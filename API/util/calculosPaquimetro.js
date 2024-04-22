@@ -78,7 +78,7 @@ function calculoParalelismoOrelhas(valorIndicadoProxOrelhas, valorIndicadoAfasOr
 
   const response = {};
 
-  response[`resultado Orelhas`] = {"tendencia proximo": parseFloat(tendenciaProxT) , "tendencia afastado" : parseFloat(tendenciaAfastT), "paralelismoOrelhas": parseFloat(paralelismoOrelhasT), "despadAfast": parseFloat(desvioPadraoAfast), "desvpadProx": parseFloat(desvioPadraoProx)}
+  response[`resultado_Orelhas`] = {"tendencia_proximo": parseFloat(tendenciaProxT) , "tendencia_afastado" : parseFloat(tendenciaAfastT), "paralelismo_Orelhas": parseFloat(paralelismoOrelhasT), "despad_Afast": parseFloat(desvioPadraoAfast), "desvpad_Prox": parseFloat(desvioPadraoProx)}
 
   return response
 }
@@ -123,7 +123,7 @@ function calculoParalelismoBicos(valorIndicadoProxBicos, valorIndicadoAfasBicos,
 
   const response = {};
 
-  response[`resultado Bicos`] = {"tendencia proximo": parseFloat(tendenciaProxT) , "tendencia afastado" : parseFloat(tendenciaAfastT), "paralelismoOrelhas": parseFloat(paralelismoOrelhasT), "desvpadAfast": parseFloat(desvioPadraoAfast), "desvpadProx": parseFloat(desvioPadraoProx)}
+  response[`resultado_Bicos`] = {"tendencia_proximo": parseFloat(tendenciaProxT) , "tendencia_afastado" : parseFloat(tendenciaAfastT), "paralelismo_Orelhas": parseFloat(paralelismoOrelhasT), "desvpad_Afast": parseFloat(desvioPadraoAfast), "desvpad_Prox": parseFloat(desvioPadraoProx)}
   
  
 
@@ -237,20 +237,110 @@ function incertezaUA(resolucao, desvpad){
   const maximo = Math.max(desvpad) 
  
   if (maximo > resolucao){
-    resultado +=  maximo / Math.sqrt(3)
+    resultado +=  maximo / Math.sqrt(3).toFixed(5)
   
   } else {
-    resultado += ((resolucao /4)/ Math.sqrt(3))
+    resultado += ((resolucao /4)/ Math.sqrt(3)).toFixed(5)
   }
 
-  const contriIn = resultado / 1
-  
-  const response = {"estimativaUA": parseFloat(resolucao), "incertezaPadrao": parseFloat(resultado), "contribuiçaoIncerteza": contriIn}
+  const contriIn = (resultado / 1).toFixed(5)
+  lista.push(contriIn)
+  const response = {"estimativa_UA": parseFloat(resolucao), "incerteza_Padrao": parseFloat(resultado), "contribuiçao_Incerteza": parseFloat(contriIn)}
 
   return response
 }
 
+function incertezaUP(faixaNominal){
+  let resultado = 0
+  let incertezaEA = 0
 
+  switch(faixaNominal){
+    case 150: 
+    case 200:
+    case 250: 
+    case 300:
+      resultado += (2 / 1000).toFixed(5)
+      incertezaEA =+ resultado + (2 * 0.00007)
+      break;
+    case 450: 
+    case 500:
+      resultado += (3/1000).toFixed(5)
+      incertezaEA =+ resultado + (2 * 0.00007)
+      break;
+    default:
+      return "Faixa Incorreta"
+  }
+
+  const contriIn = resultado / 2
+  const contriInEA = (incertezaEA / Math.sqrt(3)).toFixed(4)
+
+  const response = {"Estimativa_UP_EA": parseFloat(faixaNominal), "incerteza_Padrao": parseFloat(resultado), "contribuiçao_Incertezao_UP": parseFloat(contriIn), "incerteza_EA": parseFloat(incertezaEA), "contribuiçao_Incertezao_EA": parseFloat(contriInEA)}
+
+  return response
+}
+
+function incertezaERES(resolucao){
+  const incerteza = resolucao/2
+  const contriIn = (incerteza / Math.sqrt(3)).toFixed(4)
+
+  const response = {"Estimativa_ERES": parseFloat(resolucao), "incerteza_ERES": parseFloat(incerteza), "contribuiçao_Incerteza": parseFloat(contriIn)}
+
+  return response
+}
+
+function incertezaL1(faixaNominal){
+
+  let incerteza = 0
+
+  switch(faixaNominal){
+    case 150: 
+    case 200:
+    case 250: 
+    case 300:
+    case 450: 
+    case 500:
+      (incerteza += faixaNominal * 0.000001 * 2).toFixed(5)
+      break;
+    default:
+      return "Faixa Incorreta"
+  }
+
+  const contriIn = (incerteza / Math.sqrt(3)).toFixed(4)
+ 
+
+  const response = {"Estimativa_L1": parseFloat(faixaNominal), "incerteza_L1": parseFloat(incerteza), "contribuiçao_Incerteza": parseFloat(contriIn)}
+
+  return response
+}
+
+function incertezaL2(faixaNominal){
+
+  let incerteza = 0
+
+  switch(faixaNominal){
+    case 150: 
+    case 200:
+    case 250: 
+    case 300:
+    case 450: 
+    case 500:
+      // (incerteza += faixaNominal * ((0.0000115 + 0.0000115) / 2) * 1).toFixed(5)
+      (incerteza += faixaNominal * 0.0000115).toFixed(5)
+      break;
+    default:
+      return "Faixa Incorreta"
+  }
+
+  const contriIn = (incerteza / Math.sqrt(3)).toFixed(4)
+
+  const response = {"Estimativa_L2": parseFloat(faixaNominal), "incerteza_L2": parseFloat(incerteza), "contribuiçao_Incerteza": parseFloat(contriIn)}
+
+  return response
+}
+
+function incertezaUC(faixaNominal){
+
+}
 
 module.exports = {
   calculoTendenciaExterna,
@@ -259,5 +349,10 @@ module.exports = {
   calculoMedInterna,
   calculoMedRessalto,
   calculoMedProfundidade,
-  incertezaUA
+  incertezaUA,
+  incertezaUP,
+  incertezaERES,
+  incertezaL1,
+  incertezaL2,
+  incertezaUC
 };

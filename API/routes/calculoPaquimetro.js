@@ -1,27 +1,27 @@
 const router = require("express").Router();
 
 // Importa a função de cálculo de tendência externa do paquímetro
-const { calculoTendenciaExterna, calculoParalelismoOrelhas, calculoParalelismoBicos, calculoMedInterna, calculoMedRessalto, calculoMedProfundidade, incertezaUA } = require("../util/calculosPaquimetro");
+const { calculoTendenciaExterna, calculoParalelismoOrelhas, calculoParalelismoBicos, calculoMedInterna, calculoMedRessalto, calculoMedProfundidade, incertezaUA, incertezaUP, incertezaERES, incertezaL1, incertezaL2, incertezaUC } = require("../util/calculosPaquimetro");
 
 router
   // Rota para calcular a tendência externa do paquímetro
   .post("/calcPaquimetro", async (req, res) => {
-    const { valorNominalMedExterna, valorIndicado, valorIndicadoProxOrelhas, valorIndicadoAfasOrelhas, valorNominalPara, valorIndicadoProxBicos, valorIndicadoAfasBicos, valorNominalMedInterna, valorIndicadoMedInterna, valorNominalMedRessalto, valorIndicadoMedRessalto, valorNominalMedProf, valorIndicadoMedProf, resolucao, desvpad} = req.body;
+    const { valorNominalMedExterna, valorIndicado, valorIndicadoProxOrelhas, valorIndicadoAfasOrelhas, valorNominalPara, valorIndicadoProxBicos, valorIndicadoAfasBicos, valorNominalMedInterna, valorIndicadoMedInterna, valorNominalMedRessalto, valorIndicadoMedRessalto, valorNominalMedProf, valorIndicadoMedProf} = req.body;
 
     try {
       const response = {};
 
       !!valorNominalMedExterna == true && !!valorIndicado == true ? response.medicaoExterna = calculoTendenciaExterna( valorIndicado, valorNominalMedExterna) : response.medicaoExterna = "Sem dados";
 
-      !!valorIndicadoAfasOrelhas == true && !!valorIndicadoProxOrelhas == true ? response.calculosPararelismoOrelhas = calculoParalelismoOrelhas(valorIndicadoProxOrelhas, valorIndicadoAfasOrelhas, valorNominalPara) : response.calculosPararelismoOrelhas = "Sem dados"
+      !!valorIndicadoAfasOrelhas == true && !!valorIndicadoProxOrelhas == true ? response.calculos_Pararelismo_Orelhas = calculoParalelismoOrelhas(valorIndicadoProxOrelhas, valorIndicadoAfasOrelhas, valorNominalPara) : response.calculos_Pararelismo_Orelhas = "Sem dados"
 
-      !!valorIndicadoAfasBicos == true && !!valorIndicadoProxBicos == true ? response.calculosPararelismoBicos = calculoParalelismoBicos(valorIndicadoProxBicos, valorIndicadoAfasBicos, valorNominalPara ) : response.calculoParalelismoBicos = "Sem dados"
+      !!valorIndicadoAfasBicos == true && !!valorIndicadoProxBicos == true ? response.calculos_Pararelismo_Bicos = calculoParalelismoBicos(valorIndicadoProxBicos, valorIndicadoAfasBicos, valorNominalPara ) : response.calculo_Paralelismo_Bicos = "Sem dados"
 
-      !!valorNominalMedInterna == true && !!valorIndicadoMedInterna == true ? response.tendenciasMedInterna = calculoMedInterna(valorNominalMedInterna, valorIndicadoMedInterna) : response.tendenciasMedInterna = "Sem dados"
+      !!valorNominalMedInterna == true && !!valorIndicadoMedInterna == true ? response.tendencias_Medicao_Interna = calculoMedInterna(valorNominalMedInterna, valorIndicadoMedInterna) : response.tendencias_Medicao_Interna = "Sem dados"
 
-      !!valorNominalMedRessalto == true && !!valorIndicadoMedRessalto == true ? response.tendenciasMedRessalto = calculoMedRessalto(valorNominalMedRessalto, valorIndicadoMedRessalto ) : response.tendenciasMedRessalto = "Sem dados"
+      !!valorNominalMedRessalto == true && !!valorIndicadoMedRessalto == true ? response.tendencias_Medicao_Ressalto = calculoMedRessalto(valorNominalMedRessalto, valorIndicadoMedRessalto ) : response.tendencias_Medicao_Ressalto = "Sem dados"
 
-      !!valorNominalMedProf == true && !!valorIndicadoMedProf ==  true ? response.tendenciasMedProfundidade = calculoMedProfundidade(valorIndicadoMedProf, valorNominalMedProf) : response.tendenciasMedProfundidade = "Sem dados"
+      !!valorNominalMedProf == true && !!valorIndicadoMedProf ==  true ? response.tendencias_Medicao_Profundidade = calculoMedProfundidade(valorIndicadoMedProf, valorNominalMedProf) : response.tendencias_Medicao_Profundidade = "Sem dados"
       
       return res.status(200).json(response)
 
@@ -32,13 +32,24 @@ router
 
   .post("/incertezaPaquimetro", async(req, res) =>{
     
-    const {resolucao, desvpad} = req.body
+    const {resolucao, desvpad, faixaNominal} = req.body
     
     try{
 
       const response = {}
 
-      !! desvpad == true && !!resolucao == true ? response.incertezaUA = incertezaUA(resolucao, desvpad) : response.incertezaUA = "Sem dados"
+      !! desvpad == true && !!resolucao == true ? response.incerteza_UA = incertezaUA(resolucao, desvpad) : response.incerteza_UA = "Sem dados"
+
+      !!faixaNominal == true ? response.incerteza_UP_EA = incertezaUP(faixaNominal) : response.incerteza_UP_EA = "Sem dados"
+
+      !!resolucao == true ? response.inceteza_ERES = incertezaERES(resolucao) : response.inceteza_ERES = "Sem dados"
+
+      !!faixaNominal == true ? response.incerteza_L1 = incertezaL1(faixaNominal) : response.incerteza_L1 = "Sem dados"
+
+      !!faixaNominal == true ? response.incerteza_L2 = incertezaL2(faixaNominal) : response.incerteza_L2 = "Sem dados"
+
+      !!faixaNominal == true ? response.incerteza_UC = incertezaUC(faixaNominal) : response.incerteza_UC = "Sem dados" 
+
 
       return res.status(200).json(response)
 
