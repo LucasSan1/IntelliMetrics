@@ -48,7 +48,7 @@ router
 
       !!faixaNominal == true ? response.incerteza_L2 = incertezaL2(faixaNominal) : response.incerteza_L2 = "Sem dados"
 
-      !!faixaNominal == true ? response.incerteza_L2 = incertezaUC(faixaNominal) : response.incerteza_L2 = "Sem dados" 
+      !!faixaNominal == true ? response.incerteza_UC = incertezaUC(faixaNominal) : response.incerteza_UC = "Sem dados" 
 
 
       return res.status(200).json(response)
