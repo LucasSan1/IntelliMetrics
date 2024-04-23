@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // Importa a função de cálculo de tendência externa do paquímetro
-const { calculoTendenciaExterna, calculoParalelismoOrelhas, calculoParalelismoBicos, calculoMedInterna, calculoMedRessalto, calculoMedProfundidade, incertezaUA, incertezaUP, incertezaERES, incertezaL1, incertezaL2, incertezaUC } = require("../util/calculosPaquimetro");
+const { calculoTendenciaExterna, calculoParalelismoOrelhas, calculoParalelismoBicos, calculoMedInterna, calculoMedRessalto, calculoMedProfundidade, incertezaUA, incertezaUP, incertezaERES, incertezaL1, incertezaL2, incertezaUC, incertezaUE } = require("../util/calculosPaquimetro");
 
 router
   // Rota para calcular a tendência externa do paquímetro
@@ -48,7 +48,9 @@ router
 
       !!faixaNominal == true ? response.incerteza_L2 = incertezaL2(faixaNominal) : response.incerteza_L2 = "Sem dados"
 
-      !!faixaNominal == true ? response.incerteza_UC = incertezaUC(faixaNominal) : response.incerteza_UC = "Sem dados" 
+      !!faixaNominal == true ? response.incerteza_UC = incertezaUC() : response.incerteza_UC = "Sem dados" 
+      
+      !!faixaNominal == true ? response.incertezaUE = incertezaUE() : response.incertezaUE = "Sem dados"
 
 
       return res.status(200).json(response)

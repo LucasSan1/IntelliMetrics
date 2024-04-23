@@ -27,18 +27,15 @@ function desvpad(dados) {
     return desvioTratado;
 }
 
-function tendenciaPaq(dados, valoresNominais){
+const jStat = require("jstat")
 
-    const media = dados.reduce((acc, val) => acc + val, 0) / dados.length;
-    let tencendias = []
-    
-    for(let i = 0; i < valoresNominais.length; i++){
+const probabilidade = 0.0455;
+const grausLiberdade = 26;
 
-        const tendencia = media - valoresNominais[i]
-        tendencias.push(tendencia)
-    }
-    return tencendias
-}
+// Calcule a distribuição t acumulada inversa
+const valorT = jStat.tinv(probabilidade, grausLiberdade);
+
+console.log(valorT);
 
 module.exports = {
     media, 

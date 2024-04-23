@@ -1,4 +1,5 @@
 const { media, desvpad } = require("./funcoesCalculos");
+const jStat = require('jstat');
 
 
 function calculoTendenciaExterna(valorIndicado, valorNominalMedExterna) {
@@ -230,6 +231,11 @@ function calculoMedProfundidade(valorIndicadoMedProf, valorNominalMedProf) {
 
 // calculos de incerteza paquimetro
 
+const contriIncertezas = []
+let contriIn_UA_global = 0
+let veff_global = 0
+let contriIn_UC_global = 0
+
 function incertezaUA(resolucao, desvpad){
 
   let resultado = 0
@@ -238,13 +244,15 @@ function incertezaUA(resolucao, desvpad){
  
   if (maximo > resolucao){
     resultado +=  maximo / Math.sqrt(3).toFixed(5)
-  
   } else {
     resultado += ((resolucao /4)/ Math.sqrt(3)).toFixed(5)
   }
 
   const contriIn = (resultado / 1).toFixed(5)
-  lista.push(contriIn)
+  contriIncertezas.push(parseFloat(contriIn))
+
+  contriIn_UA_global += contriIn
+
   const response = {"estimativa_UA": parseFloat(resolucao), "incerteza_Padrao": parseFloat(resultado), "contribuiçao_Incerteza": parseFloat(contriIn)}
 
   return response
@@ -271,8 +279,9 @@ function incertezaUP(faixaNominal){
       return "Faixa Incorreta"
   }
 
-  const contriIn = resultado / 2
+  const contriIn = (resultado / 2).toFixed(4)
   const contriInEA = (incertezaEA / Math.sqrt(3)).toFixed(4)
+  contriIncertezas.push(parseFloat(contriIn, contriInEA))
 
   const response = {"Estimativa_UP_EA": parseFloat(faixaNominal), "incerteza_Padrao": parseFloat(resultado), "contribuiçao_Incertezao_UP": parseFloat(contriIn), "incerteza_EA": parseFloat(incertezaEA), "contribuiçao_Incertezao_EA": parseFloat(contriInEA)}
 
@@ -282,6 +291,7 @@ function incertezaUP(faixaNominal){
 function incertezaERES(resolucao){
   const incerteza = resolucao/2
   const contriIn = (incerteza / Math.sqrt(3)).toFixed(4)
+  contriIncertezas.push(parseFloat(contriIn))
 
   const response = {"Estimativa_ERES": parseFloat(resolucao), "incerteza_ERES": parseFloat(incerteza), "contribuiçao_Incerteza": parseFloat(contriIn)}
 
@@ -306,8 +316,8 @@ function incertezaL1(faixaNominal){
   }
 
   const contriIn = (incerteza / Math.sqrt(3)).toFixed(4)
+  contriIncertezas.push(parseFloat(contriIn))
  
-
   const response = {"Estimativa_L1": parseFloat(faixaNominal), "incerteza_L1": parseFloat(incerteza), "contribuiçao_Incerteza": parseFloat(contriIn)}
 
   return response
@@ -331,15 +341,42 @@ function incertezaL2(faixaNominal){
       return "Faixa Incorreta"
   }
 
-  const contriIn = (incerteza / Math.sqrt(3)).toFixed(4)
+  const contriIn = (incerteza / Math.sqrt(3)).toFixed(4 )
+  contriIncertezas.push(parseFloat(contriIn))
 
   const response = {"Estimativa_L2": parseFloat(faixaNominal), "incerteza_L2": parseFloat(incerteza), "contribuiçao_Incerteza": parseFloat(contriIn)}
 
   return response
 }
 
-function incertezaUC(faixaNominal){
+function incertezaUC(){
 
+  const somaQuadrados = contriIncertezas.reduce((acc, val) => acc + Math.pow(val, 2), 0);
+
+  const raiz = Math.sqrt(somaQuadrados).toFixed(4)
+  contriIn_UC_global += raiz
+
+  const veff = Math.round(Math.pow(raiz, 4) /(Math.pow(contriIn_UA_global, 4)/ 2))
+  veff_global += veff
+
+  const response = {"UC": parseFloat(raiz), "veff": veff}
+
+  return response
+  
+}
+
+function incertezaUE(){
+
+
+  // const K = jStat.tinv(0.0455, veff_global)
+
+  // const UE = contriIn_UC_global * K
+
+  // const response = {"K": parseFloat(K), "UE": parseFloat(UE)}
+
+  // return response
+  console.log(valorT)
+  
 }
 
 module.exports = {
@@ -354,5 +391,6 @@ module.exports = {
   incertezaERES,
   incertezaL1,
   incertezaL2,
-  incertezaUC
+  incertezaUC,
+  incertezaUE
 };
