@@ -102,7 +102,7 @@ router
                 alterarIdRelatorio,
                 idInstrumento,
                 idUsuario, idPeca,
-                alterarInicio, 
+                alterarInicio,  
                 alterarTermino,
                 alterarTempoTotal,
                 alterarTemperaturaC, 
@@ -128,12 +128,5 @@ router
             console.log(error); // Registra o erro no console
         }
     })
-
-
-    
-
-    
-
-
 
 module.exports = router;

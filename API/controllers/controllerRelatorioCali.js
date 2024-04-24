@@ -82,9 +82,6 @@ const updateReport = async (antigoIdRelatorio, alterarIdRelatorio, idInstrumento
     });
 } 
 
-
-
-
 module.exports = {
     registerReport,
     getAllReports,

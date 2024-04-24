@@ -1,2 +1,2 @@
 # IntelliMetrics
-hahahahahaha aprendi 
+oie karol
