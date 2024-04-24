@@ -375,7 +375,7 @@ function incertezaUE(){
   // const response = {"K": parseFloat(K), "UE": parseFloat(UE)}
 
   // return response
-  console.log(valorT)
+  // console.log(valorT)
   
 }
 
