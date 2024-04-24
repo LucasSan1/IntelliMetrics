@@ -29,20 +29,12 @@ function desvpad(dados) {
   return desvioTratado;
 }
 
-
-const jstat = require('jstat');
-
-// Definir a probabilidade e os graus de liberdade
-const probability = 0.0455; // Probabilidade de cauda (4.55%)
-const degreesOfFreedom = 26; // Graus de liberdade (J26)
-
-// Calcular o valor t de Student inverso (INVT) usando jstat
-const tValue = jstat.tinv(probability, degreesOfFreedom);
-
-// Exiba o resultado
-console.log(tValue);
+function arredondarParaCima(numero) {
+  return Math.ceil(numero * 100) / 100;
+}
 
 module.exports = {
   media,
   desvpad,
+  arredondarParaCima
 };

@@ -1,4 +1,4 @@
-const { media, desvpad } = require("./funcoesCalculos");
+const { media, desvpad, arredondarParaCima } = require("./funcoesCalculos");
 const jStat = require('jstat');
 
 
@@ -354,6 +354,7 @@ function incertezaUC(){
   const somaQuadrados = contriIncertezas.reduce((acc, val) => acc + Math.pow(val, 2), 0);
 
   const raiz = Math.sqrt(somaQuadrados).toFixed(4)
+
   contriIn_UC_global += raiz
 
   const veff = Math.round(Math.pow(raiz, 4) /(Math.pow(contriIn_UA_global, 4)/ 2))
@@ -366,16 +367,19 @@ function incertezaUC(){
 }
 
 function incertezaUE(){
+ 
+
+  const K = (jStat.studentt.inv(1 - 0.0455 / 2, veff_global));
+  const K_Resposta = K.toFixed(2)
 
 
-  // const K = jStat.tinv(0.0455, veff_global)
+  const UE = (contriIn_UC_global * K)
+  const UE_Arredondado = arredondarParaCima(UE)
+ 
 
-  // const UE = contriIn_UC_global * K
+  const response = {"K": parseFloat(K_Resposta), "UE": parseFloat(UE_Arredondado)}
 
-  // const response = {"K": parseFloat(K), "UE": parseFloat(UE)}
-
-  // return response
-  // console.log(valorT)
+  return response
   
 }
 
