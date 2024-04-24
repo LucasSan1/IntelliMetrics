@@ -2,6 +2,8 @@ const cors =  require('cors');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUI = require("swagger-ui-express");
 
 //Midlewares da API
 app.use(cors());
@@ -28,6 +30,26 @@ app.use("", rotas_ordemRelatorio)
 app.use("", rotas_instrumentos); 
 app.use("", certificado_paquimetro)
 app.use("", certificado_micrometro)
+
+// Defina as opções do Swagger JSDoc
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Intelli",
+      version: "1.0.0",
+      description:
+        "A api",
+    },
+  },
+  apis: ["./docs/*.js"],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+
+// Use o Swagger UI Express para servir a documentação Swagger
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 
 app.use("/", (req, res) => {

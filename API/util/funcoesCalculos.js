@@ -30,13 +30,17 @@ function desvpad(dados) {
 }
 
 
-function inverse(rate, value) {
-    return value / (1 + rate);
-}
+const jstat = require('jstat');
 
-// Exemplo de uso:
-var resultado = inverse(0.0455, 50); // Certifique-se de definir o valor de j26
-console.log(resultado);
+// Definir a probabilidade e os graus de liberdade
+const probability = 0.0455; // Probabilidade de cauda (4.55%)
+const degreesOfFreedom = 26; // Graus de liberdade (J26)
+
+// Calcular o valor t de Student inverso (INVT) usando jstat
+const tValue = jstat.tinv(probability, degreesOfFreedom);
+
+// Exiba o resultado
+console.log(tValue);
 
 module.exports = {
   media,
