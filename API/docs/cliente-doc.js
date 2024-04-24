@@ -1,22 +1,32 @@
-
- /**
+/**
  * @swagger
  * tags:
  *   - name: Admin
  *     description: Operações relacionadas a administradores do sistema
- *
- * /admin/login:
- *   put:
+ * definitions:
+ *   incertezaPaq:
+ *     type: object
+ *     properties:
+ *       desvpad:
+ *         type: array
+ *         items:
+ *           type: number
+ *       resolucao:
+ *         type: number
+ *       faixaNominal:
+ *         type: number
+ * /incertezaPaquimetro:
+ *   post:
  *     tags:
- *       - Admin
- *     summary: Logar como admin.
- *     description: Verifica se o admin está no banco de dados e devolve o token.
+ *       - incerteza Paq
+ *     summary: incerteza do paq .
+ *     description: Tio paulo
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/definitions/adminModelo'
+ *             $ref: '#/definitions/incertezaPaq'
  *     responses:
  *       200:
  *         description: Administrador logado com sucesso(retorna o token).
@@ -26,6 +36,6 @@
  *         description: Usuário não encontrado.
  *       500:
  *         description: Erro no banco de dados.
- *  
- *  
+ *
+ *
  */
