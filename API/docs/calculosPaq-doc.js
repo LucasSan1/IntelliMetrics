@@ -1,27 +1,20 @@
 /**
  * @swagger
  * tags:
- *   - name: cliente
- *     description: Operações relacionadas aos clientes
+ *   - name: Admin
+ *     description: Operações relacionadas a administradores do sistema
  * definitions:
- *  cliente:
+ *   incertezaPaq:
  *     type: object
  *     properties:
- *       nomeEmpresa:
- *         type: string
- *       representante:
- *         type: string
- *       email:
- *          type: string
- *       telefone:
- *          type: string
- *       endereco:
- *          type: string
- *       cnpj:
- *          type: string
- *       status:
- *          type: string
- * 
+ *       desvpad:
+ *         type: array
+ *         items:
+ *           type: number
+ *       resolucao:
+ *         type: number
+ *       faixaNominal:
+ *         type: number
  * /incertezaPaquimetro:
  *   post:
  *     tags:
