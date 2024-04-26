@@ -101,13 +101,7 @@ router
     .put("/clientes/:id", async (req, res) => {
         try {
             const id_cliente = req.params.id;
-            const nome = req.body.nome;
-            const representante = req.body.representante;
-            const email = req.body.email;
-            const telefone = req.body.telefone;
-            const endereço = req.body.endereço;
-            const cnpj = req.body.cnpj;
-            const status = req.body.status;
+            const {nome, representante, email, telefone, endereço, cnpj, status} = req.body;
 
             // Chama a função para atualizar um cliente pelo ID
             let resultUpdate = await updateCliente(

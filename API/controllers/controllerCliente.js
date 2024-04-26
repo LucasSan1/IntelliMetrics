@@ -101,9 +101,11 @@ const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telef
                 resolve (results);
             }
             
-        }//)
+        }
     })
 }
+
+
 
      
 module.exports = {

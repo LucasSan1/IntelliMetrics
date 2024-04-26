@@ -1,34 +1,31 @@
 const router = require('express').Router();
 
 // Importa as funções do controlador relacionadas aos certificados de calibração
-const { registerOrder, getCertificateOrders, getOrdersById } = require("../controllers/controllerCertificadoCali");
+const { registerOrder, getCertificateOrders, getOrdersById, updateOrders } = require("../controllers/controllerOrdens");
+const validacaoOrdens = require('../validation/ordensVal');
 
 router
     // Rota para registrar um novo certificado de calibração
     .post("/registerCertificate", async(req, res) => {
         try{
             // Extrai os dados do corpo da requisição
-            const fk_idCliente = req.body.fk_idCliente; 
-            const fk_iUsuario = req.body.fk_iUsuario;
-            const titulo = req.body.titulo; 
-            const descricao = req.body.descricao; 
-            const dataInicio = req.body.dataInicio; 
-            const dataTermino = req.body.dataTermino; 
-            const contratante = req.body.contratante; 
-            const telefone = req.body.telefone; 
-            const email = req.body.email; 
+            const {titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone, status} = req.body;
+
+            const ordensVal = {titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone, status}
+
+            const ordensValidadas = validacaoOrdens.parse(ordensVal)
 
             // Chama a função para registrar um novo certificado de calibração
             let register = await registerOrder(
-                fk_idCliente,
-                fk_iUsuario,
                 titulo,
+                tipo,
                 descricao,
                 dataInicio,
                 dataTermino,
                 contratante,
+                email,
                 telefone,
-                email
+                status
             );
 
             // Verifica o resultado do registro e retorna a resposta adequada
@@ -55,7 +52,7 @@ router
     .get("/allCertificatesOrders", async(req, res) => {
         try {
             // Chama a função para obter todos os certificados de calibração
-            const users = await getCertificateOrders();
+            const ordens = await getCertificateOrders();
             res.status(200).json(users);
         } catch (error) {
             console.log(error); // Registra o erro no console
@@ -74,6 +71,35 @@ router
         } catch (error) {
             console.log(error); // Registra o erro no console
             res.status(500).json('Erro interno do servidor');
+        }
+    })
+
+    .put("/orders/:id", async(req, res) =>{
+        try {
+            const id_certificate = req.params.id;
+            const {fk_idCliente, fk_idUsuario, titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone} = req.body;
+
+            let resultUpdate = await updateOrders(
+                id_certificate,
+                fk_idCliente,
+                fk_idUsuario,
+                titulo,
+                tipo,
+                descricao,
+                dataInicio,
+                dataTermino,
+                contratante,
+                email,
+                telefone
+            )
+
+            if(resultUpdate){
+                res.status(200).json("Ordem atualizada");
+            } else{
+                res.status(500).json("Erro interno do servidor");
+            } 
+        } catch (error) {
+            console.log(error);
         }
     })
 
