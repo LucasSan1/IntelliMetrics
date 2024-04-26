@@ -13,7 +13,7 @@ app.use(express.json());
 
 //Rotas
 const rotas_usuario = require('./routes/usuarios');
-const rotas_ordemCertificado = require('./routes/ordemCertificadoCali')
+const rotas_ordemCertificado = require('./routes/Ordens')
 const rotas_clientes = require('./routes/clientes'); 
 const rotas_pecas = require('./routes/pecas');
 const rotas_ordemRelatorio = require('./routes/ordemRelatorioCali')
