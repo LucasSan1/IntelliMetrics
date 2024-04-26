@@ -70,7 +70,7 @@ const getClienteById = async (id_cliente) => {
     }) 
 }
 
-// Função para deletar um cliente pelo seu ID
+// Função para deletar um cliente pelo seu email
 // DELETE FROM clientes WHERE pk_idCliente = 
 const deleteCliente = async (id_cliente) => {
     return new Promise((resolve, reject) => {
@@ -86,6 +86,40 @@ const deleteCliente = async (id_cliente) => {
         }//)
     })
 }
+// ativar cliente desativado
+const activateclient = async (email)=> {
+try{
+    // virifica se o cliente esta desativado
+    const clienteAtivo = await new Promise((resolve, reject) =>{
+        db.query(`SELECT * FROM clientes WHERE status = 'ativo'`,
+        (error, results) => {
+            if (error) {
+                reject(error); // Rejeita a promessa em caso de erro
+                return;
+            }
+            resolve(results); // Resolve a promessa com os resultados
+        });
+    })
+
+    if (clienteAtivo.length ==5 ){
+        return 200;
+    }
+
+       const ativar = db.query(` CALL reativarCliente('${email}')`)
+       if(!ativar){
+        return 400;
+       }else{
+        return 200;
+       }
+        
+    }
+
+catch(error){
+    console.log(error);
+    return 500;
+}
+
+} 
 
 // Função para atualizar informações de um cliente pelo seu ID
 const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telefone, endereco, cnpj, status) => {
@@ -111,5 +145,6 @@ module.exports = {
     getClientes,
     getClienteById,
     deleteCliente,
-    updateCliente
+    updateCliente,
+    activateclient
 }
