@@ -1,3 +1,5 @@
+const db = require('../connector/conn')
+
 // Função para registrar um novo instrumento
 const registerInstrumento = async(fk_idCliente, fk_idOsCalibracao, fk_idTipo, nSerie, fabricante, resolucao, unidadeMedida, faixaNominal) => {
     // INSERT INTO instrumentos(fk_idCliente, fk_idOsCalibracao, fk_idTipo, nSerie, fabricante, resolucao, unidadeMedida, faixaNominal) values
@@ -13,7 +15,6 @@ const registerInstrumento = async(fk_idCliente, fk_idOsCalibracao, fk_idTipo, nS
 }
 
 // Função para obter todos os instrumentos
-
 const getAllInstrumentos = async() => {
     return new Promise((resolve, reject) => {
         db.query(`Select * from instrumentos`),
@@ -57,9 +58,22 @@ const updateInstrumento = async(id_instrumento, fk_idCliente, fk_idOsCalibracao,
     }
 }
 
+// função para selecionar a categoria do instrumento da ser usado
+const registerCategory = async(novaCategoria) =>{
+
+    const register = db.query(`CALL cadastrarCategoria ('${novaCategoria}')`)
+    if (!register){
+        return 400; // Retorna 400 (Bad Request) se a operação der errado
+    } else {
+        return 200;   // Retorna 200 (OK) se a operação for bem-sucedida
+    }
+
+}
+
 module.exports = { 
     registerInstrumento,
     updateInstrumento,
     getInstrumentoById,
-    getAllInstrumentos
+    getAllInstrumentos,
+    registerCategory,
 };
