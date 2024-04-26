@@ -2,7 +2,7 @@ const router = require('express').Router();
 const  validacaoCliente  = require("../validation/clientesVal")
 
 // Importa as funções do controlador relacionadas aos clientes
-const { registerCliente, getClientes, getClienteById, deleteCliente, updateCliente } = require('../controllers/controllerCliente');
+const { registerCliente, getClientes, getClienteById, deleteCliente, updateCliente, activateclient } = require('../controllers/controllerCliente');
 
 router
     // Rota para cadastrar um novo cliente
@@ -82,18 +82,31 @@ router
         }
     })
 
-    // Rota para deletar um cliente pelo seu ID
-    .delete("/clientes/:id", async(req, res) => {
-        const id_cliente = req.params.id;
+    // Rota para desativar um cliente pelo seu ID
+    .put("/clientes/disable", async(req, res) => {
+        const email = req.body.email;
+
 
         try {
             // Chama a função para deletar um cliente pelo ID
-            const cliente = await deleteCliente(id_cliente);
-            res.status(200).json("Cliente deletado com sucesso");
+            const cliente = await deleteCliente(email);
+            res.status(200).json("Cliente desativado com sucesso");
 
         } catch (error) {
             console.log(error); // Registra o erro no console
             res.status(500).json("Erro interno no servidor");
+        }
+    })
+// rota para ativar o cliente pelo seu email
+    .put("/cliente/active/:id", async(req,res) =>{
+        const email = req.body.id;
+
+        try{
+            const cliente = await activateclient(email);
+            res.status(200).json("Cliente ativado com sucesso");
+        }catch(error){
+            console.log(error);
+            res.status(500).json("Erro interno no servidor")
         }
     })
 
@@ -101,13 +114,7 @@ router
     .put("/clientes/:id", async (req, res) => {
         try {
             const id_cliente = req.params.id;
-            const nome = req.body.nome;
-            const representante = req.body.representante;
-            const email = req.body.email;
-            const telefone = req.body.telefone;
-            const endereço = req.body.endereço;
-            const cnpj = req.body.cnpj;
-            const status = req.body.status;
+            const {nome, representante, email, telefone, endereço, cnpj, status} = req.body;
 
             // Chama a função para atualizar um cliente pelo ID
             let resultUpdate = await updateCliente(
@@ -131,5 +138,7 @@ router
             console.log(error); // Registra o erro no console
         }
     })
+
+    
 
 module.exports = router;
