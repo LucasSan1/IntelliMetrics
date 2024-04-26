@@ -1,8 +1,8 @@
 /**
  * @swagger
  * tags:
- *   - name: Admin
- *     description: Operações relacionadas a administradores do sistema
+ *   - name: Calculos paquimetro
+ *     description: Todos os resultados dos calculos referentes a parte de paquimetro 
  * definitions:
  *   incertezaPaq:
  *     type: object
@@ -15,12 +15,13 @@
  *         type: number
  *       faixaNominal:
  *         type: number
+ * 
  * /incertezaPaquimetro:
  *   post:
  *     tags:
- *       - incerteza Paq
- *     summary: incerteza do paq .
- *     description: Tio paulo
+ *       - Calculos paquimetro
+ *     summary: incerteza do paquimetro
+ *     description: Todos os calculos referentes a incerteza de paquimetos
  *     requestBody:
  *       required: true
  *       content:
@@ -29,13 +30,15 @@
  *             $ref: '#/definitions/incertezaPaq'
  *     responses:
  *       200:
- *         description: Administrador logado com sucesso(retorna o token).
- *       401:
- *         description: Senha incorreta.
- *       404:
- *         description: Usuário não encontrado.
+ *         description: Retorna os resultados dos calculos.
  *       500:
- *         description: Erro no banco de dados.
+ *         description: Erro interno da API.
  *
+ * /calculosPaquimetro:
+ *   post:
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: calculos de paquimetro
+ *     description: Calculos de tendencia, paralelismo e desvio padrao de paquimetros 
  *
  */

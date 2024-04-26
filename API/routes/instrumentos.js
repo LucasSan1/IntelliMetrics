@@ -132,4 +132,10 @@ router
         }
     })
 
+    // .post("/registerCategory", async(req, res) =>{
+    //     const novaCategoria = req.body.req;
+
+        
+    // })
+
 module.exports = router; 
