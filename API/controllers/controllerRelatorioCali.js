@@ -75,10 +75,12 @@ const updateReport = async (antigoIdRelatorio, alterarIdRelatorio, idInstrumento
     return new Promise((resolve, reject) => {
         db.query(`CALL modificarRelatorio (${antigoIdRelatorio, alterarIdRelatorio, idInstrumento, idUsuario, idPeca, alterarInicio, alterarTermino, alterarTempoTotal, alterarTemperaturaC, alterarUmidadeRelativa, alterarObservacoes, alterarLocalDaMedicao, alterarDia, alterarAssinatura})`),
         (error, results) => {
+            if(error){
             reject(error);
             return;
+            }
+            resolve(results);
         };
-        results(results);
     });
 } 
 
