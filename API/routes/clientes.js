@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {validacaoCliente} = require("../validation/clientesVal")
+const  validacaoCliente  = require("../validation/clientesVal")
 
 // Importa as funções do controlador relacionadas aos clientes
 const { registerCliente, getClientes, getClienteById, deleteCliente, updateCliente } = require('../controllers/controllerCliente');
@@ -43,7 +43,7 @@ router
                     res.status(400).json("Erro ao cadastrar cliente");
                     break;
                 case 409:
-                    res.status(409).json("Este email já está em uso");
+                    res.status(409).json("Este cliente já está cadastrado");
                     break;
                 default:
                     res.status(500).json("Erro interno do servidor");

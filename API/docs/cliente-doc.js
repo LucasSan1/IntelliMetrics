@@ -22,27 +22,40 @@
  *       status:
  *          type: string
  * 
- * /incertezaPaquimetro:
+ * /cadastroCliente:
  *   post:
  *     tags:
- *       - incerteza Paq
- *     summary: incerteza do paq .
- *     description: Tio paulo
+ *       - cliente
+ *     summary: cadastro de clientes
+ *     description: cadastra um novo cliente no banco de dados
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/definitions/incertezaPaq'
+ *             $ref: '#/definitions/cliente'
  *     responses:
  *       200:
- *         description: Administrador logado com sucesso(retorna o token).
- *       401:
- *         description: Senha incorreta.
- *       404:
- *         description: Usuário não encontrado.
+ *         description: Cliente cadastrado
+ *       400:
+ *         description: Erro ao cadastrar cliente
+ *       409:
+ *         description: Este cliente já está cadastrado
  *       500:
- *         description: Erro no banco de dados.
- *
+ *         description: Erro interno do servidor
+ * 
+ * /clientes:
+ *  get:
+ *    tags:
+ *      - cliente
+ *    summary: mostrar cliente
+ *    description: mostra todos os clientes cadastrados
+ *    requestBody:
+ *       required: false
+ *    responses:
+ *      200:
+ *        description: Mostra todos os clientes
+ *      500:
+ *        description: Erro interno do servidor
  *
  */
