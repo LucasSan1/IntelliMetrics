@@ -103,10 +103,10 @@ router
 
         try{
             const cliente = await activateclient(email);
-            res.status(200).json("cliente ativado com sucesso");
+            res.status(200).json("Cliente ativado com sucesso");
         }catch(error){
             console.log(error);
-            res.status(500).json("erro interno no servidor")
+            res.status(500).json("Erro interno no servidor")
         }
     })
 

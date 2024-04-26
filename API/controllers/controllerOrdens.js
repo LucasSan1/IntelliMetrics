@@ -79,9 +79,31 @@ const updateOrders = async(pk_idOs, fk_idCliente, fk_idUsuario, titulo, tipo, de
     })
 }
 
+const ordemConcluida = async(id_certificate) => {
+    try {
+        const concluirOrdem = await db.query(`CALL concluirOrdem '${id_certificate}' `)
+
+        if (concluirOrdem.lenght == 9){
+            return 200;
+        }
+        const desmarcarOrdemComoConcluida = db.query(`
+        CALL desmarcarOrdemComoConcluida ('${id_certificate}')
+        `)
+        if (!desmarcarOrdemComoConcluida){
+            return 400;
+        } else {
+            return 200;
+        }
+    } catch (error) {
+        console.log(error);
+        return 500;
+    }
+}
+
 module.exports = { 
    registerOrder,
    getCertificateOrders,
    getOrdersById,
-   updateOrders
+   updateOrders,
+   ordemConcluida
   };

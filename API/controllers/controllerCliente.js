@@ -10,7 +10,7 @@ const registerCliente = async(nomeEmpresa, representante, email, telefone, ender
             db.query(`SELECT * FROM clientes WHERE email = '${email}'`,
             (error, results) => {
                 if (error) {
-                    reject(error); // Rejeita a promessa em caso de erro
+                    reject(error); // Rejeita a promessa em caso de er ro
                     return;
                 }
                 resolve(results); // Resolve a promessa com os resultados
@@ -87,7 +87,7 @@ const deleteCliente = async (id_cliente) => {
     })
 }
 // ativar cliente desativado
-const activateclient = async (email)=> {
+const activateclient = async (email) => {
 try{
     // virifica se o cliente esta desativado
     const clienteAtivo = await new Promise((resolve, reject) =>{
@@ -123,7 +123,6 @@ catch(error){
 
 // Função para atualizar informações de um cliente pelo seu ID
 const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telefone, endereco, cnpj, status) => {
-    // UPDATE clientes SET nome = "${nome}", representante = "${representante}", email = "${email}", telefone = "${telefone}", endereço = "${endereço}", cnpj = "${cnpj}" WHERE pk_idCliente = "${id_cliente}"`,
     return new Promise((resolve, reject) => {
         db.query(`
         CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}', '${status}') `),   
@@ -133,13 +132,10 @@ const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telef
                 return;
             } else {
                 resolve (results);
-            }
-            
+            }   
         }
     })
 }
-
-
 
      
 module.exports = {
