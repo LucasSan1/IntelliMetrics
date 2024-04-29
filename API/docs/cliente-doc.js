@@ -1,7 +1,7 @@
 /**
  * @swagger
  * tags:
- *   - name: cliente
+ *   - name: Cliente
  *     description: Operações relacionadas aos clientes
  * definitions:
  *  cliente:
@@ -21,11 +21,18 @@
  *          type: string
  *       status:
  *          type: string
+ *          
+ *  disableCliente:
+ *     type: object
+ *     properties:
+ *       email:
+ *          type: string
+ *      
  * 
  * /cadastroCliente:
  *   post:
  *     tags:
- *       - cliente
+ *       - Cliente
  *     summary: cadastro de clientes
  *     description: cadastra um novo cliente no banco de dados
  *     requestBody:
@@ -47,15 +54,99 @@
  * /clientes:
  *  get:
  *    tags:
- *      - cliente
- *    summary: mostrar cliente
- *    description: mostra todos os clientes cadastrados
- *    requestBody:
- *       required: false
+ *      - Cliente
+ *    summary: retorna clientes
+ *    description: retorna todos os clientes cadastrados
  *    responses:
  *      200:
- *        description: Mostra todos os clientes
+ *        description: Retorna todos os clientes
  *      500:
  *        description: Erro interno do servidor
+ * 
+ * /clientes/:id:
+ *  get:
+ *    tags:
+ *      - Cliente
+ *    summary: retorna dados de cliente
+ *    description: retorna o cliente com base em um id especifico
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        type: number
+ *        required: true
+ *    responses:
+ *      200:
+ *        description: Retorna o cliente correspondente ao id fornecido.
+ *      404:
+ *        description: Não existe cliente com esse ID no banco de dados.
+ *      500:
+ *        description: Erro interno do servidor.
+ * 
+ * /clientes/disable:
+ *   put:
+ *     tags:
+ *       - Cliente
+ *     summary: atualiza o estado do cliente
+ *     description: atualiza o status do cliente para desativado/fora de uso
+ *     requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/definitions/disableCliente'
+ *     responses:
+ *      200:
+ *        description: Cliente desativado com sucesso
+ *      400:
+ *        description: Erro ao desativar cliente
+ *      409:
+ *        description: Este cliente já está desativado
+ *      500:
+ *        description: Erro interno do servidor
+ * 
+ * 
+ * /cliente/active/:id:
+ *   put:
+ *     tags:
+ *       - Cliente 
+ *     summary: atualiza o estado do cliente
+ *     description: atualiza o status do cliente para ativado
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         type: number
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Cliente ativado com sucesso
+ *       404:
+ *         description: Este cliente já esta ativado
+ *       500:
+ *         description: Erro interno do servidor
+ * 
+ * /clientesA/:id:
+ *   put:
+ *     tags:
+ *       - Cliente
+ *     summary: atualiza os dados
+ *     description: atualiza os dados do cliente especificado pelo id 
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         type: number
+ *         required: true
+ *     requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/definitions/cliente'
+ *     responses:
+ *       200:
+ *         description: Cliente atualizado
+ *       404:
+ *         description: Cliente não encontrado
+ *       500:
+ *         description: Erro interno do servidor
  *
  */
