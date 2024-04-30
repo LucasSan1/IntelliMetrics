@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const { registerInstrumento, getAllInstrumentos, deleteInstrumento, updateInstrumento } = require("../controllers/controllerInstrumentos");
-const { validacaoInstrumentos } = require('../validation/instrumentosVal');
+const validacaoInstrumentos  = require('../validation/instrumentosVal');
 
 
 router
     // Rota para cadastrar um novo instrumento
-    .post("/cadastroInstrumentos", async(req, res) => {
+    .post("/instrumentRegistration", async(req, res) => {
         try {
             // Extrai os dados do corpo da requisição
             const {id_instrumento, fk_idCliente, fk_idOs, fk_idCategoria, nome, nSerie, identificacaoCliente, fabricante, faixaNominalNum, faixaNominalUni, divisaoResolucaoNum, divisaoResolucaoUni, orgaoResponsavel} = req.body;
@@ -30,7 +30,7 @@ router
 
             // Chama a função para registrar um novo instrumento
             let resultCad = await registerInstrumento(
-                id_instrumento,
+                instrumentoValidado.id_instrumento,
                 fk_idCliente,
                 fk_idOs,
                 fk_idCategoria,
@@ -63,7 +63,7 @@ router
     })
 
     // Rota para atualizar um instrumento pelo seu ID
-    .put("/instrumentos/:id", async(req, res) => {
+    .put("/instruments/:id", async(req, res) => {
         try {
             const id_instrumento = req.params.id;
             const fk_idCliente = req.body.fk_idCliente;
@@ -106,7 +106,7 @@ router
     })
 
     // Rota para obter todos os instrumentos
-    .get("/instrumentos", async (req, res) => {
+    .get("/instruments", async (req, res) => {
         try {
             // Chama a função para obter todos os instrumentos
             const instrumentos = await getAllInstrumentos();
@@ -119,7 +119,7 @@ router
     })
 
     // Rota para deletar um instrumento pelo seu ID
-    .delete("/instrumentos/:id", async(req, res) => {
+    .delete("/instruments/:id", async(req, res) => {
         const id_instrumento = req.params.id;
         
         try {

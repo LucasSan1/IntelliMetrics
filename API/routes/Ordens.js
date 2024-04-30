@@ -103,7 +103,7 @@ router
         }
     })
 
-    .put("Orders/concluidas/:id", async(req, res) => {
+    .put("completedOrders/:id", async(req, res) => {
         const id_certificate = req.params.id;
         try {
             const ordemConc = await ordemConcluida(id_certificate);

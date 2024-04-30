@@ -91,7 +91,7 @@ const activateclient = async (email) => {
 try{
     // virifica se o cliente esta desativado
     const clienteAtivo = await new Promise((resolve, reject) =>{
-        db.query(`SELECT * FROM clientes WHERE status = 'ativo'`,
+        db.query(`SELECT * FROM clientes WHERE email = ${email}`,
         (error, results) => {
             if (error) {
                 reject(error); // Rejeita a promessa em caso de erro
@@ -101,8 +101,10 @@ try{
         });
     })
 
-    if (clienteAtivo.length ==5 ){
-        return 200;
+    if (clienteAtivo.status == "ativo"){
+        return 409;
+    }else if (!clienteAtivo){
+        return 404;
     }
 
        const ativar = db.query(` CALL reativarCliente('${email}')`)

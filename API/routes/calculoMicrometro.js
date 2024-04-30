@@ -5,7 +5,7 @@ const { calculoPlaneza, calculoParalelismo, controleDimensional, incerteza_AU } 
 
 router
      // Rota para calcular a planicidade do micrômetro
-    .post("/calculoMicrometro", async (req, res) => {
+    .post("/calculateMicrometer", async (req, res) => {
 
         const {cMovel, cFixo, dadosParalelismo, dadosControle, faixaCalibrada} = req.body
 
@@ -26,7 +26,7 @@ router
         }
     })
 
-    .post("/incertezaMicrometro", async(req, res) =>{
+    .post("/uncertaintyMicrometer", async(req, res) =>{
         const {faixaCalibrada} = req.body
 
         try{

@@ -7,7 +7,7 @@ const validacaoPecas = require('../validation/pecasVal');
 
 router
     // Rota para cadastrar uma nova peça
-    .post("/cadastroPeca", async(req, res) => {
+    .post("/partRegistration", async(req, res) => {
         try {
             // Extrai os dados do corpo da requisição
             const {fk_idOsMedicao, fk_idCliente, nome, material, nDesenho, descricao} = req.body;
@@ -50,7 +50,7 @@ router
     })
 
     // Rota para obter todas as peças
-    .get("/pecas", async(req, res) => {
+    .get("/parts", async(req, res) => {
         try {
             // Chama a função para obter todas as peças
             const pecas = await getAllPecas();
@@ -63,7 +63,7 @@ router
     })
 
     // Rota para obter uma peça pelo seu ID
-    .get("/pecas/:id", async(req, res) => {
+    .get("/parts/:id", async(req, res) => {
         const id_peca = req.params.id;
 
         try {
@@ -78,7 +78,7 @@ router
 
 
     // atualizar cadastro peça
-    .put("/pecasUpdate/:id"), async(req, res) =>{
+    .put("/partUpdate/:id"), async(req, res) =>{
         const idPeca = req.params.id;
 
         try{
