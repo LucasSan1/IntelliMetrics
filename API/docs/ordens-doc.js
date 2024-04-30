@@ -33,7 +33,7 @@
  *          type: string
  * 
  *          
- * /registerCertificate:
+ * /registerOrders:
  *   post:
  *     tags:
  *       - Ordens de serviço
@@ -55,7 +55,7 @@
  *       500:
  *         description: Erro interno do servidor
  * 
- * /allCertificatesOrders:
+ * /getAllOrders:
  *  get:
  *    tags:
  *      - Ordens de serviço
@@ -67,7 +67,7 @@
  *      500:
  *        description: Erro interno do servidor
  * 
- * /certificateOrder/:id:
+ * /orders/:id:
  *  get:
  *    tags:
  *      - Ordens de serviço
@@ -86,7 +86,7 @@
  *      500:
  *        description: Erro interno do servidor.
  * 
- * /orders/:id:
+ * /updateOrders/:id:
  *   put:
  *     tags:
  *       - Ordens de serviço
@@ -114,7 +114,7 @@
  *        description: Erro interno do servidor
  * 
  * 
- * /Orders/concluidas/:id:
+ * /orders/completedOrders/:id:
  *   put:
  *     tags:
  *       - Ordens de serviço
