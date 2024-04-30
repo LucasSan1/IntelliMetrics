@@ -4,11 +4,7 @@ const validacaoPecas = require('../validation/pecasVal');
 
 router
     // Rota para cadastrar uma nova peça
-<<<<<<< HEAD
-    .post("/partRegistration", async(req, res) => {
-=======
     .post("/registerPieces", async(req, res) => {
->>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         try {
             // Extrai os dados do corpo da requisição
             const {fk_idOs, fk_idCliente, nome, material, nDesenho, descricao} = req.body;
@@ -96,11 +92,8 @@ router
     })
 
     // Rota para obter todas as peças
-<<<<<<< HEAD
-    .get("/parts", async(req, res) => {
-=======
     .get("/getAllPieces", async(req, res) => {
->>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
+
         try {
             // Chama a função para obter todas as peças
             const pecas = await getAllPecas();
@@ -113,11 +106,7 @@ router
     })
 
     // Rota para obter uma peça pelo seu ID
-<<<<<<< HEAD
-    .get("/parts/:id", async(req, res) => {
-=======
     .get("/pieces/:id", async(req, res) => {
->>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         const id_peca = req.params.id;
 
         try {
@@ -131,7 +120,7 @@ router
     })
 
 
-<<<<<<< HEAD
+
     // atualizar cadastro peça
     .put("/partUpdate/:id"), async(req, res) =>{
         const idPeca = req.params.id;
@@ -147,6 +136,6 @@ router
 
     
 
-=======
->>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
+
+
 module.exports = router;

@@ -55,11 +55,7 @@ router
     })
  
     // Rota para obter todos os clientes
-<<<<<<< HEAD
-    .get("/clients", async(req, res) => {
-=======
     .get("/getAllClients", async(req, res) => {
->>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         try {
             // Chama a função para obter todos os clientes
             const clientes = await getClientes();
@@ -87,24 +83,34 @@ router
     })
 
     // Rota para desativar um cliente pelo seu ID
-<<<<<<< HEAD
-    .put("/client/disable", async(req, res) => {
-=======
     .put("/clients/disable", async(req, res) => {
->>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         const email = req.body.email;
-
 
         try {
             // Chama a função para deletar um cliente pelo ID
             const cliente = await deleteCliente(email);
-            res.status(200).json("Cliente desativado com sucesso");
+            
+
+            switch (cliente) { 
+                case 200:
+                    res.status(200).json("Cliente desativado");
+                    break;
+                case 400:
+                    res.status(400).json("Erro ao desativar cliente");
+                    break;
+                case 409:
+                    res.status(409).json("Este cliente já está desativado");
+                    break;
+                default:
+                    res.status(500).json("Erro interno do servidor");
+            }
 
         } catch (error) {
             console.log(error); // Registra o erro no console
-            res.status(500).json("Erro interno no servidor");
         }
     })
+
+    
 // rota para ativar o cliente pelo seu email
     .put("/client/active/:id", async(req,res) =>{
         const email = req.body.id;

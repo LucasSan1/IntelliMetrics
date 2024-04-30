@@ -66,8 +66,14 @@ const getClienteById = async (id_cliente) => {
                 resolve(results);
             }
         }
-    //   )
+        if(id_cliente){
+            return 200;
+        }else{
+            return 500;
+        }
+        
     }) 
+    
 }
 
 // Função para deletar um cliente pelo seu email
@@ -83,7 +89,7 @@ const deleteCliente = async (id_cliente) => {
             } else {
                 resolve (results);
             }
-        }//)
+        }
     })
 }
 // ativar cliente desativado
