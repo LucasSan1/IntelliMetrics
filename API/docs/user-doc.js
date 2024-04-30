@@ -13,9 +13,6 @@
  *         type: string
  *       cargo:
  *         type: string
- *       status:
- *         type: string
- *          
  * 
  * /cadastroMembro:
  *   post:

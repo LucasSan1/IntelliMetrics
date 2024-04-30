@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {validacaoUsuario} = require("../validation/usuariosVal")
+const validacaoUsuario = require("../validation/usuariosVal")
 
 // Importa as funções do controlador de usuários
 const { getUsers, registerUser, getUserByID, deleteUser } = require("../controllers/controllersUser");
@@ -15,14 +15,12 @@ router
             const valUsuario = {
                 nome,
                 email,
-                cargo,
-                status
+                cargo
             }
 
             const usuarioValidado = validacaoUsuario.parse(valUsuario);
-
             // Chama a função para cadastrar um novo usuário
-            let resultCad = await registerUser(nome, email, cargo, status);
+            let resultCad = await registerUser(usuarioValidado.nome, usuarioValidado.email, usuarioValidado.cargo);
 
             // Verifica o resultado do cadastro e retorna a resposta adequada
             switch(resultCad) {
