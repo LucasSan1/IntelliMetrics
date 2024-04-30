@@ -1,4 +1,5 @@
 const router = require('express').Router();
+<<<<<<< HEAD
 const { registerInstrumento, getAllInstrumentos, deleteInstrumento, updateInstrumento } = require("../controllers/controllerInstrumentos");
 const validacaoInstrumentos  = require('../validation/instrumentosVal');
 
@@ -6,12 +7,19 @@ const validacaoInstrumentos  = require('../validation/instrumentosVal');
 router
     // Rota para cadastrar um novo instrumento
     .post("/instrumentRegistration", async(req, res) => {
+=======
+const { registerInstrumento, getAllInstrumentos, updateInstrumento } = require("../controllers/controllerInstrumentos");
+const validacaoInstrumentos = require('../validation/instrumentosVal');
+
+router
+    // Rota para cadastrar um novo instrumento
+    .post("/registerTools", async(req, res) => {
+>>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         try {
             // Extrai os dados do corpo da requisição
-            const {id_instrumento, fk_idCliente, fk_idOs, fk_idCategoria, nome, nSerie, identificacaoCliente, fabricante, faixaNominalNum, faixaNominalUni, divisaoResolucaoNum, divisaoResolucaoUni, orgaoResponsavel} = req.body;
+            const {fk_idCliente, fk_idOs, fk_idCategoria, nome, nSerie, identificacaoCliente, fabricante, faixaNominalNum, faixaNominalUni, divisaoResolucaoNum, divisaoResolucaoUni, orgaoResponsavel} = req.body;
 
             const valInstrumento = {
-                id_instrumento,
                 fk_idCliente,
                 fk_idOs,
                 fk_idCategoria,
@@ -30,6 +38,7 @@ router
 
             // Chama a função para registrar um novo instrumento
             let resultCad = await registerInstrumento(
+<<<<<<< HEAD
                 instrumentoValidado.id_instrumento,
                 fk_idCliente,
                 fk_idOs,
@@ -43,6 +52,20 @@ router
                 divisaoResolucaoNum,
                 divisaoResolucaoUni,
                 orgaoResponsavel
+=======
+                instrumentoValidado.fk_idCliente,
+                instrumentoValidado.fk_idOs,
+                instrumentoValidado.fk_idCategoria,
+                instrumentoValidado.nome,
+                instrumentoValidado.nSerie,
+                instrumentoValidado.identificacaoCliente,
+                instrumentoValidado.fabricante,
+                instrumentoValidado.faixaNominalNum,
+                instrumentoValidado.faixaNominalUni,
+                instrumentoValidado.divisaoResolucaoNum,
+                instrumentoValidado.divisaoResolucaoUni,
+                instrumentoValidado.orgaoResponsavel
+>>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
             );
 
             // Verifica o resultado do cadastro e retorna a resposta adequada
@@ -59,33 +82,51 @@ router
 
         } catch (error) {
             console.log(error); // Registra o erro no console
+            res.status(500).json("Erro interno do servidor");
         }
     })
 
     // Rota para atualizar um instrumento pelo seu ID
+<<<<<<< HEAD
     .put("/instruments/:id", async(req, res) => {
+=======
+    .put("/updateTools/:id", async(req, res) => {
+>>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         try {
             const id_instrumento = req.params.id;
-            const fk_idCliente = req.body.fk_idCliente;
-            const fk_idOsCalibracao = req.body.fk_idOsCalibracao;
-            const fk_idTipo = req.body.fk_idTipo;
-            const nSerie = req.body.nSerie;
-            const fabricante = req.body.fabricante;
-            const resolucao = req.body.resolucao;
-            const unidadeMedida = req.body.unidadeMedida;
-            const faixaNominal = req.body.faixaNominal;
+            const {fk_idCliente, fk_idOs, fk_idCategoria, nome, nSerie, identificacaoCliente, fabricante, faixaNominalNum, faixaNominalUni, divisaoResolucaoNum, divisaoResolucaoUni} = req.body;
+            
+            const valInstrumento = {
+                id_instrumento,
+                fk_idCliente,
+                fk_idOs,
+                fk_idCategoria,
+                nome,
+                nSerie,
+                identificacaoCliente,
+                fabricante,
+                faixaNominalNum,
+                faixaNominalUni,
+                divisaoResolucaoNum,
+                divisaoResolucaoUni
+            }
 
+            const instrumentoValidado = validacaoInstrumentos.parse(valInstrumento);
+            
             // Chama a função para atualizar um instrumento pelo ID
             let resultUpdate = await updateInstrumento(
                 id_instrumento,
-                fk_idCliente,
-                fk_idOsCalibracao,
-                fk_idTipo,
-                nSerie,
-                fabricante,
-                resolucao,
-                unidadeMedida,
-                faixaNominal
+                instrumentoValidado.fk_idCliente,
+                instrumentoValidado.fk_idOs,
+                instrumentoValidado.fk_idCategoria,
+                instrumentoValidado.nome,
+                instrumentoValidado.nSerie,
+                instrumentoValidado.identificacaoCliente,
+                instrumentoValidado.fabricante,
+                instrumentoValidado.faixaNominalNum,
+                instrumentoValidado.faixaNominalUni,
+                instrumentoValidado.divisaoResolucaoNum,
+                instrumentoValidado.divisaoResolucaoUni
             );
 
             // Verifica o resultado da atualização e retorna a resposta adequada
@@ -101,12 +142,17 @@ router
             }
 
         } catch (error) {
-            console.log(error); // Registra o erro no console
+            console.log(error);zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+            res.status(500).json("Erro interno do servidor");
         }
     })
 
     // Rota para obter todos os instrumentos
+<<<<<<< HEAD
     .get("/instruments", async (req, res) => {
+=======
+    .get("/getAllTools", async (req, res) => {
+>>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         try {
             // Chama a função para obter todos os instrumentos
             const instrumentos = await getAllInstrumentos();
@@ -118,6 +164,7 @@ router
         }
     })
 
+<<<<<<< HEAD
     // Rota para deletar um instrumento pelo seu ID
     .delete("/instruments/:id", async(req, res) => {
         const id_instrumento = req.params.id;
@@ -137,5 +184,7 @@ router
 
         
     // })
+=======
+>>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
 
 module.exports = router; 

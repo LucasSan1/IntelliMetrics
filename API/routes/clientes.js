@@ -55,7 +55,11 @@ router
     })
  
     // Rota para obter todos os clientes
+<<<<<<< HEAD
     .get("/clients", async(req, res) => {
+=======
+    .get("/getAllClients", async(req, res) => {
+>>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         try {
             // Chama a função para obter todos os clientes
             const clientes = await getClientes();
@@ -83,7 +87,11 @@ router
     })
 
     // Rota para desativar um cliente pelo seu ID
+<<<<<<< HEAD
     .put("/client/disable", async(req, res) => {
+=======
+    .put("/clients/disable", async(req, res) => {
+>>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         const email = req.body.email;
 
 
@@ -139,6 +147,5 @@ router
         }
     })
 
-    
 
 module.exports = router;

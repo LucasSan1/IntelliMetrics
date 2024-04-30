@@ -8,13 +8,6 @@ const validacaoCliente  = z.object({
     endereco: z.string().min(1).max(100),
     cnpj: z.string().length(14),
     status: z.enum(['ativo', 'inativo']).default('ativo')
-    
 })
-
-
-// const validationTiming = z.object({
-//     data: z.date({ invalid_type_error: "Precisa ser do tipo date"})
-// })
-
 
 module.exports = validacaoCliente;

@@ -7,7 +7,11 @@ const { getUsers, registerUser, getUserByID, deleteUser } = require("../controll
 // Rotas de usuários
 router
     // Rota para cadastrar um novo usuário
+<<<<<<< HEAD
     .post("/memberRegistration", async(req, res) => {
+=======
+    .post("/registerUser", async(req, res) => {
+>>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         try {
             // Extrai os dados do corpo da requisição
             const {nome, email, cargo, status} = req.body;
@@ -42,7 +46,11 @@ router
     })
 
     // Rota para obter todos os usuários
+<<<<<<< HEAD
     .get("/users", async (req, res) => {
+=======
+    .get("/getAllUsers", async (req, res) => {
+>>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         try {
 
             // Chama a função para obter todos os usuários
@@ -60,7 +68,11 @@ router
     })
 
     // Rota para obter um usuário pelo seu ID
+<<<<<<< HEAD
     .get("user/:id", async (req, res) => {
+=======
+    .get("/users/:id", async (req, res) => {
+>>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         const id_user = req.params.id;
 
         try {
@@ -74,7 +86,11 @@ router
     })
 
     // Rota para deletar um usuário pelo seu ID
+<<<<<<< HEAD
     .delete('/userD elete/:id', async(req, res) => {
+=======
+    .delete('/deleteUser/:id', async(req, res) => {
+>>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
         const id_user = req.params.id;
 
         try {
