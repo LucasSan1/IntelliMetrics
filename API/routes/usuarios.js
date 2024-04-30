@@ -7,7 +7,7 @@ const { getUsers, registerUser, getUserByID, deleteUser } = require("../controll
 // Rotas de usuários
 router
     // Rota para cadastrar um novo usuário
-    .post("/cadastroMembro", async(req, res) => {
+    .post("/registerUser", async(req, res) => {
         try {
             // Extrai os dados do corpo da requisição
             const {nome, email, cargo, status} = req.body;
@@ -42,7 +42,7 @@ router
     })
 
     // Rota para obter todos os usuários
-    .get("/usuarios", async (req, res) => {
+    .get("/getAllUsers", async (req, res) => {
         try {
             // Chama a função para obter todos os usuários
             const users = await getUsers();
@@ -54,7 +54,7 @@ router
     })
 
     // Rota para obter um usuário pelo seu ID
-    .get("/usuario/:id", async (req, res) => {
+    .get("/users/:id", async (req, res) => {
         const id_user = req.params.id;
 
         try {
@@ -68,7 +68,7 @@ router
     })
 
     // Rota para deletar um usuário pelo seu ID
-    .delete('/usuario/:id', async(req, res) => {
+    .delete('/deleteUser/:id', async(req, res) => {
         const id_user = req.params.id;
 
         try {

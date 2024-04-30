@@ -1,11 +1,11 @@
 const db = require("../connector/conn");
 
 // Função para registrar uma nova peça
-const registerPeca = async(fk_idOsMedicao, fk_idCliente, nome, material, nDesenho, descricao) => {
+const registerPeca = async(fk_idOs  , fk_idCliente, nome, material, nDesenho, descricao) => {
     
     // Insere os dados da peça no banco de dados
     const save = db.query(`CALL cadastrarPeca
-     ( '${fk_idOsMedicao}', '${fk_idCliente}' ,'${nome}' ,'${material}' ,'${nDesenho}, ${descricao} ') `)
+     ( '${fk_idOs}', '${fk_idCliente}' ,'${nome}' ,'${material}' ,'${nDesenho}, ${descricao} ') `)
 
     // Verifica se a inserção foi bem-sucedida
     if (!save) {
@@ -46,18 +46,14 @@ const getPecaById = async (id_peca) => {
 }
 
 // alterar peça
-const updatePeca = async (idPeca, idOs, idCliente, alterarNome, alterarMaterial, alterarDesenho, alterarDescricao) => {
-    return new Promise((resolve, reject) => {
-        db.query(`CALL alterarPeca ${idPeca, idOs, idCliente, alterarNome, alterarMaterial, alterarDesenho, alterarDescricao}`,
-        (error, results) => {
-            if(error){
-                reject(error);
-                return;
-            }
-            resolve(results);
-        }
-        )
-    })
+const updatePeca = async (idPeca, fk_idOs, fk_idCliente, nome, material, nDesenho, descricao) => {
+    const update = await db.query(`
+    CALL alterarPeca ('${idPeca}', '${fk_idOs}', '${fk_idCliente}', '${nome}', '${material}', '${nDesenho}', '${descricao}' ) `)
+        if (update.affectedRows === 0) {
+            return 404; // Retorna status 404 se não foi possível encontrar a peça para atualização
+        } else {
+            return 200; // Retorna status 200 se foi bem-sucedido
+        } 
 }
 
 module.exports = {

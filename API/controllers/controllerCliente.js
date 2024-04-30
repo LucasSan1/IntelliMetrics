@@ -130,9 +130,9 @@ const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telef
             if (error) {
                 reject (error);
                 return;
-            } else {
-                resolve (results);
-            }   
+            }
+            resolve (results);
+              
         }
     })
 }
