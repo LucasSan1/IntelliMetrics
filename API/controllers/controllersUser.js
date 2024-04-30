@@ -23,7 +23,7 @@ const registerUser = async(nome, email, cargo) => {
         }
 
         // Se não existir nenhum usuário com esse e-mail cadastrado, inserir os dados do novo usuário 
-        const save = db.query(`INSERT INTO usuarios (nome, email, cargo, status) value ('${nome}', '${email}', '${cargo}')`);
+        const save = db.query(`call criarUsuario('${nome}', '${email}', '${cargo}')`);
 
         // Verifica se a inserção foi bem-sucedida
         if(!save){
