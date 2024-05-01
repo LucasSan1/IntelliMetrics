@@ -1,10 +1,10 @@
 const db = require('../connector/conn')
 
 // Função para registrar um novo instrumento
-const registerInstrumento = async(fk_idCliente, fk_idOsCalibracao, fk_idTipo, nSerie, fabricante, resolucao, unidadeMedida, faixaNominal) => {
-    // INSERT INTO instrumentos(fk_idCliente, fk_idOsCalibracao, fk_idTipo, nSerie, fabricante, resolucao, unidadeMedida, faixaNominal) values
+const registerInstrumento = async( fk_idCliente, fk_idOs, fk_idCategoria, nome, nSerie, identificacaoCliente, fabricante, faixaNominalNum, faixaNominalUni, divisaoResolucaoNum, divisaoResolucaoUni, orgaoResponsavel ) => {
+
     const save = db.query(`
-    CALL cadastrarInstrumento( '${fk_idCliente}', '${fk_idOsCalibracao}', '${fk_idTipo}', '${nSerie}', '${fabricante}', '${resolucao}', '${unidadeMedida}', '${faixaNominal} ') `);
+    CALL cadastrarInstrumento( '${fk_idCliente}', '${fk_idOs}', '${fk_idCategoria}', '${nome}', '${nSerie}', '${identificacaoCliente}', '${fabricante}', '${faixaNominalNum}', '${faixaNominalUni}', '${divisaoResolucaoNum}', '${divisaoResolucaoUni}', '${orgaoResponsavel}' ) `);
 
     // Verifica se a inserção foi bem-sucedida
     if (!save){
@@ -17,7 +17,7 @@ const registerInstrumento = async(fk_idCliente, fk_idOsCalibracao, fk_idTipo, nS
 // Função para obter todos os instrumentos
 const getAllInstrumentos = async() => {
     return new Promise((resolve, reject) => {
-        db.query(`Select * from instrumentos`),
+        db.query(`SELECT * from instrumentos`),
         (error, results) => {
             if(error) {
                 reject(error); // Rejeita a promessa em caso de erro
@@ -45,10 +45,9 @@ const getInstrumentoById = async (id_instrumento) => {
 
 
 // Função para atualizar informações de um instrumento pelo seu ID
-const updateInstrumento = async(id_instrumento, fk_idCliente, fk_idOsCalibracao, fk_idTipo, nSerie, fabricante, resolucao, unidadeMedida, faixaNominal) => {
-    // UPDATE instrumentos SET fk_idCliente = ${fk_idCliente}, fk_idOsCalibracao = ${fk_idOsCalibracao}, fk_idTipo = ${fk_idTipo}, nSerie = ${nSerie}, fabricante = ${fabricante}, resolucao = ${resolucao}, unidadeMedida = ${unidadeMedida}, faixaNominal = ${faixaNominal} WHERE pk_idinstrumento = ${id_instrumento}
+const updateInstrumento = async(id_instrumento, fk_idCliente, fk_idOs, fk_idCategoria, nome, nSerie, identificacaoCliente, fabricante, faixaNominalNum, faixaNominalUni, divisaoResolucaoNum, divisaoResolucaoUni) => {    
     const update = await db.query(`
-    CALL modificarInstrumento ('${id_instrumento}', '${fk_idCliente}', '${fk_idOsCalibracao}', '${fk_idTipo}', '${nSerie}', '${fabricante}', '${resolucao}', '${unidadeMedida}', '${faixaNominal} ') `);
+    CALL modificarInstrumento ( '${id_instrumento}', '${fk_idCliente}', '${fk_idOs}', '${fk_idCategoria}', '${nome}', '${nSerie}', '${identificacaoCliente}', '${fabricante}', '${faixaNominalNum}', '${faixaNominalUni}', '${divisaoResolucaoNum}', '${divisaoResolucaoUni}' ) `);
 
     // Verifica se a atualização foi bem-sucedida
     if (update.affectedRows === 0) {
@@ -60,7 +59,6 @@ const updateInstrumento = async(id_instrumento, fk_idCliente, fk_idOsCalibracao,
 
 // função para selecionar a categoria do instrumento da ser usado
 const registerCategory = async(novaCategoria) =>{
-
     const register = db.query(`CALL cadastrarCategoria ('${novaCategoria}')`)
     if (!register){
         return 400; // Retorna 400 (Bad Request) se a operação der errado

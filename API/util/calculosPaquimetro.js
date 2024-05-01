@@ -231,13 +231,15 @@ function calculoMedProfundidade(valorIndicadoMedProf, valorNominalMedProf) {
 
 // calculos de incerteza paquimetro
 
-const contriIncertezas = []
 let contriIn_UA_global = 0
 let veff_global = 0
 let contriIn_UC_global = 0
 
-function incertezaUA(resolucao, desvpad){
+function incertezaUA(resolucao, desvpad,req){
 
+  //  lista de contexto global
+  const listaIncerteza = req.incertezas
+    
   let resultado = 0
 
   const maximo = Math.max(desvpad) 
@@ -249,16 +251,21 @@ function incertezaUA(resolucao, desvpad){
   }
 
   const contriIn = (resultado / 1).toFixed(5)
-  contriIncertezas.push(parseFloat(contriIn))
-
   contriIn_UA_global += contriIn
+
+  listaIncerteza.push(parseFloat(contriIn))
+  req.incertezas = listaIncerteza
 
   const response = {"estimativa_UA": parseFloat(resolucao), "incerteza_Padrao": parseFloat(resultado), "contribuiçao_Incerteza": parseFloat(contriIn)}
 
   return response
 }
 
-function incertezaUP(faixaNominal){
+function incertezaUP(faixaNominal, req){
+
+//  lista de contexto global
+  const listaIncerteza = req.incertezas
+
   let resultado = 0
   let incertezaEA = 0
 
@@ -281,24 +288,35 @@ function incertezaUP(faixaNominal){
 
   const contriIn = (resultado / 2).toFixed(4)
   const contriInEA = (incertezaEA / Math.sqrt(3)).toFixed(4)
-  contriIncertezas.push(parseFloat(contriIn, contriInEA))
+
+  listaIncerteza.push(parseFloat(contriIn), parseFloat(contriInEA))
+  req.incertezas = listaIncerteza
 
   const response = {"Estimativa_UP_EA": parseFloat(faixaNominal), "incerteza_Padrao": parseFloat(resultado), "contribuiçao_Incertezao_UP": parseFloat(contriIn), "incerteza_EA": parseFloat(incertezaEA), "contribuiçao_Incertezao_EA": parseFloat(contriInEA)}
 
   return response
 }
 
-function incertezaERES(resolucao){
+function incertezaERES(resolucao, req){
+
+  //  lista de contexto global
+  const listaIncerteza = req.incertezas
+
   const incerteza = resolucao/2
   const contriIn = (incerteza / Math.sqrt(3)).toFixed(4)
-  contriIncertezas.push(parseFloat(contriIn))
 
+  listaIncerteza.push(parseFloat(contriIn))
+  req.incertezas = listaIncerteza
+  
   const response = {"Estimativa_ERES": parseFloat(resolucao), "incerteza_ERES": parseFloat(incerteza), "contribuiçao_Incerteza": parseFloat(contriIn)}
 
   return response
 }
 
-function incertezaL1(faixaNominal){
+function incertezaL1(faixaNominal,req){
+
+   //  lista de contexto global
+  const listaIncerteza = req.incertezas
 
   let incerteza = 0
 
@@ -316,15 +334,20 @@ function incertezaL1(faixaNominal){
   }
 
   const contriIn = (incerteza / Math.sqrt(3)).toFixed(4)
-  contriIncertezas.push(parseFloat(contriIn))
+
+  listaIncerteza.push(parseFloat(contriIn))
+  req.incertezas = listaIncerteza
  
   const response = {"Estimativa_L1": parseFloat(faixaNominal), "incerteza_L1": parseFloat(incerteza), "contribuiçao_Incerteza": parseFloat(contriIn)}
 
   return response
 }
 
-function incertezaL2(faixaNominal){
+function incertezaL2(faixaNominal, req){
 
+ //  lista de contexto global
+  const listaIncerteza = req.incertezas
+  
   let incerteza = 0
 
   switch(faixaNominal){
@@ -342,16 +365,20 @@ function incertezaL2(faixaNominal){
   }
 
   const contriIn = (incerteza / Math.sqrt(3)).toFixed(4 )
-  contriIncertezas.push(parseFloat(contriIn))
+
+  listaIncerteza.push(parseFloat(contriIn))
+  req.incertezas = listaIncerteza
 
   const response = {"Estimativa_L2": parseFloat(faixaNominal), "incerteza_L2": parseFloat(incerteza), "contribuiçao_Incerteza": parseFloat(contriIn)}
 
   return response
 }
 
-function incertezaUC(){
+function incertezaUC(req){
 
-  const somaQuadrados = contriIncertezas.reduce((acc, val) => acc + Math.pow(val, 2), 0);
+  // console.log("funciona por favor", req.incertezas)
+
+  const somaQuadrados = req.incertezas.reduce((acc, val) => acc + Math.pow(val, 2), 0);
 
   const raiz = Math.sqrt(somaQuadrados).toFixed(4)
 

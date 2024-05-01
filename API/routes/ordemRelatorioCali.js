@@ -55,7 +55,7 @@ router
     })
 
     // Rota para obter todos os relatórios de calibração
-    .get("/allReports", async(req,res) => {
+    .get("/getAllReports", async(req,res) => {
         try {
             // Chama a função para obter todos os relatórios de calibração
             const reports = await getAllReports();
@@ -91,7 +91,7 @@ router
     })
 
     //rota para atualizar o relatório 
-    .put("/reportUp/:id", async(req,res)=> {
+    .put("/updateReports/:id", async(req,res)=> {
         const id = req.params.id;
 
         try {

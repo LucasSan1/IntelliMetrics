@@ -1,19 +1,16 @@
 const router = require('express').Router();
-
-// Importa as funções do controlador relacionadas às peças
-
-const { registerPeca, getAllPecas, getPecaById } = require('../controllers/controllerPecas');
+const { registerPeca, getAllPecas, getPecaById, updatePeca } = require('../controllers/controllerPecas');
 const validacaoPecas = require('../validation/pecasVal');
 
 router
     // Rota para cadastrar uma nova peça
-    .post("/cadastroPeca", async(req, res) => {
+    .post("/registerPieces", async(req, res) => {
         try {
             // Extrai os dados do corpo da requisição
-            const {fk_idOsMedicao, fk_idCliente, nome, material, nDesenho, descricao} = req.body;
+            const {fk_idOs, fk_idCliente, nome, material, nDesenho, descricao} = req.body;
 
             const valPeca = {
-                fk_idOsMedicao,
+                fk_idOs,
                 fk_idCliente,
                 nome,
                 material,
@@ -25,11 +22,12 @@ router
 
             // Chama a função para cadastrar uma nova peça
             let resultCad = await registerPeca(
-                fk_idOsMedicao,
-                fk_idCliente,
-                nome,
-                material,
-                nDesenho
+                pecaValidada.fk_idOs,
+                pecaValidada.fk_idCliente,
+                pecaValidada.nome,
+                pecaValidada.material,
+                pecaValidada.nDesenho,
+                pecaValidada.descricao
             );
 
             // Verifica o resultado do cadastro e retorna a resposta adequada
@@ -49,8 +47,53 @@ router
         }
     })
 
+        // atualizar cadastro peça
+    .put("/updatePieces/:id", async(req, res) => {
+        try {
+            const idPeca = req.params.id;
+            const {fk_idOs, fk_idCliente, nome, material, nDesenho, descricao} = req.body;
+
+            const valPeca = {
+                fk_idOs,
+                fk_idCliente,
+                nome,
+                material,
+                nDesenho,
+                descricao
+            }
+
+            const pecaValidada = validacaoPecas.parse(valPeca);
+
+            let resultUpdate = await updatePeca(
+                idPeca,
+                pecaValidada.fk_idOs,
+                pecaValidada.fk_idCliente,
+                pecaValidada.nome,
+                pecaValidada.material,
+                pecaValidada.nDesenho,
+                pecaValidada.descricao
+            )
+
+            switch(resultUpdate){
+                case 200:
+                    res.status(200).json('Peça atualizada');
+                    break;
+                case 400:
+                    res.status(400).json('Erro ao atualizar peça');
+                    break;
+                default:
+                    res.status(500).json('Erro interno do servidor');
+            }  
+            
+        } catch(error) {
+            console.log(error);
+            res.status(500).json("Erro interno no servidor");
+        }
+    })
+
     // Rota para obter todas as peças
-    .get("/pecas", async(req, res) => {
+    .get("/getAllPieces", async(req, res) => {
+
         try {
             // Chama a função para obter todas as peças
             const pecas = await getAllPecas();
@@ -63,7 +106,7 @@ router
     })
 
     // Rota para obter uma peça pelo seu ID
-    .get("/pecas/:id", async(req, res) => {
+    .get("/pieces/:id", async(req, res) => {
         const id_peca = req.params.id;
 
         try {
@@ -77,8 +120,9 @@ router
     })
 
 
+
     // atualizar cadastro peça
-    .put("/pecasUpdate/:id"), async(req, res) =>{
+    .put("/partUpdate/:id"), async(req, res) =>{
         const idPeca = req.params.id;
 
         try{
@@ -91,5 +135,7 @@ router
     }
 
     
+
+
 
 module.exports = router;

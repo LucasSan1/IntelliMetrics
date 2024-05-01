@@ -59,7 +59,7 @@ function calculoParalelismo(dadosParalelismo) {
   return resultados;
 }
 
-function controleDimensional(dadosControle, faixaCalibrada) {
+function controleDimensional(dadosControle, faixaCalibrada, req) {
   const list0_25 = [0.000, 2.500, 5.100, 7.700, 10.300, 12.900, 15.000, 17.600, 20.200, 22.800, 25.000];
   const list1_25 = [1.000, 3.500, 6.100, 8.700, 11.300, 13.900, 16.000, 18.600, 21.200, 23.800, 25.000];
   const list25_50 = [25.000, 27.500, 30.100, 32.700, 35.300, 37.900, 40.000, 42.600, 45.200, 47.800, 50.000];
@@ -74,7 +74,8 @@ function controleDimensional(dadosControle, faixaCalibrada) {
   const tendencias = [];
   let tendencia = 0
   let soma = 0
-
+  let ultimoValor = req.ultimoValor
+  
   for (let i = 0; i < dadosControle.length; i++) {
 
     for (let y = 0; y < 3; y++) {
@@ -85,6 +86,7 @@ function controleDimensional(dadosControle, faixaCalibrada) {
               // tendencia
               tendencia = (mediaValor[i] - list0_25[i]).toFixed(3)
               tendencias.push(parseFloat(tendencia))
+              ultimoValor += list0_25[11]
               break;
             case 1:
               tendencia = (mediaValor[i] - list1_25[i]).toFixed(3)
@@ -104,6 +106,7 @@ function controleDimensional(dadosControle, faixaCalibrada) {
             case 75:
               tendencia = (mediaValor[i] - list75_100[i]).toFixed(3)
               tendencias.push(parseFloat(tendencia))
+              ultimoValor += list75_100[10]
               break;
 
             case 100:
@@ -145,41 +148,106 @@ function controleDimensional(dadosControle, faixaCalibrada) {
     soma += Math.pow(desvioP[i], 2) 
   }
 
-  let desvioPadraoMedio = Math.sqrt(soma / 22).toFixed(4)
-  desvpadMedio_g += desvioPadraoMedio
+  let desvioPadraoMedio = Math.sqrt(soma / 22)
+  req.desvpadMedio += desvioPadraoMedio
 
-  const response = {}
+ console.log(list75_100[10])
+
+  const response = {} 
 
   for (let index = 0; index < mediaValor.length; index++) {
 
     response[`resultado${index + 1}`] = { "media do valor" :mediaValor[index] , "desvio padrao" :desvioP[index] , "tendência ": tendencias[index]}
   }
-  response.desvioPadraoMedio = parseFloat(desvioPadraoMedio)
+  response.desvioPadraoMedio = parseFloat(desvioPadraoMedio.toFixed(4))
 
   return response
 }
 
 // Calculos incerteza
 
-let desvpadMedio_g = 0.7487
-
 const contriIncertezas =[]
 
-function incerteza_AU (){
+function incerteza_medAU (req){
 
-  const incertezaPD = (desvpadMedio_g /  Math.sqrt(3)).toFixed(5)
+  const incertezaPD = (req.desvpadMedio /  Math.sqrt(3)).toFixed(5)
 
   const contriIncerteza = (incertezaPD / 1 * 1)
-  contriIncertezas.push(contriIncerteza)
   
   const response = {"incerteza_AU": parseFloat(incertezaPD), "contribuiçao_Incerteza": contriIncerteza}
 
   return response
 }
 
+// function incerteza_UP (){
+
+//   const incertezaPD = (100.000/1500) / 1000 
+// }
+
+
+function incerteza_medERES (valorDivResolucao, dig_anal){
+
+  let incertezaEres = 0
+
+  switch(dig_anal){
+    case 0 :
+      incertezaEres = valorDivResolucao / 10
+      break;
+    case 1 :
+      incertezaEres = valorDivResolucao / 2
+      break;
+  }
+
+  const contriIncerteza = incertezaEres / Math.sqrt(3)
+
+  const response = {"incerteza_medERES": parseFloat(incertezaEres.toFixed(5)), "contribuiçao_Incerteza": parseFloat(contriIncerteza.toFixed(5))}
+
+  return response
+ 
+}
+
+// function incertez_medl1 (){
+
+// }
+
+// function incertez_medl2 (){
+
+// }
+
+function incerteza_medPAR (valorDivResolucao, dig_anal){
+
+  let incertezaPar = 0 
+  
+  switch (dig_anal){
+    case 0:
+      incertezaPar = valorDivResolucao / 4
+      break;
+    case 1:
+      incertezaPar = 0
+      break;
+  }
+
+  const contriIncerteza = incertezaPar / Math.sqrt(3)
+
+  const response = {"incerteza_medPAR": parseFloat(incertezaPar.toFixed(5)), "contribuoção_incereteza": parseFloat(contriIncerteza.toFixed(5))}
+
+  return response
+}
+
+// function incertez_medEader (){
+
+//   let incertez_Eader = 0
+
+//   switch(){
+
+//   }
+// }
+
 module.exports = {
   calculoPlaneza,
   calculoParalelismo,
   controleDimensional,
-  incerteza_AU
+  incerteza_medAU,
+  incerteza_medERES,
+  incerteza_medPAR
 };

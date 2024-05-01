@@ -15,10 +15,4 @@ const validacaoInstrumentos  = z.object({
     orgaoResponsavel: z.string().min().max(60)
 })
 
-
-// const validationTiming = z.object({
-//     data: z.date({ invalid_type_error: "Precisa ser do tipo date"})
-// })
-
-
 module.exports = validacaoInstrumentos;

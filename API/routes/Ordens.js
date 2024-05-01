@@ -6,7 +6,7 @@ const validacaoOrdens = require('../validation/ordensVal');
 
 router
     // Rota para registrar um novo certificado de calibração
-    .post("/registerCertificate", async(req, res) => {
+    .post("/registerOrders", async(req, res) => {
         try{
             // Extrai os dados do corpo da requisição
             const {titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone, status} = req.body;
@@ -14,18 +14,21 @@ router
             const ordensVal = {titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone, status}
 
             const ordensValidadas = validacaoOrdens.parse(ordensVal)
+            console.log(ordensValidadas.titulo)
 
             // Chama a função para registrar um novo certificado de calibração
             let register = await registerOrder(
-                titulo,
-                tipo,
-                descricao,
-                dataInicio,
-                dataTermino,
-                contratante,
-                email,
-                telefone,
-                status
+                fk_idCliente,
+                fk_idUsuario,
+                ordensValidadas.titulo,
+                ordensValidadas.tipo,
+                ordensValidadas.descricao,
+                ordensValidadas.dataInicio,
+                ordensValidadas.dataTermino,
+                ordensValidadas.contratante,
+                ordensValidadas.email,
+                ordensValidadas.telefone,
+                ordensValidadas.status
             );
 
             // Verifica o resultado do registro e retorna a resposta adequada
@@ -49,7 +52,7 @@ router
     })
 
     // Rota para obter todos os certificados de calibração
-    .get("/allCertificatesOrders", async(req, res) => {
+    .get("/getAllOrders", async(req, res) => {
         try {
             // Chama a função para obter todos os certificados de calibração
             const ordens = await getCertificateOrders();
@@ -61,7 +64,7 @@ router
     })
 
     // Rota para obter um certificado de calibração pelo seu ID
-    .get("/certificateOrder/:id", async(req, res) => {
+    .get("/orders/:id", async(req, res) => {
         const id_certificate = req.params.id;
 
         try {
@@ -74,7 +77,7 @@ router
         }
     })
 
-    .put("/orders/:id", async(req, res) =>{
+    .put("/updateOrders/:id", async(req, res) =>{
         try {
             const id_certificate = req.params.id;
             const {fk_idCliente, fk_idUsuario, titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone} = req.body;
@@ -103,7 +106,8 @@ router
         }
     })
 
-    .put("Orders/concluidas/:id", async(req, res) => {
+    .put("/orders/completedOrders/:id", async(req, res) => {
+
         const id_certificate = req.params.id;
         try {
             const ordemConc = await ordemConcluida(id_certificate);

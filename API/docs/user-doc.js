@@ -13,11 +13,8 @@
  *         type: string
  *       cargo:
  *         type: string
- *       status:
- *         type: string
- *          
  * 
- * /cadastroMembro:
+ * /newUser:
  *   post:
  *     tags:
  *       - Users

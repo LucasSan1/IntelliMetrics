@@ -5,13 +5,14 @@ const { calculoTendenciaExterna, calculoParalelismoOrelhas, calculoParalelismoBi
 
 router
   // Rota para calcular a tendência externa do paquímetro
-  .post("/calcPaquimetro", async (req, res) => {
+  .post("/caliperCalculation", async (req, res) => {
     const { valorNominalMedExterna, valorIndicado, valorIndicadoProxOrelhas, valorIndicadoAfasOrelhas, valorNominalPara, valorIndicadoProxBicos, valorIndicadoAfasBicos, valorNominalMedInterna, valorIndicadoMedInterna, valorNominalMedRessalto, valorIndicadoMedRessalto, valorNominalMedProf, valorIndicadoMedProf} = req.body;
 
     try {
       const response = {};
 
       !!valorNominalMedExterna == true && !!valorIndicado == true ? response.medicaoExterna = calculoTendenciaExterna( valorIndicado, valorNominalMedExterna) : response.medicaoExterna = "Sem dados";
+
 
       !!valorIndicadoAfasOrelhas == true && !!valorIndicadoProxOrelhas == true ? response.calculos_Pararelismo_Orelhas = calculoParalelismoOrelhas(valorIndicadoProxOrelhas, valorIndicadoAfasOrelhas, valorNominalPara) : response.calculos_Pararelismo_Orelhas = "Sem dados"
 
@@ -30,7 +31,7 @@ router
     }
   })
 
-  .post("/incertezaPaquimetro", async(req, res) =>{
+  .post("/caliperUncertainty", async(req, res) =>{
     
     const {resolucao, desvpad, faixaNominal} = req.body
     
@@ -38,20 +39,21 @@ router
 
       const response = {}
 
-      !! desvpad == true && !!resolucao == true ? response.incerteza_UA = incertezaUA(resolucao, desvpad) : response.incerteza_UA = "Sem dados"
+      req.incertezas = []
 
-      !!faixaNominal == true ? response.incerteza_UP_EA = incertezaUP(faixaNominal) : response.incerteza_UP_EA = "Sem dados"
+      !! desvpad == true && !!resolucao == true ? response.incerteza_UA = incertezaUA(resolucao, desvpad, req) : response.incerteza_UA = "Sem dados"
 
-      !!resolucao == true ? response.inceteza_ERES = incertezaERES(resolucao) : response.inceteza_ERES = "Sem dados"
+      !!faixaNominal == true ? response.incerteza_UP_EA = incertezaUP(faixaNominal, req) : response.incerteza_UP_EA = "Sem dados"
 
-      !!faixaNominal == true ? response.incerteza_L1 = incertezaL1(faixaNominal) : response.incerteza_L1 = "Sem dados"
+      !!resolucao == true ? response.inceteza_ERES = incertezaERES(resolucao,req) : response.inceteza_ERES = "Sem dados"
 
-      !!faixaNominal == true ? response.incerteza_L2 = incertezaL2(faixaNominal) : response.incerteza_L2 = "Sem dados"
+      !!faixaNominal == true ? response.incerteza_L1 = incertezaL1(faixaNominal,req) : response.incerteza_L1 = "Sem dados"
 
-      !!faixaNominal == true ? response.incerteza_UC = incertezaUC() : response.incerteza_UC = "Sem dados" 
+      !!faixaNominal == true ? response.incerteza_L2 = incertezaL2(faixaNominal, req) : response.incerteza_L2 = "Sem dados"
+
+      !!faixaNominal == true ? response.incerteza_UC = incertezaUC(req) : response.incerteza_UC = "Sem dados" 
       
       !!faixaNominal == true ? response.incertezaUE = incertezaUE() : response.incertezaUE = "Sem dados"
-
 
       return res.status(200).json(response)
 

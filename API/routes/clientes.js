@@ -6,7 +6,7 @@ const { registerCliente, getClientes, getClienteById, deleteCliente, updateClien
 
 router
     // Rota para cadastrar um novo cliente
-    .post("/cadastroCliente", async(req, res) => {
+    .post("/registerClient", async(req, res) => {
         try {
             // Extrai os dados do corpo da requisição
             const {nomeEmpresa, representante, email, telefone, endereco , cnpj, status} = req.body
@@ -55,7 +55,7 @@ router
     })
  
     // Rota para obter todos os clientes
-    .get("/clientes", async(req, res) => {
+    .get("/getAllClients", async(req, res) => {
         try {
             // Chama a função para obter todos os clientes
             const clientes = await getClientes();
@@ -68,7 +68,7 @@ router
     })
 
     // Rota para obter um cliente pelo seu ID
-    .get("/clientes/:id", async(req, res) => {
+    .get("/clients/:id", async(req, res) => {
         const id_cliente = req.params.id;
 
         try {
@@ -83,22 +83,36 @@ router
     })
 
     // Rota para desativar um cliente pelo seu ID
-    .put("/clientes/disable", async(req, res) => {
+    .put("/clients/disable", async(req, res) => {
         const email = req.body.email;
-
 
         try {
             // Chama a função para deletar um cliente pelo ID
             const cliente = await deleteCliente(email);
-            res.status(200).json("Cliente desativado com sucesso");
+            
+
+            switch (cliente) { 
+                case 200:
+                    res.status(200).json("Cliente desativado");
+                    break;
+                case 400:
+                    res.status(400).json("Erro ao desativar cliente");
+                    break;
+                case 409:
+                    res.status(409).json("Este cliente já está desativado");
+                    break;
+                default:
+                    res.status(500).json("Erro interno do servidor");
+            }
 
         } catch (error) {
             console.log(error); // Registra o erro no console
-            res.status(500).json("Erro interno no servidor");
         }
     })
+
+    
 // rota para ativar o cliente pelo seu email
-    .put("/cliente/active/:id", async(req,res) =>{
+    .put("/client/active/:id", async(req,res) =>{
         const email = req.body.id;
 
         try{
@@ -111,7 +125,7 @@ router
     })
 
     // Rota para atualizar um cliente pelo seu ID
-    .put("/clientes/:id", async (req, res) => {
+    .put("/clients/:id", async (req, res) => {
         try {
             const id_cliente = req.params.id;
             const {nome, representante, email, telefone, endereço, cnpj, status} = req.body;
@@ -139,6 +153,5 @@ router
         }
     })
 
-    
 
 module.exports = router;
