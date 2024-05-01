@@ -106,7 +106,7 @@ router
     })
 
     // Rota para obter uma peça pelo seu ID
-    .get("/pieces/:id", async(req, res) => {
+    .get("/piece/:id", async(req, res) => {
         const id_peca = req.params.id;
 
         try {
@@ -118,24 +118,6 @@ router
             res.status(500).json("Erro interno do servidor");
         }
     })
-
-
-
-    // atualizar cadastro peça
-    .put("/partUpdate/:id"), async(req, res) =>{
-        const idPeca = req.params.id;
-
-        try{
-            const update = await updatePeca(idPeca);
-            res.status(200).json(update);
-        }catch(error){
-            console.log(error);
-            res.status(500).json("error no servidor");
-        }
-    }
-
-    
-
 
 
 module.exports = router;
