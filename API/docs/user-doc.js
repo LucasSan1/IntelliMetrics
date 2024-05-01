@@ -14,7 +14,7 @@
  *       cargo:
  *         type: string
  * 
- * /cadastroMembro:
+ * /newUser:
  *   post:
  *     tags:
  *       - Users

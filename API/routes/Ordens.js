@@ -106,15 +106,8 @@ router
         }
     })
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    .put("completedOrders/:id", async(req, res) => {
-=======
-    .put("orders/completedOrders/:id", async(req, res) => {
->>>>>>> ee504c22583a07b36354942f8b29b1b2c8c5497a
-=======
     .put("/orders/completedOrders/:id", async(req, res) => {
->>>>>>> baf23f4ebeb8011a805c7a499a08d3184b01eff4
+
         const id_certificate = req.params.id;
         try {
             const ordemConc = await ordemConcluida(id_certificate);
