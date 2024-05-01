@@ -7,9 +7,11 @@
  *  ordem:
  *     type: object
  *     properties:
- *       idCliente:
+ *       pk_idOs:
  *          type: integer
- *       idUsuario:
+ *       fk_idCliente:
+ *          type: integer
+ *       fk_idUsuario:
  *          type: integer
  *       titulo:
  *          type: string
@@ -27,11 +29,34 @@
  *          type: string
  *       telefone:
  *          type: string
- *       valor:
- *          type: number
  *       status:
  *          type: string
  * 
+ *  update:
+ *     type: object
+ *     properties:
+ *       id_antigo:
+ *          type: integer
+ *       id_order:
+ *          type: integer
+ *       fk_idCliente:
+ *          type: integer
+ *       fk_idUsuario:
+ *          type: integer
+ *       titulo:
+ *          type: string
+ *       tipo:
+ *          type: string
+ *       descricao:
+ *          type: string
+ *       dataTermino:
+ *          type: string
+ *       contratante:
+ *          type: string
+ *       email:
+ *          type: string
+ *       telefone:
+ *          type: string
  *          
  * /registerOrders:
  *   post:
@@ -67,7 +92,7 @@
  *      500:
  *        description: Erro interno do servidor
  * 
- * /orders/:id:
+ * /orders/id:
  *  get:
  *    tags:
  *      - Ordens de serviço
@@ -86,7 +111,7 @@
  *      500:
  *        description: Erro interno do servidor.
  * 
- * /updateOrders/:id:
+ * /updateOrders:
  *   put:
  *     tags:
  *       - Ordens de serviço
@@ -102,7 +127,7 @@
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/definitions/ordem'
+ *              $ref: '#/definitions/update'
  *     responses:
  *      200:
  *        description: Ordem atualizada
@@ -114,7 +139,7 @@
  *        description: Erro interno do servidor
  * 
  * 
- * /orders/completedOrders/:id:
+ * /completedOrders/id:
  *   put:
  *     tags:
  *       - Ordens de serviço
@@ -134,6 +159,28 @@
  *         description: Esta ordem não existe
  *       500:
  *         description: Erro interno do servidor
+ * 
+ * /uncheckOrders/id:
+ *   put:
+ *     tags:
+ *       - Ordens de serviço
+ *     summary: atualiza o estado da ordem de serviço
+ *     description: atualiza o status da ordem de serviço para em espera
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         type: number
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Ordem colocada em espera
+ *       400:
+ *         description: Não foi possivel alterar status
+ *       404:
+ *         description: Esta ordem não existe
+ *       500:
+ *         description: Erro interno do servidor
+ * 
  * 
  *
  */

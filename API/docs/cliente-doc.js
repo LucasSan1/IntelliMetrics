@@ -19,8 +19,6 @@
  *          type: string
  *       cnpj:
  *          type: string
- *       status:
- *          type: string
  *          
  *  disableCliente:
  *     type: object
@@ -29,7 +27,7 @@
  *          type: string
  *      
  * 
- * /cadastroCliente:
+ * /registerClient:
  *   post:
  *     tags:
  *       - Cliente
@@ -51,7 +49,7 @@
  *       500:
  *         description: Erro interno do servidor
  * 
- * /clientes:
+ * /getAllClients:
  *  get:
  *    tags:
  *      - Cliente
@@ -63,7 +61,7 @@
  *      500:
  *        description: Erro interno do servidor
  * 
- * /clientes/:id:
+ * /client/id:
  *  get:
  *    tags:
  *      - Cliente
@@ -82,18 +80,17 @@
  *      500:
  *        description: Erro interno do servidor.
  * 
- * /clientes/disable:
+ * /clients/disable/id:
  *   put:
  *     tags:
  *       - Cliente
  *     summary: atualiza o estado do cliente
  *     description: atualiza o status do cliente para desativado/fora de uso
- *     requestBody:
+ *     parameters:
+ *      - in: path
+ *        name: id
+ *        type: number
  *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/definitions/disableCliente'
  *     responses:
  *      200:
  *        description: Cliente desativado com sucesso
@@ -105,7 +102,7 @@
  *        description: Erro interno do servidor
  * 
  * 
- * /cliente/active/:id:
+ * /client/active/:id:
  *   put:
  *     tags:
  *       - Cliente 
@@ -119,12 +116,14 @@
  *     responses:
  *       200:
  *         description: Cliente ativado com sucesso
- *       404:
+ *       400:
+ *         description: Erro ao ativar cliente
+ *       409:
  *         description: Este cliente já esta ativado
  *       500:
  *         description: Erro interno do servidor
  * 
- * /clientesA/:id:
+ * /updateClient/:id:
  *   put:
  *     tags:
  *       - Cliente

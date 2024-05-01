@@ -140,7 +140,7 @@ router
 
             switch(ordemUncheck){
             case 200:
-                res.status(200).json("Ordem desmarcada");
+                res.status(200).json("Ordem colocada em espera");
                 break;
             case 400:
                 res.status(400).json("Não foi possivel alterar status");

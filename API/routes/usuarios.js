@@ -93,11 +93,8 @@ router
 
   .get("/allUsers", middlewareValidarJWT, async (req, res) => {
     try {
-      const email = req.body.email;
-
-      let resultado = await getCol(
-        email.toLowerCase()
-      )
+    
+      let resultado = await getCol()
       res.status(200).json(resultado);
 
     } catch (error) {
@@ -112,16 +109,19 @@ router
       let resultado = await getColById(
         id
       )
-      res.status(200).json(resultado);
-
-
+      if(resultado){
+        res.status(200).json(resultado);
+      } else{
+        res.status(404).json("Usuario Não Encontrado")
+      }
+      
     } catch (error) {
       console.log(error)
     }
   })
 
   // atualizar senha usuario
-  .put("/updatePass", middlewareValidarJWT, async (req, res) => {
+  .put("/updatePass", async (req, res) => {
     try {
       const { email, senhaNova } = req.body;
 
@@ -150,6 +150,7 @@ router
     }
 
   })
+  
   // atualizar token
   .put("/user/login", async (req, res) => {
     try {
