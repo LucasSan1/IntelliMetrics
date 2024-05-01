@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const { registerInstrumento, getAllInstrumentos, updateInstrumento } = require("../controllers/controllerInstrumentos");
 const validacaoInstrumentos = require('../validation/instrumentosVal');
+const { middlewareValidarJWT } = require("../middleware/authMiddleware");
 
 router
     // Rota para cadastrar um novo instrumento

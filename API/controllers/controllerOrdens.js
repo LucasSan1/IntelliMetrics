@@ -1,20 +1,19 @@
 const db = require('../connector/conn')
 
 // Função para registrar uma nova ordem de calibração
-const registerOrder = async(fk_idCliente, fk_idUsuario, titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone, status)  => {
+const registerOrder = async(pk_idOs, fk_idCliente, fk_idUsuario, titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone, status)  => {
     try{
         const save =  await new Promise((resolve, reject) =>{ 
-                db.query(`
-                CALL criarOrdens( '${fk_idCliente}', '${fk_idUsuario}', '${titulo}', '${tipo}', '${descricao}', '${dataInicio}', '${dataTermino}', '${contratante}', '${email}', '${telefone}', '${status}' )
-                `),
-            (error, results) => {
-                if (error) {
-                    reject(error);
-                    return;
-                } else {
-                    resolve(results);
+            db.query(`CALL criarOrdens( '${pk_idOs}', '${fk_idCliente}', '${fk_idUsuario}', '${titulo}', '${tipo}', '${descricao}', '${dataInicio}', '${dataTermino}', '${contratante}', '${email}', '${telefone}', '${status}' )`,
+                (error, results) => {
+                    if (error) {
+                        reject(error);
+                        return;
+                    } else {
+                        resolve(results);
+                    }
                 }
-            }
+            );
       });
 
      // Verificar se a inserção foi bem-sucedida
@@ -33,7 +32,7 @@ const registerOrder = async(fk_idCliente, fk_idUsuario, titulo, tipo, descricao,
 // Função para obter todas as ordens de calibração
 const getCertificateOrders = async() => {
     return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM ordensCalibracao`,
+        db.query(`SELECT * FROM ordensServico`,
           (erro, results) => {
             if (erro) {
               reject(erro); // Rejeita a promessa em caso de erro
@@ -45,12 +44,11 @@ const getCertificateOrders = async() => {
       });
 }
 
+// CALL infosOrdens (${id_certificate}
 // Função para obter uma ordem de calibração pelo seu ID 
-const getOrdersById = async(id_certificate) => {
+const getOrdersById = async(id_order) => {
     return new Promise((resolve, reject) => {
-        db.query(`
-        CALL infosOrdens (${id_certificate})
-        `),
+        db.query(`SELECT * FROM ordensServico WHERE pk_idOs = '${id_order}'`,
             (erro, results) => {
                 if (erro) {
                     reject(erro);
@@ -58,46 +56,58 @@ const getOrdersById = async(id_certificate) => {
                 }
                 resolve(results);
             }
-        ;
+        );
       });
 
 }
 
-const updateOrders = async(pk_idOs, fk_idCliente, fk_idUsuario, titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone) =>{
+const updateOrders = async(id_antigo, pk_idOs, fk_idCliente, fk_idUsuario, titulo, tipo, descricao, dataTermino, contratante, email, telefone) =>{
     return new Promise((resolve, reject) => {
-        db.query(`
-        CALL modificarOrdem( '${pk_idOs}', '${fk_idCliente}', '${fk_idUsuario}', '${titulo}', '${tipo}', '${descricao}', '${dataInicio}', '${dataTermino}', '${contratante}', '${email}', '${telefone}' )
-        `),
-        (error, results) => {
-            if (error){
-                reject (error);
-                return;
-            } else {
-                resolve (results)
+        db.query(`CALL modificarOrdem( '${id_antigo}','${pk_idOs}', '${fk_idCliente}', '${fk_idUsuario}', '${titulo}', '${tipo}', '${descricao}', '${dataTermino}', '${contratante}', '${email}', '${telefone}' )`,
+            (error, results) => {
+                if (error){
+                    reject (error);
+                    return;
+                } else {
+                    resolve (results)
+                }
             }
-        }
-    })
+        );
+    });
 }
 
-const ordemConcluida = async(id_certificate) => {
-    try {
-        const concluirOrdem = await db.query(`CALL concluirOrdem '${id_certificate}' `)
+const ordemConcluida = async(id_order) => {
+    return new Promise((resolve, reject) => {
+        db.query(`call concluirOrdem('${id_order}')`,
+            (erro, results) => {
+                if (erro) {
+                    reject(500);
+                    return;
+                }
+                else if (results.affectedRows === 0) {
+                    resolve(400)
+                }
+                resolve(200)
+            }
+        );
+    });
+}
 
-        if (concluirOrdem.lenght == 9){
-            return 200;
-        }
-        const desmarcarOrdemComoConcluida = db.query(`
-        CALL desmarcarOrdemComoConcluida ('${id_certificate}')
-        `)
-        if (!desmarcarOrdemComoConcluida){
-            return 400;
-        } else {
-            return 200;
-        }
-    } catch (error) {
-        console.log(error);
-        return 500;
-    }
+const ordemEmEspera = async(id_order) => {
+    return new Promise((resolve, reject) => {
+        db.query(`call desmarcarOrdemComoConcluida('${id_order}')`,
+            (erro, results) => {
+                if (erro) {
+                    reject(500);
+                    return;
+                }
+                else if (results.affectedRows === 0) {
+                    resolve(400)
+                }
+                resolve(200)
+            }
+        );
+    });
 }
 
 module.exports = { 
@@ -105,5 +115,6 @@ module.exports = {
    getCertificateOrders,
    getOrdersById,
    updateOrders,
-   ordemConcluida
+   ordemConcluida,
+   ordemEmEspera
   };

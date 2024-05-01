@@ -23,7 +23,7 @@ const registerCliente = async(nomeEmpresa, representante, email, telefone, ender
 
         // Insere os detalhes do novo cliente no banco de dados
         const save = db.query(`
-        CALL criarCliente ( '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}', '${status}' ) `)
+        CALL criarCliente ( '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}') `)
 
         if (!save){
             return 400; // Retorna 400 (Bad Request) se a operação der errado
@@ -52,27 +52,23 @@ const getClientes = async () => {
     })
 }
 
-// SELECT * FROM clientes WHERE pk_idCliente = ${id_cliente}`,
+
+//  CALL infosClientes (${id_cliente}),
 // Função para obter um cliente pelo seu ID
 const getClienteById = async (id_cliente) => {
+    
     return new Promise((resolve, reject) => {
-        db.query(`
-        CALL infosClientes (${id_cliente})`),
-        (error, results) => {
-            if (error) {
-                reject(error);
-                return;
-            } else {
-                resolve(results);
+        db.query(`SELECT * FROM clientes WHERE pk_idCliente = ${id_cliente}`,
+            (error, results) => {
+                if (error) {
+                    reject(error);
+                    return;
+                } else {
+                    resolve(results);
+                }
             }
-        }
-        if(id_cliente){
-            return 200;
-        }else{
-            return 500;
-        }
-        
-    }) 
+        );   
+    }); 
     
 }
 
@@ -80,69 +76,54 @@ const getClienteById = async (id_cliente) => {
 // DELETE FROM clientes WHERE pk_idCliente = 
 const deleteCliente = async (id_cliente) => {
     return new Promise((resolve, reject) => {
-        db.query(`
-        CALL exlcuirCliente ('${id_cliente}'`),
-        (error, results) => {
-            if (error) {
-                reject (error);
-                return;
-            } else {
-                resolve (results);
+        db.query(`call exlcuirCliente('${id_cliente}')`,
+            (erro, results) => {
+                if (erro) {
+                    reject(500);
+                    return;
+                }
+                else if (results.affectedRows === 0) {
+                    resolve(400)
+                }
+                resolve(200)
             }
-        }
-    })
+        );
+    });
 }
+
 // ativar cliente desativado
-const activateclient = async (email) => {
-try{
-    // virifica se o cliente esta desativado
-    const clienteAtivo = await new Promise((resolve, reject) =>{
-        db.query(`SELECT * FROM clientes WHERE email = ${email}`,
-        (error, results) => {
-            if (error) {
-                reject(error); // Rejeita a promessa em caso de erro
-                return;
+const activateclient = async (id_cliente) => {
+    return new Promise((resolve, reject) => {
+        db.query(`call reativarCliente('${id_cliente}')`,
+            (erro, results) => {
+                if (erro) {
+                    reject(500);
+                    return;
+                }
+                else if (results.affectedRows === 0) {
+                    resolve(400)
+                }
+                resolve(200)
             }
-            resolve(results); // Resolve a promessa com os resultados
-        });
-    })
-
-    if (clienteAtivo.status == "ativo"){
-        return 409;
-    }else if (!clienteAtivo){
-        return 404;
-    }
-
-       const ativar = db.query(` CALL reativarCliente('${email}')`)
-       if(!ativar){
-        return 400;
-       }else{
-        return 200;
-       }
-        
-    }
-
-catch(error){
-    console.log(error);
-    return 500;
-}
-
+        );
+    });
 } 
 
 // Função para atualizar informações de um cliente pelo seu ID
-const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telefone, endereco, cnpj, status) => {
+const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telefone, endereco, cnpj) => {
     return new Promise((resolve, reject) => {
         db.query(`
-        CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}', '${status}') `),   
-        (error, results) => {
-            if (error) {
-                reject (error);
-                return;
+        CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}')`,   
+            (error, results) => {
+                if (error) {
+                    reject (error);
+                    return;
+                }
+                resolve (results);
+                
             }
-            resolve (results);
-              
-        }
-    })
+        );
+    });
 }
 
      

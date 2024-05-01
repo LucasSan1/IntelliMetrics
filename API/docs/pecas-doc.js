@@ -7,9 +7,9 @@
  *   peca:
  *     type: object
  *     properties:
- *       idOsMedicao:
+ *       fk_idOs:
  *         type: number
- *       idCliente:
+ *       fk_idCliente:
  *         type: number
  *       nome:
  *         type: string
@@ -21,7 +21,7 @@
  *         type: string
  * 
  * 
- * /cadastroPeca:
+ * /registerPieces:
  *   post:
  *     tags:
  *       - Peças
@@ -41,7 +41,7 @@
  *       500:
  *         description: Erro interno do servidor
  * 
- * /pecas:
+ * /getAllPieces:
  *   get:
  *     tags:
  *       - Peças
@@ -53,7 +53,7 @@
  *       500:
  *         description: Erro interno do servidor
  * 
- * /pecas/:id:
+ * /piece/:id:
  *   get:
  *     tags:
  *       - Peças
@@ -73,7 +73,7 @@
  *         description: Erro interno do servidor
  *
  * 
- * /pecasUpdate/:id:
+ * /updatePieces/:id:
  *   put:
  *     tags:
  *       - Peças

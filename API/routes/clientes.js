@@ -3,13 +3,14 @@ const  validacaoCliente  = require("../validation/clientesVal")
 
 // Importa as funções do controlador relacionadas aos clientes
 const { registerCliente, getClientes, getClienteById, deleteCliente, updateCliente, activateclient } = require('../controllers/controllerCliente');
+const { middlewareValidarJWT } = require("../middleware/authMiddleware");
 
 router
     // Rota para cadastrar um novo cliente
     .post("/registerClient", async(req, res) => {
         try {
             // Extrai os dados do corpo da requisição
-            const {nomeEmpresa, representante, email, telefone, endereco , cnpj, status} = req.body
+            const {nomeEmpresa, representante, email, telefone, endereco , cnpj} = req.body
             
             const cliente = {
                 nomeEmpresa,
@@ -18,20 +19,18 @@ router
                 telefone,
                 endereco,
                 cnpj,
-                status
             }
             
             const clienteValidado = validacaoCliente.parse(cliente);
 
             // Chama a função para registrar um novo cliente
             let resultCad = await registerCliente(
-                nomeEmpresa,
-                representante,
-                email,
-                telefone,
-                endereco,
-                cnpj,
-                status
+                clienteValidado.nomeEmpresa,
+                clienteValidado.representante,
+                clienteValidado.email,
+                clienteValidado.telefone,
+                clienteValidado.endereco,
+                clienteValidado.cnpj,
             );
 
             // Verifica o resultado do cadastro e retorna a resposta adequada
@@ -68,12 +67,13 @@ router
     })
 
     // Rota para obter um cliente pelo seu ID
-    .get("/clients/:id", async(req, res) => {
+    .get("/client/:id", async(req, res) => {
         const id_cliente = req.params.id;
 
         try {
             // Chama a função para obter um cliente pelo ID
             const cliente = await getClienteById(id_cliente);
+          
             res.status(200).json(cliente);
 
         } catch (error) {
@@ -83,13 +83,12 @@ router
     })
 
     // Rota para desativar um cliente pelo seu ID
-    .put("/clients/disable", async(req, res) => {
-        const email = req.body.email;
+    .put("/clients/disable/:id", async(req, res) => {
+        const id = req.params.id
 
         try {
             // Chama a função para deletar um cliente pelo ID
-            const cliente = await deleteCliente(email);
-            
+            const cliente = await deleteCliente(id);
 
             switch (cliente) { 
                 case 200:
@@ -113,11 +112,24 @@ router
     
 // rota para ativar o cliente pelo seu email
     .put("/client/active/:id", async(req,res) =>{
-        const email = req.body.id;
+        const id_cliente = req.params.id
 
         try{
-            const cliente = await activateclient(email);
-            res.status(200).json("Cliente ativado com sucesso");
+            const cliente = await activateclient(id_cliente);
+            
+            switch (cliente) { 
+                case 200:
+                    res.status(200).json("Cliente ativado");
+                    break;
+                case 400:
+                    res.status(400).json("Erro ao ativar cliente");
+                    break;
+                case 409:
+                    res.status(409).json("Este cliente já está ativo");
+                    break;
+                default:
+                    res.status(500).json("Erro interno do servidor");
+            }
         }catch(error){
             console.log(error);
             res.status(500).json("Erro interno no servidor")
@@ -125,23 +137,33 @@ router
     })
 
     // Rota para atualizar um cliente pelo seu ID
-    .put("/clients/:id", async (req, res) => {
+    .put("/updateClient/:id", async (req, res) => {
         try {
             const id_cliente = req.params.id;
-            const {nome, representante, email, telefone, endereço, cnpj, status} = req.body;
+            const { nomeEmpresa, representante, email, telefone, endereco, cnpj} = req.body;
+
+            const cliente = {
+                nomeEmpresa,
+                representante,
+                email,
+                telefone,
+                endereco,
+                cnpj,
+            }
+            
+            const clienteValidado = validacaoCliente.parse(cliente);
 
             // Chama a função para atualizar um cliente pelo ID
             let resultUpdate = await updateCliente(
                 id_cliente,
-                nome,
-                representante,
-                email,
-                telefone,
-                endereço,
-                cnpj,
-                status
+                clienteValidado.nomeEmpresa,
+                clienteValidado.representante,
+                clienteValidado.email,
+                clienteValidado.telefone,
+                clienteValidado.endereco,
+                clienteValidado.cnpj,
             )
-            
+            console.log(resultUpdate)
             // Verifica o resultado da atualização e retorna a resposta adequada
             if(resultUpdate){
                 res.status(200).json("Cliente atualizado");

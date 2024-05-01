@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 // Importa as funções do controlador relacionadas aos certificados de calibração
-const { registerOrder, getCertificateOrders, getOrdersById, updateOrders, ordemConcluida } = require("../controllers/controllerOrdens");
+const { registerOrder, getCertificateOrders, getOrdersById, updateOrders, ordemConcluida, ordemEmEspera } = require("../controllers/controllerOrdens");
 const validacaoOrdens = require('../validation/ordensVal');
 
 router
@@ -9,22 +9,22 @@ router
     .post("/registerOrders", async(req, res) => {
         try{
             // Extrai os dados do corpo da requisição
-            const {titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone, status} = req.body;
+            const {pk_idOs, fk_idCliente, fk_idUsuario, titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone, status} = req.body;
 
             const ordensVal = {titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone, status}
 
             const ordensValidadas = validacaoOrdens.parse(ordensVal)
-            console.log(ordensValidadas.titulo)
 
             // Chama a função para registrar um novo certificado de calibração
             let register = await registerOrder(
+                pk_idOs,
                 fk_idCliente,
                 fk_idUsuario,
                 ordensValidadas.titulo,
                 ordensValidadas.tipo,
                 ordensValidadas.descricao,
-                ordensValidadas.dataInicio,
-                ordensValidadas.dataTermino,
+                dataInicio,
+                dataTermino,
                 ordensValidadas.contratante,
                 ordensValidadas.email,
                 ordensValidadas.telefone,
@@ -56,7 +56,7 @@ router
         try {
             // Chama a função para obter todos os certificados de calibração
             const ordens = await getCertificateOrders();
-            res.status(200).json(users);
+            res.status(200).json(ordens);
         } catch (error) {
             console.log(error); // Registra o erro no console
             res.status(500).json('Erro interno do servidor');
@@ -64,12 +64,12 @@ router
     })
 
     // Rota para obter um certificado de calibração pelo seu ID
-    .get("/orders/:id", async(req, res) => {
-        const id_certificate = req.params.id;
+    .get("/order/:id", async(req, res) => {
+        const id_order = req.params.id;
 
         try {
             // Chama a função para obter um certificado de calibração pelo ID
-            const report = await getOrdersById(id_certificate);
+            const report = await getOrdersById(id_order);
             res.status(200).json(report);
         } catch (error) {
             console.log(error); // Registra o erro no console
@@ -77,23 +77,26 @@ router
         }
     })
 
-    .put("/updateOrders/:id", async(req, res) =>{
+    .put("/updateOrders", async(req, res) =>{
         try {
-            const id_certificate = req.params.id;
-            const {fk_idCliente, fk_idUsuario, titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone} = req.body;
+            const {id_antigo, id_order, fk_idCliente, fk_idUsuario, titulo, tipo, descricao, dataTermino, contratante, email, telefone} = req.body;
+
+            const ordensVal = {titulo, tipo, descricao, dataTermino, contratante, email, telefone}
+
+            const ordensValidadas = validacaoOrdens.parse(ordensVal)
 
             let resultUpdate = await updateOrders(
-                id_certificate,
+                id_antigo,
+                id_order,
                 fk_idCliente,
                 fk_idUsuario,
-                titulo,
-                tipo,
-                descricao,
-                dataInicio,
+                ordensValidadas.titulo,
+                ordensValidadas.tipo,
+                ordensValidadas.descricao,
                 dataTermino,
-                contratante,
-                email,
-                telefone
+                ordensValidadas.contratante,
+                ordensValidadas.email,
+                ordensValidadas.telefone
             )
 
             if(resultUpdate){
@@ -106,12 +109,46 @@ router
         }
     })
 
-    .put("/orders/completedOrders/:id", async(req, res) => {
+    .put("/completedOrders/:id", async(req, res) => {
 
-        const id_certificate = req.params.id;
+        const id_order = req.params.id;
         try {
-            const ordemConc = await ordemConcluida(id_certificate);
-            res.status(200).json("Ordem marcada como concluida");
+            const ordemConc = await ordemConcluida(id_order);
+
+            switch(ordemConc){
+            case 200:
+                res.status(200).json("Ordem marcada como concluida");
+                break;
+            case 400:
+                res.status(400).json("Não foi possivel alterar status");
+                break;
+            default:
+                res.status(500).json("Erro interno do servidor");
+            }
+          
+        } catch (error) {
+            console.log(error);
+            res.status(500).json("Erro interno no servidor");
+        }
+    })
+
+    .put("/uncheckOrders/:id", async(req, res) => {
+
+        const id_order = req.params.id;
+        try {
+            const ordemUncheck = await ordemEmEspera(id_order);
+
+            switch(ordemUncheck){
+            case 200:
+                res.status(200).json("Ordem colocada em espera");
+                break;
+            case 400:
+                res.status(400).json("Não foi possivel alterar status");
+                break;
+            default:
+                res.status(500).json("Erro interno do servidor");
+            }
+          
         } catch (error) {
             console.log(error);
             res.status(500).json("Erro interno no servidor");
