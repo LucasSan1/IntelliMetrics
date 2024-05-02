@@ -92,7 +92,7 @@
  *      500:
  *        description: Erro interno do servidor
  * 
- * /orders/id:
+ * /orders/{id}:
  *  get:
  *    tags:
  *      - Ordens de serviço
@@ -139,7 +139,7 @@
  *        description: Erro interno do servidor
  * 
  * 
- * /completedOrders/id:
+ * /completedOrders/{id}:
  *   put:
  *     tags:
  *       - Ordens de serviço
@@ -160,7 +160,7 @@
  *       500:
  *         description: Erro interno do servidor
  * 
- * /uncheckOrders/id:
+ * /uncheckOrders/{id}:
  *   put:
  *     tags:
  *       - Ordens de serviço

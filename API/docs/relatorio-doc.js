@@ -63,7 +63,7 @@
  *      500:
  *        description: Erro interno do servidor
  * 
- * /report/:id:
+ * /report/{id}:
  *  get:
  *    tags:
  *      - Relatorios
@@ -82,7 +82,7 @@
  *      500:
  *        description: Erro interno do servidor.
  * 
- * /reportUp/:id:
+ * /reportUp/{id}:
  *   put:
  *     tags:
  *       - Relatorios

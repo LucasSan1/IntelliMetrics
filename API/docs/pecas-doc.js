@@ -53,7 +53,7 @@
  *       500:
  *         description: Erro interno do servidor
  * 
- * /piece/:id:
+ * /piece/{id}:
  *   get:
  *     tags:
  *       - Peças
@@ -73,7 +73,7 @@
  *         description: Erro interno do servidor
  *
  * 
- * /updatePieces/:id:
+ * /updatePieces/{id}:
  *   put:
  *     tags:
  *       - Peças
