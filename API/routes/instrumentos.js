@@ -31,7 +31,6 @@ router
 
             // Chama a função para registrar um novo instrumento
             let resultCad = await registerInstrumento(
-
                 instrumentoValidado.fk_idCliente,
                 instrumentoValidado.fk_idOs,
                 instrumentoValidado.fk_idCategoria,
@@ -119,6 +118,7 @@ router
         } catch (error) {
             console.log(error);
             res.status(500).json("Erro interno do servidor");
+            
         }
     })
 
@@ -148,11 +148,5 @@ router
             res.status(500).json("Erro interno do servidor");
         }
     })
-
-    // .post("/registerCategory", async(req, res) =>{
-    //     const novaCategoria = req.body.req;
-
-        
-    // })
 
 module.exports = router; 

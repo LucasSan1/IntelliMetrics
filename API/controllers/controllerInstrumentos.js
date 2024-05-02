@@ -3,11 +3,10 @@ const db = require('../connector/conn')
 // Função para registrar um novo instrumento
 const registerInstrumento = async( fk_idCliente, fk_idOs, fk_idCategoria, nome, nSerie, identificacaoCliente, fabricante, faixaNominalNum, faixaNominalUni, divisaoResolucaoNum, divisaoResolucaoUni, orgaoResponsavel ) => {
 
-    const save = db.query(`
-    CALL cadastrarInstrumento( '${fk_idCliente}', '${fk_idOs}', '${fk_idCategoria}', '${nome}', '${nSerie}', '${identificacaoCliente}', '${fabricante}', '${faixaNominalNum}', '${faixaNominalUni}', '${divisaoResolucaoNum}', '${divisaoResolucaoUni}', '${orgaoResponsavel}' ) `);
+    const save = db.query(`CALL cadastrarInstrumento( '${fk_idCliente}', '${fk_idOs}', '${fk_idCategoria}', '${nome}', '${nSerie}', '${identificacaoCliente}', '${fabricante}', '${faixaNominalNum}', '${faixaNominalUni}', '${divisaoResolucaoNum}', '${divisaoResolucaoUni}', '${orgaoResponsavel}')`);
 
     // Verifica se a inserção foi bem-sucedida
-    if (!save){
+    if (!save) {
         return 400; // Retorna status 400 se não foi bem-sucedido
     } else {
         return 200; // Retorna status 200 se foi bem-sucedido
@@ -57,21 +56,10 @@ const updateInstrumento = async(id_instrumento, fk_idCliente, fk_idOs, fk_idCate
     }
 }
 
-// função para selecionar a categoria do instrumento da ser usado
-const registerCategory = async(novaCategoria) =>{
-    const register = db.query(`CALL cadastrarCategoria ('${novaCategoria}')`)
-    if (!register){
-        return 400; // Retorna 400 (Bad Request) se a operação der errado
-    } else {
-        return 200;   // Retorna 200 (OK) se a operação for bem-sucedida
-    }
-
-}
 
 module.exports = { 
     registerInstrumento,
     updateInstrumento,
     getInstrumentoById,
     getAllInstrumentos,
-    registerCategory,
 };
