@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { registerInstrumento, getAllInstrumentos, updateInstrumento } = require("../controllers/controllerInstrumentos");
+const { registerInstrumento, getAllInstrumentos, updateInstrumento, getInstrumentoById } = require("../controllers/controllerInstrumentos");
 const validacaoInstrumentos = require('../validation/instrumentosVal');
 const { middlewareValidarJWT } = require("../middleware/authMiddleware");
 
@@ -31,7 +31,6 @@ router
 
             // Chama a função para registrar um novo instrumento
             let resultCad = await registerInstrumento(
-
                 instrumentoValidado.fk_idCliente,
                 instrumentoValidado.fk_idOs,
                 instrumentoValidado.fk_idCategoria,
@@ -119,6 +118,7 @@ router
         } catch (error) {
             console.log(error);
             res.status(500).json("Erro interno do servidor");
+            
         }
     })
 
@@ -135,13 +135,11 @@ router
         }
     })
 
-    // Rota para deletar um instrumento pelo seu ID
-    .delete("/instruments/:id", async(req, res) => {
-        const id_instrumento = req.params.id;
-        
+    .get("/getTool/:id", async (req, res) => {
         try {
-            // Chama a função para deletar um instrumento pelo ID
-            const deletar = await deleteInstrumento(id_instrumento);
+            // Chama a função para obter todos os instrumentos
+            const instrumentos = await getInstrumentoById();
+            res.status(200).json(instrumentos);
 
         } catch (error) {
             console.log(error); // Registra o erro no console
@@ -149,10 +147,5 @@ router
         }
     })
 
-    // .post("/registerCategory", async(req, res) =>{
-    //     const novaCategoria = req.body.req;
-
-        
-    // })
 
 module.exports = router; 

@@ -20,6 +20,7 @@ const rotas_ordemRelatorio = require('./routes/ordemRelatorioCali')
 const rotas_instrumentos = require('./routes/instrumentos');
 const certificado_paquimetro = require('./routes/calculoPaquimetro')
 const certificado_micrometro =  require('./routes/calculoMicrometro')
+const rotas_categorias = require('./routes/categorias')
 
 
 app.use("", rotas_pecas); 
@@ -30,6 +31,8 @@ app.use("", rotas_ordemRelatorio)
 app.use("", rotas_instrumentos); 
 app.use("", certificado_paquimetro)
 app.use("", certificado_micrometro)
+app.use("", rotas_categorias)
+
 
 // Defina as opções do Swagger JSDoc
 
