@@ -1,9 +1,10 @@
 const router = require('express').Router();
 
-const { registerCategoria, updateCategoria } = require("../controllers/controllerCategorias")
+const { registerCategoria, updateCategoria, getCategorias } = require("../controllers/controllerCategorias")
 const validacaoCategoria = require("../validation/categoriasVal")
 
 router
+
     .post("/registerCategory", async(req, res) => {
         try {
             const nome = req.body.nome;
@@ -20,10 +21,10 @@ router
 
             switch (resultCad) { 
                 case 200:
-                    res.status(200).json("Instrumento cadastrado");
+                    res.status(200).json("Categoria cadastrada");
                     break;
                 case 400:
-                    res.status(400).json("Erro ao cadastrar instrumento");
+                    res.status(400).json("Erro ao cadastrar categoria");
                     break;
                 default:
                     res.status(500).json("Erro interno do servidor");
@@ -36,10 +37,12 @@ router
     })
 
     .put("/updateCategory/:id", async(req, res) => {
-        try {
-            const idCategoria = req.params.id;
-            const nome = req.body.nome;
 
+        const idCategoria = req.params.id;
+        const nome = req.body.nome;
+
+        try {
+           
             const valCategoria = {
                 nome
             }
@@ -53,10 +56,10 @@ router
             
             switch(resultUpdate){
                 case 200:
-                    res.status(200).json('Instrumento atualizado');
+                    res.status(200).json('Categoria atualizado');
                     break;
                 case 400:
-                    res.status(400).json('Erro ao atualizar instrumento');
+                    res.status(400).json('Erro ao atualizar categoria');
                     break;
                 default:
                     res.status(500).json('Erro interno do servidor');
@@ -64,6 +67,18 @@ router
 
         } catch (error) {
             console.log(error);
+            res.status(500).json("Erro interno do servidor");
+        }
+    })
+
+    .get("/allCategorys", async(req, res) =>{
+        try {
+            // Chama a função para obter todos os clientes
+            const categorys = await getCategorias();
+            res.status(200).json(categorys);
+
+        } catch (error) {
+            console.log(error); // Registra o erro no console
             res.status(500).json("Erro interno do servidor");
         }
     })
