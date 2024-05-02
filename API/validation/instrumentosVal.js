@@ -12,7 +12,7 @@ const validacaoInstrumentos  = z.object({
     faixaNominalUni: z.enum(['mm', 'pol']),
     divisaoResolucaoNum: z.number(),
     divisaoResolucaoUni: z.enum(['mm', 'pol']),
-    orgaoResponsavel: z.string().min().max(60)
+    orgaoResponsavel: z.string().min(1).max(60)
 })
 
 module.exports = validacaoInstrumentos;

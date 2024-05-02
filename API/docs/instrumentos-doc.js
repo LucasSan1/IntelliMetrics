@@ -3,6 +3,13 @@
  * tags:
  *   - name: Instrumentos
  *     description: Todas as operações referentes a Instrumentos
+ * components:
+ *  securitySchemes:
+ *    bearerAuth:            
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT 
+ * 
  * definitions:
  *   instrumento:
  *     type: object
@@ -16,17 +23,17 @@
  *       nome:
  *         type: string
  *       nSerie:
- *         type: string
+ *         type: number
  *       identificacaoCliente:
  *         type: string
  *       fabricante:
  *         type: string
  *       faixaNominalNum:
- *         type: string
+ *         type: number
  *       faixaNominalUni:
  *         type: string
  *       divisaoResolucaoNum:
- *         type: string
+ *         type: number
  *       divisaoResolucaoUni:
  *         type: string
  *       orgaoResponsavel:
