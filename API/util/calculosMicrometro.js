@@ -86,47 +86,63 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
               // tendencia
               tendencia = (mediaValor[i] - list0_25[i]).toFixed(3)
               tendencias.push(parseFloat(tendencia))
-              ultimoValor += list0_25[11]
+              ultimoValor = list0_25[10]
+              req.ultimoValor = ultimoValor
               break;
             case 1:
               tendencia = (mediaValor[i] - list1_25[i]).toFixed(3)
               tendencias.push(parseFloat(tendencia))
+              ultimoValor = list1_25[10]
+              req.ultimoValor = ultimoValor
               break;
 
             case 25:
               tendencia = (mediaValor[i] - list25_50[i]).toFixed(3)
               tendencias.push(parseFloat(tendencia))
+              ultimoValor = list25_50[10]
+              req.ultimoValor = ultimoValor
               break;
 
             case 50:
               tendencia = (mediaValor[i] - list50_75[i]).toFixed(3)
               tendencias.push(parseFloat(tendencia))
+              ultimoValor = list50_75[10]
+              req.ultimoValor = ultimoValor
               break;
 
             case 75:
               tendencia = (mediaValor[i] - list75_100[i]).toFixed(3)
               tendencias.push(parseFloat(tendencia))
-              ultimoValor += list75_100[10]
+              ultimoValor = list75_100[10]
+              req.ultimoValor = ultimoValor
               break;
 
             case 100:
               tendencia = (mediaValor[i] - list100_125[i]).toFixed(3)
               tendencias.push(parseFloat(tendencia))
+              ultimoValor = list100_125[10]
+              req.ultimoValor = ultimoValor
               break;
 
             case 125:
               tendencia = (mediaValor[i] - list125_150[i]).toFixed(3)
               tendencias.push(parseFloat(tendencia))
+              ultimoValor = list125_150[10]
+              req.ultimoValor = ultimoValor
               break;
 
             case 150:
               tendencia = (mediaValor[i] - list150_175[i]).toFixed(3)
               tendencias.push(parseFloat(tendencia))
+              ultimoValor = list150_175[10]
+              req.ultimoValor = ultimoValor
               break;
 
             case 175:
               tendencia = (mediaValor[i] - list175_200[i]).toFixed(3)
               tendencias.push(parseFloat(tendencia))
+              ultimoValor = list175_200[10]
+              req.ultimoValor = ultimoValor
               break;
             default:
               return "Não consta faixa calibrada"
@@ -150,8 +166,6 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
 
   let desvioPadraoMedio = Math.sqrt(soma / 22)
   req.desvpadMedio += desvioPadraoMedio
-
- console.log(list75_100[10])
 
   const response = {} 
 
@@ -200,19 +214,33 @@ function incerteza_medERES (valorDivResolucao, dig_anal){
 
   const contriIncerteza = incertezaEres / Math.sqrt(3)
 
-  const response = {"incerteza_medERES": parseFloat(incertezaEres.toFixed(5)), "contribuiçao_Incerteza": parseFloat(contriIncerteza.toFixed(5))}
+  const response = {"incerteza_medERES": parseFloat(incertezaEres.toFixed(5)), "contribuição_Incerteza": parseFloat(contriIncerteza.toFixed(5))}
 
   return response
  
 }
 
-// function incertez_medl1 (){
+function incertez_medl1 (req){
 
-// }
+  const incertezamedl1 = req.ultimoValor * 0.00001 * 2
 
-// function incertez_medl2 (){
+  const contriIncerteza = incertezamedl1 / Math.sqrt(3)
 
-// }
+  const response = {"incertez_medl1": parseFloat(incertezamedl1.toFixed(5)), "contribuição_Incerteza": parseFloat(contriIncerteza.toFixed(5))}
+
+  return response
+}
+
+function incertez_medl2 (req){
+
+  const incertezamedl2 = req.ultimoValor *((0.0000115+0.00001)/2)*2
+
+  const contriIncerteza = incertezamedl2 / Math.sqrt(3)
+  
+  const response = {"incertez_medl2": parseFloat(incertezamedl2.toFixed(5)), "contribuição_Incerteza": parseFloat(contriIncerteza.toFixed(5))}
+
+  return response
+}
 
 function incerteza_medPAR (valorDivResolucao, dig_anal){
 
@@ -227,21 +255,49 @@ function incerteza_medPAR (valorDivResolucao, dig_anal){
       break;
   }
 
-  const contriIncerteza = incertezaPar / Math.sqrt(3)
+  const contriIncerteza = incertezaPar / (Math.sqrt(3) * 1)
 
   const response = {"incerteza_medPAR": parseFloat(incertezaPar.toFixed(5)), "contribuoção_incereteza": parseFloat(contriIncerteza.toFixed(5))}
 
   return response
 }
 
-// function incertez_medEader (){
+function incertez_medEader (req){
 
-//   let incertez_Eader = 0
+  let incertezaPD = 0
 
-//   switch(){
+  switch(req.ultimoValor){
 
-//   }
-// }
+    case 50:
+      incertezaPD = 0.00019
+      break;
+    case 75:
+      incertezaPD = 0.00021
+      break;
+    case 100:
+      incertezaPD = 0.00023
+      break;
+    case 125:
+      incertezaPD = 0.00024
+      break;
+    case 150:
+      incertezaPD = 0.00034
+      break;
+    case 175:
+      incertezaPD = 0.00036
+      break
+    case 200:
+      incertezaPD = 0.00037
+      break;
+    default:
+      return "Fora de faixa"
+  }
+
+  const response = {"incertezaPD": parseFloat(incertezaPD)}
+
+  return response
+
+}
 
 module.exports = {
   calculoPlaneza,
@@ -249,5 +305,8 @@ module.exports = {
   controleDimensional,
   incerteza_medAU,
   incerteza_medERES,
-  incerteza_medPAR
+  incertez_medl1,
+  incertez_medl2,
+  incerteza_medPAR,
+  incertez_medEader
 };
