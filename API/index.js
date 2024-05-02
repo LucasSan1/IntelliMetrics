@@ -33,6 +33,7 @@ app.use("", certificado_paquimetro)
 app.use("", certificado_micrometro)
 app.use("", rotas_categorias)
 
+
 // Defina as opções do Swagger JSDoc
 
 const options = {
