@@ -72,7 +72,7 @@
  *       500:
  *         description: Erro interno do servidor
  * 
- * /user/id:
+ * /user/{id}:
  *   get:
  *     tags:
  *       - Users

@@ -86,7 +86,7 @@
  *       500:
  *         description: Erro interno do servidor
  * 
- * /instrumentos/:id:
+ * /instrumentos/{id}:
  *   put:
  *     tags:
  *       - Instrumentos

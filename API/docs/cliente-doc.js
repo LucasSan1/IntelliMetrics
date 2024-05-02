@@ -61,7 +61,7 @@
  *      500:
  *        description: Erro interno do servidor
  * 
- * /client/id:
+ * /client/{id}:
  *  get:
  *    tags:
  *      - Cliente
@@ -80,7 +80,7 @@
  *      500:
  *        description: Erro interno do servidor.
  * 
- * /clients/disable/id:
+ * /clients/disable/{id}:
  *   put:
  *     tags:
  *       - Cliente
@@ -102,7 +102,7 @@
  *        description: Erro interno do servidor
  * 
  * 
- * /client/active/:id:
+ * /client/active/{id}:
  *   put:
  *     tags:
  *       - Cliente 
@@ -123,7 +123,7 @@
  *       500:
  *         description: Erro interno do servidor
  * 
- * /updateClient/:id:
+ * /updateClient/{id}:
  *   put:
  *     tags:
  *       - Cliente
