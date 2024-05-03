@@ -112,8 +112,7 @@ const activateclient = async (id_cliente) => {
 // Função para atualizar informações de um cliente pelo seu ID
 const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telefone, endereco, cnpj) => {
     return new Promise((resolve, reject) => {
-        db.query(`
-        CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}')`,   
+        db.query(`CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}')`,   
             (error, results) => {
                 if (error) {
                     reject (error);

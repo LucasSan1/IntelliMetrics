@@ -58,8 +58,8 @@ router
                 case 200:
                     res.status(200).json('Categoria atualizado');
                     break;
-                case 400:
-                    res.status(400).json('Erro ao atualizar categoria');
+                case 404:
+                    res.status(400).json('Categoria não encontrada');
                     break;
                 default:
                     res.status(500).json('Erro interno do servidor');

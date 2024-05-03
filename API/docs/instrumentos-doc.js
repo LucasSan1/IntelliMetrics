@@ -3,13 +3,6 @@
  * tags:
  *   - name: Instrumentos
  *     description: Todas as operações referentes a Instrumentos
- * components:
- *  securitySchemes:
- *    bearerAuth:            
- *      type: http
- *      scheme: bearer
- *      bearerFormat: JWT 
- * 
  * definitions:
  *   instrumento:
  *     type: object
@@ -29,7 +22,7 @@
  *       fabricante:
  *         type: string
  *       faixaNominalNum:
- *         type: number
+ *         type: string
  *       faixaNominalUni:
  *         type: string
  *       divisaoResolucaoNum:
@@ -38,35 +31,40 @@
  *         type: string
  *       orgaoResponsavel:
  *         type: string
- *   
+ *
  *   updateInstrumento:
  *     type: object
  *     properties:
- *       id_instrumento:
- *         type: number
  *       fk_idCliente:
  *         type: number
- *       fk_idOsCalibracao:
+ *       fk_idOs:
  *         type: number
- *       fk_idTipo:
+ *       fk_idCategoria:
  *         type: number
+ *       nome:
+ *         type: string
  *       nSerie:
+ *         type: number
+ *       identificacaoCliente:
  *         type: string
  *       fabricante:
  *         type: string
- *       resolucao:
+ *       divisaoResolucaoNum:
  *         type: string
- *       unidadeMedida:
+ *       divisaoResolucaoUni:
  *         type: string
- *       faixaNominal:
- *         type: string      
- * 
- * /cadastroInstrumentos:
+ *       faixaNominalNum:
+ *         type: string
+ *       faixaNominalUni:
+ *         type: string
+
+ *
+ * /registerTools:
  *   post:
  *     tags:
  *       - Instrumentos
  *     summary: cadastro de instrumento
- *     description: cadastra um novo instrumento 
+ *     description: cadastra um novo instrumento
  *     requestBody:
  *       required: true
  *       content:
@@ -80,8 +78,8 @@
  *         description: Erro ao cadastrar instrumento
  *       500:
  *         description: Erro interno do servidor
- * 
- * /instrumentos:
+ *
+ * /getAllTools:
  *   get:
  *     tags:
  *       - Instrumentos
@@ -92,8 +90,27 @@
  *         description: retorna todos os instrumentos
  *       500:
  *         description: Erro interno do servidor
- * 
- * /instrumentos/{id}:
+ *
+ * /getTool/{id}:
+ *  get:
+ *    tags:
+ *      - Instrumentos
+ *    summary: retorna dados de instrumento
+ *    description: retorna o instrumento com base em um id especifico
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        type: number
+ *        required: true
+ *    responses:
+ *      200:
+ *        description: Retorna o instrumento correspondente ao id fornecido.
+ *      404:
+ *        description: Instrumento nao encontrado
+ *      500:
+ *        description: Erro interno do servidor.
+ *
+ * /updateTools/{id}:
  *   put:
  *     tags:
  *       - Instrumentos
@@ -109,7 +126,7 @@
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/definitions/updateInstrumento'
+ *              $ref: '#/definitions/instrumento'
  *     responses:
  *       200:
  *         description: Instrumento atualizado
