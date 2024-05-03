@@ -1,8 +1,3 @@
-// CREATE TABLE categorias(
-// 	pk_idCategoria int  PRIMARY KEY AUTO_INCREMENT,
-//     nome varchar(30) NOT NULL
-// );
-
 const db = require('../connector/conn');
 
 const registerCategoria = async(nome) => {
@@ -17,15 +12,35 @@ const registerCategoria = async(nome) => {
 }
 
 const updateCategoria = async(idCategoria, nome) => {
-    const update = await db.query(`CALL modificarCategoria('${idCategoria}', '${nome}')`);
 
-    if (update.affectedRows === 0) {
+    const verificarCategoria = await new Promise((resolve, reject) => {
+        db.query(`SELECT * FROM categorias WHERE pk_idCategoria = '${idCategoria}'`,
+            (error, results) => {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+                resolve(results);
+            }
+        );
+    });
+        
+    if (verificarCategoria.length == 0) {
         return 404;
-    } else {
-        return 200;
     }
-}
 
+    return new Promise((resolve, reject) => {
+        db.query(`CALL modificarCategoria('${idCategoria}', '${nome}')`,   
+            (error, results) => {
+                if (error) {
+                    reject (error);
+                    return;
+                }
+                resolve (200); 
+            }
+        );
+    });
+}
 
 const getCategorias = async() => {
     return new Promise((resolve, reject) => {

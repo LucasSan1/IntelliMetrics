@@ -3,6 +3,13 @@
  * tags:
  *   - name: Users
  *     description: Operações relacionadas aos usuário
+ * components:
+ *  securitySchemes:
+ *    bearerAuth:
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT
+ *
  * definitions:
  *  usuario:
  *     type: object
@@ -60,8 +67,6 @@
  * 
  * /allUsers:
  *   get:
- *     security:
- *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: retorna usuário
