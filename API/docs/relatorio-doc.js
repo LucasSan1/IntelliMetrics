@@ -7,27 +7,78 @@
  *  relatorio:
  *     type: object
  *     properties:
- *       fk_idCliente:
+ *       idRelatorio:
+ *         type: integer 
+ *       idInstrumento:
  *         type: integer
- *       fk_idUsuario:
+ *       idUsuario:
  *         type: integer
- *       titulo:
+ *       idPeca:
+ *         typer: integer 
+ *       inicio:
+ *         typer: string
+ *         pattern: 09:00
+ *       termino:
  *         type: string
- *       codigoOrdem:
+ *         pattern: 10:00
+ *       tempoTotal:
  *         type: string
- *       reponsavel:
+ *         pattern: 20:03
+ *       temperaturaC:
  *         type: string
- *       tipo:
+ *         pattern: 20°C 
+ *       umidadeRelativa:
+ *         type: string 
+ *         pattern: 10%
+ *       observacoes:
  *         type: string
- *       peca:
+ *         nullable: true 
+ *       localDaMedicao:
  *         type: string
- *       dataInicio:
+ *         pattern: sala 1
+ *       dia:
  *         type: string
- *       dataTermino:
+ *         pattern: 2024-02-03
+ *       assinatura:
  *         type: string
- *       descricao:
+ * 
+ *  upRelatorio:
+ *     type: object
+ *     properties:
+ *       novoIdRelatorio:
+ *         type: integer 
+ *       idInstrumento:
+ *         type: integer
+ *       idUsuario:
+ *         type: integer
+ *       idPeca:
+ *         typer: integer
+ *       inicio:
+ *         typer: string
+ *         pattern: 09:00
+ *       termino:
  *         type: string
- *             
+ *         pattern: 10:00
+ *       tempoTotal:
+ *         type: string
+ *         pattern: 20:03
+ *       temperaturaC:
+ *         type: string
+ *         pattern: 40°C 
+ *       umidadeRelativa:
+ *         type: string 
+ *         pattern: 30%
+ *       observacoes:
+ *         type: string
+ *         nullable: true
+ *       localDaMedicao:
+ *         type: string
+ *         pattern: sala 2
+ *       dia:
+ *         type: string
+ *         pattern: 2024-03-06
+ *       assinatura:
+ *         type: string
  * 
  * /registerReport:
  *   post:
@@ -51,7 +102,7 @@
  *       500:
  *         description: Erro interno do servidor
  * 
- * /allReports:
+ * /getAllReports:
  *  get:
  *    tags:
  *      - Relatorios
@@ -63,7 +114,7 @@
  *      500:
  *        description: Erro interno do servidor
  * 
- * /report/{id}:
+ * /infoReport/{id}:
  *  get:
  *    tags:
  *      - Relatorios
@@ -82,7 +133,7 @@
  *      500:
  *        description: Erro interno do servidor.
  * 
- * /reportUp/{id}:
+ * /updateReports/{id}:
  *   put:
  *     tags:
  *       - Relatorios
@@ -98,13 +149,13 @@
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/definitions/relatorio'
+ *              $ref: '#/definitions/upRelatorio'
  *     responses:
  *       200:
  *         description: Relatório atualizado
  *       404:
  *         description: Relatório não encontrado
- *       409:
+ *       400:
  *         description: Erro ao atualizar relatório
  *       500:
  *         description: Erro interno do servidor

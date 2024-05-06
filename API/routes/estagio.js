@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { getColById } = require("../controller/collaboratorController");
+const { getColById } = require("../controllers/controllerUser");
 const { generateToken } = require("../controller/token");
 
 

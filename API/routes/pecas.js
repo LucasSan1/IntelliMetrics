@@ -7,11 +7,11 @@ router
     .post("/registerPieces", async(req, res) => {
         try {
             // Extrai os dados do corpo da requisição
-            const {fk_idOs, fk_idCliente, nome, material, nDesenho, descricao} = req.body;
+            const {idOs, idCliente, nome, material, nDesenho, descricao} = req.body;
 
             const valPeca = {
-                fk_idOs,
-                fk_idCliente,
+                idOs,
+                idCliente,
                 nome,
                 material,
                 nDesenho,
@@ -22,8 +22,8 @@ router
 
             // Chama a função para cadastrar uma nova peça
             let resultCad = await registerPeca(
-                pecaValidada.fk_idOs,
-                pecaValidada.fk_idCliente,
+                pecaValidada.idOs,
+                pecaValidada.idCliente,
                 pecaValidada.nome,
                 pecaValidada.material,
                 pecaValidada.nDesenho,

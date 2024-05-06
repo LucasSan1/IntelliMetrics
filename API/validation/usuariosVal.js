@@ -7,4 +7,6 @@ const validacaoUsuario  = z.object({
     status: z.enum(['ativo', 'inativo']).default('ativo') 
 })
 
+// validar o email com a string regular
+// const string_regular = /^[^\s@]+@sp.senai\.br/;
 module.exports = validacaoUsuario;

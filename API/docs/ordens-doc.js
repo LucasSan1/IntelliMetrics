@@ -15,22 +15,29 @@
  *          type: integer
  *       titulo:
  *          type: string
+ *          pattern: Calibrar paq 
  *       tipo:
  *          type: string
+ *          pattern: calibracao/medicao
  *       descricao:
  *          type: string
  *       dataInicio:
  *          type: string
+ *          pattern: 2024-12-30
  *       dataTermino:
  *          type: string
+ *          pattern: 2024-12-31
  *       contratante:
  *          type: string
+ *          pattern: auristelio
  *       email:
  *          type: string
  *       telefone:
  *          type: string
+ *          pattern: 11912345678
  *       status:
  *          type: string
+ *          pattern: em espera/concluida
  * 
  *  update:
  *     type: object

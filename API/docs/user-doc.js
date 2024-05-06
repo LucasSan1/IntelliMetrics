@@ -16,10 +16,13 @@
  *     properties:
  *       nome:
  *         type: string
+ *         pattern: auristelio 
  *       email:
  *         type: string
+ *         pattern: auristelio@sp.senai.br
  *       cargo:
  *         type: string
+ *         pattern: gestor/tecnico
  *         
  *  email: 
  *     type: object
