@@ -35,6 +35,7 @@
  *         nullable: true 
  *       localDaMedicao:
  *         type: string
+ *         pattern: sala 1
  *       dia:
  *         type: string
  *         pattern: 2024-02-03
@@ -51,7 +52,7 @@
  *       idUsuario:
  *         type: integer
  *       idPeca:
- *         typer: integer 
+ *         typer: integer
  *       inicio:
  *         typer: string
  *         pattern: 09:00
@@ -63,18 +64,19 @@
  *         pattern: 20:03
  *       temperaturaC:
  *         type: string
- *         pattern: 20°C 
+ *         pattern: 40°C 
  *       umidadeRelativa:
  *         type: string 
- *         pattern: 10%
+ *         pattern: 30%
  *       observacoes:
  *         type: string
- *         nullable: true 
+ *         nullable: true
  *       localDaMedicao:
  *         type: string
+ *         pattern: sala 2
  *       dia:
  *         type: string
- *         pattern: 2024-02-03
+ *         pattern: 2024-03-06
  *       assinatura:
  *         type: string
  * 

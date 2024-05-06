@@ -6,6 +6,7 @@ const createUser = async (nome, email, cargo) => {
         if (!nome || !email || !cargo) {
             return 400
         }
+        
         // Verificar se um usuário com o e-mail fornecido já existe
         const verificarUser = await new Promise((resolve, reject) => {
             db.query(`SELECT * FROM usuarios WHERE email = '${email}'`,

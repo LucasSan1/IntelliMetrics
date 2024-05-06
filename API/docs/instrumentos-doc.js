@@ -15,22 +15,29 @@
  *         type: number
  *       nome:
  *         type: string
+ *         pattern: paquimetro
  *       nSerie:
  *         type: number
  *       identificacaoCliente:
  *         type: string
+ *         pattern: 50a 
  *       fabricante:
  *         type: string
+ *         pattern: Mitutoyo 
  *       faixaNominalNum:
  *         type: string
+ *         pattern: 0-2 / 1-25 / 25-50 / 50-75 / 75-100 / 100-125 / 125-150 / 150-175 / 175-200
  *       faixaNominalUni:
  *         type: string
+ *         pattern: mm/pol 
  *       divisaoResolucaoNum:
  *         type: number
  *       divisaoResolucaoUni:
  *         type: string
+ *         pattern: mm/pol
  *       orgaoResponsavel:
  *         type: string
+ *         pattern: Suiclab
  *
  *   updateInstrumento:
  *     type: object

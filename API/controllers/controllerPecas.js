@@ -1,10 +1,10 @@
 const db = require("../connector/conn");
 
 // Função para registrar uma nova peça
-const registerPeca = async(fk_idOs, fk_idCliente, nome, material, nDesenho, descricao) => {
+const registerPeca = async(idOs, idCliente, nome, material, nDesenho, descricao) => {
     
     // Insere os dados da peça no banco de dados
-    const save = db.query(`CALL cadastrarPeca('${fk_idOs}', '${fk_idCliente}' ,'${nome}' ,'${material}' ,'${nDesenho}', '${descricao}')`)
+    const save = db.query(`CALL cadastrarPeca('${idOs}', '${idCliente}' ,'${nome}' ,'${material}' ,'${nDesenho}', '${descricao}')`)
 
     // Verifica se a inserção foi bem-sucedida
     if (!save) {

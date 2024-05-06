@@ -7,19 +7,21 @@
  *   peca:
  *     type: object
  *     properties:
- *       fk_idOs:
- *         type: number
- *       fk_idCliente:
- *         type: number
+ *       idOs:
+ *         type: integer
+ *       idCliente:
+ *         type: integer
  *       nome:
  *         type: string
+ *         pattern: parafuso 
  *       material:
  *         type: string
+ *         pattern: aço
  *       nDesenho:
- *         type: number
+ *         type: integer
  *       descricao:
  *         type: string
- * 
+ *         nullable: true
  * 
  * /registerPieces:
  *   post:
