@@ -64,4 +64,4 @@ const upPaqParalelismo = async(alterarValorNominalOrelha, alterarValorProxOrelha
 //   )
 // }
 
-// })
+}
