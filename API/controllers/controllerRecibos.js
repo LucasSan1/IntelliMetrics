@@ -5,7 +5,7 @@ const db = require('../connector/conn')
 const insertReceipt = async(idOrdem, idUsuario, novoSetor,novoNProposta, novoNumNotaFiscal, novaDataRecebimento, novoRecebidoPrevisao, novaPrevisaoInicio, novaPrevisaoTermino, novoClienteConcorda,dataAssinatura ,novaPessoaContatada, novaDataContatada) =>{
     try{
         const insert = await new Promise((resolve, reject)=>{
-            db.query(` CALL inserirRecebimento ('${idOrdem}' '${idUsuario}', '${novoSetor}','${novoNProposta}', '${novoNumNotaFiscal}', '${novaDataRecebimento}', '${novoRecebidoPrevisao}', '${novaPrevisaoInicio}', '${novaPrevisaoTermino}', '${novoClienteConcorda}, '${dataAssinatura}'')`,
+            db.query(` CALL inserirRecebimento ('${idOrdem}', '${idUsuario}', '${novoSetor}','${novoNProposta}', '${novoNumNotaFiscal}', '${novaDataRecebimento}', '${novoRecebidoPrevisao}', '${novaPrevisaoInicio}', '${novaPrevisaoTermino}', '${novoClienteConcorda}, '${dataAssinatura}', ${novaPessoaContatada}, '${novaDataContatada}')`,
             (error, results) => {
                 if (error) {
                     reject(error);
@@ -36,7 +36,7 @@ const insertReceipt = async(idOrdem, idUsuario, novoSetor,novoNProposta, novoNum
 // controller para alteração do recibo 
 const updateReceipt = async(idRecebimento, idOrdem, alterarSetor, alterarNProposta , alterarNumNotaFiscal, alterarDataRecebimento, alterarRecebidoPrevisao, alterarPrevisaoInicio, alterarPrevisaoTermino, alterarClienteConcorda, alterarDataAssinatura, alterarPessoaContatada, alterarDataContatada) =>{
     return new Promise((resolve, reject) =>{
-        db.query(` CALL modificarRecebimento ('${idRecebimento}' '${idOrdem}', '${alterarSetor}','${alterarNProposta}', '${alterarNumNotaFiscal}', '${alterarDataRecebimento}', '${alterarRecebidoPrevisao}', '${alterarPrevisaoInicio}', '${alterarPrevisaoTermino}', '${alterarClienteConcorda}', '${alterarDataAssinatura}','${alterarPessoaContatada}','${alterarDataContatada}')`,
+        db.query(` CALL modificarRecebimento ('${idRecebimento}', '${idOrdem}', '${alterarSetor}','${alterarNProposta}', '${alterarNumNotaFiscal}', '${alterarDataRecebimento}', '${alterarRecebidoPrevisao}', '${alterarPrevisaoInicio}', '${alterarPrevisaoTermino}', '${alterarClienteConcorda}', '${alterarDataAssinatura}','${alterarPessoaContatada}','${alterarDataContatada}')`,
         (error, results) => {
             if (error){
                 reject (error);
