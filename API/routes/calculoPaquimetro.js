@@ -62,4 +62,9 @@ router
     } 
   })
 
+// rota para inserir o paralelismo do paquimetro
+.post("/caliperParallelismo", async (req, res) =>{
+  
+})
+
 module.exports = router;
