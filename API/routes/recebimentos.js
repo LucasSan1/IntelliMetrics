@@ -64,17 +64,31 @@ router
 
     .put("/updateReceipt/:id", async(req, res) =>{
         try {
-            const idOrdem = req.params.id;
+            // const idOrdem = req.params.id;
             const idRecibo = req.params.id
+            const {idOrdem, setor, nProposta, nNotaFiscal, dataDeRecebimento, recebidoNaPrevisao, previsaoInicio, previsaoTermino, clienteConcorda, dataAssinatura, pessoaContatada, dataContatada} = req.body;
 
-            const {setor, nProposta, nNotaFiscal, dataDeRecebimento, recebidoNaPrevisao, previsaoInicio, previsaoTermino, clienteConcorda, dataAssinatura, pessoaContatada, dataContatada} = req.body;
+            const valRecebidos = {
+                idOrdem,
+                idUsuario,
+                setor,
+                nProposta,
+                nNotaFiscal,
+                dataDeRecebimento,
+                recebidoNaPrevisao,
+                previsaoInicio,
+                previsaoTermino,
+                clienteConcorda,
+                dataAssinatura,
+                pessoaContatada,
+                dataContatada
+            }
 
             const reciboValidado = validacaoRecebimentos.parse(valRecebidos)
              
             let resultUpdate = await updateReceipt(
-                reciboValidado.idOrdem,
                 idRecibo,
-                reciboValidado.idUsuario,
+                reciboValidado.idOrdem,
                 reciboValidado.setor,
                 reciboValidado.nProposta,
                 reciboValidado.nNotaFiscal,
