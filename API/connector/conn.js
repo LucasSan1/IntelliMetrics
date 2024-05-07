@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
     password: process.env.PASSWORD,
     database: process.env.DATABASE,
     port:process.env.DATAPORT,
-    ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}
+    // ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}
 
 })
 

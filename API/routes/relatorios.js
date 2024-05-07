@@ -1,18 +1,14 @@
 const router = require('express').Router();
-
 // Importa as funções do controlador relacionadas aos relatórios de calibração
-const { registerReport, getAllReports, getAllInfos, updateReport  } = require("../controllers/controllerRelatorioCali")
-
+const { registerReport, getAllReports, getAllInfos, updateReport  } = require("../controllers/controllerRelatorioCali");
+const validacaoRelatorios = require('../validation/relatoriosVal');
 router
     // Rota para registrar um relatório de calibração
     .post("/registerReport", async(req, res) => {
         try{
+            const {idRelatorio, idInstrumento, idUsuario, idPeca, inicio, termino, tempoTotal, temperaturaC, umidadeRelativa, observacoes, localDaMedicao, dia, assinatura} = req.body
 
-            const {idRelatorio, idInstrumento, idUsuario, idPeca, inicio, termino,tempoTotal, temperaturaC, umidadeRelativa, observacoes, localDaMedicao, dia, assinatura} = req.body
-       
-            // Chama a função para registrar um relatório de calibração
-            let register = await registerReport(
-                idRelatorio, 
+            const valRelatorio = {
                 idInstrumento, 
                 idUsuario, 
                 idPeca, 
@@ -25,6 +21,25 @@ router
                 localDaMedicao, 
                 dia, 
                 assinatura
+            }
+       
+            const relatorioValidado = validacaoRelatorios.parse(valRelatorio);
+
+            // Chama a função para registrar um relatório de calibração
+            let register = await registerReport(
+                idRelatorio, 
+                relatorioValidado.idInstrumento, 
+                relatorioValidado.idUsuario, 
+                relatorioValidado.idPeca, 
+                relatorioValidado.inicio, 
+                relatorioValidado.termino,
+                relatorioValidado.tempoTotal, 
+                relatorioValidado.temperaturaC, 
+                relatorioValidado.umidadeRelativa, 
+                relatorioValidado.observacoes, 
+                relatorioValidado.localDaMedicao, 
+                relatorioValidado.dia, 
+                relatorioValidado.assinatura
             );
 
             // Verifica o resultado do registro e retorna a resposta adequada
@@ -77,21 +92,40 @@ router
 
         try {
             const {novoIdRelatorio, idInstrumento, idUsuario, idPeca, inicio, termino, tempoTotal, temperaturaC, umidadeRelativa, observacoes, localDaMedicao, dia, assinatura} = req.body;
+
+            const valRelatorio = {
+                idInstrumento, 
+                idUsuario, 
+                idPeca, 
+                inicio, 
+                termino,
+                tempoTotal, 
+                temperaturaC, 
+                umidadeRelativa, 
+                observacoes, 
+                localDaMedicao, 
+                dia, 
+                assinatura
+            }
+       
+            const relatorioValidado = validacaoRelatorios.parse(valRelatorio);
+
             // Chama a função para atualizar  o relatorio
             let resultUpdate = await updateReport(
                 id,
                 novoIdRelatorio,
-                idInstrumento,
-                idUsuario, idPeca,
-                inicio,  
-                termino,
-                tempoTotal,
-                temperaturaC, 
-                umidadeRelativa,
-                observacoes,
-                localDaMedicao, 
-                dia, 
-                assinatura
+                relatorioValidado.idInstrumento,
+                relatorioValidado.idUsuario,
+                relatorioValidado.idPeca,
+                relatorioValidado.inicio,  
+                relatorioValidado.termino,
+                relatorioValidado.tempoTotal,
+                relatorioValidado.temperaturaC, 
+                relatorioValidado.umidadeRelativa,
+                relatorioValidado.observacoes,
+                relatorioValidado.localDaMedicao, 
+                relatorioValidado.dia, 
+                relatorioValidado.assinatura
             );
 
             switch(resultUpdate){

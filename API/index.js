@@ -56,7 +56,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 
 app.use("/", (req, res) => {
-    res.json("Ta rodando a API, está é a /home");
+    res.json("Ta rodando a API, está é a /home, funfo ahahaha");
   });
 
 app.listen(port, () => {
