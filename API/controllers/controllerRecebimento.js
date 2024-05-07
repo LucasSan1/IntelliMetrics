@@ -2,10 +2,10 @@ const db = require('../connector/conn')
 
 
 // controller para fazer os insert do recibo 
-const insertReceipt = async(idOrdem, idUsuario, novoSetor,novoNProposta, novoNumNotaFiscal, novaDataRecebimento, novoRecebidoPrevisao, novaPrevisaoInicio, novaPrevisaoTermino, novoClienteConcorda,dataAssinatura ,novaPessoaContatada, novaDataContatada) =>{
+const registerReceipt = async(idOrdem, idUsuario, setor, nProposta, nNotaFiscal, dataDeRecebimento, recebidoNaPrevisao, previsaoInicio, previsaoTermino, clienteConcorda, dataAssinatura, pessoaContatada, dataContatada) =>{
     try{
         const insert = await new Promise((resolve, reject)=>{
-            db.query(` CALL inserirRecebimento ('${idOrdem}' '${idUsuario}', '${novoSetor}','${novoNProposta}', '${novoNumNotaFiscal}', '${novaDataRecebimento}', '${novoRecebidoPrevisao}', '${novaPrevisaoInicio}', '${novaPrevisaoTermino}', '${novoClienteConcorda}, '${dataAssinatura}'')`,
+            db.query(` CALL inserirRecebimento('${idOrdem}' '${idUsuario}', '${setor}','${nProposta}', '${nNotaFiscal}', '${dataDeRecebimento}', '${recebidoNaPrevisao}', '${previsaoInicio}', '${previsaoTermino}', '${clienteConcorda}, '${dataAssinatura}', '${pessoaContatada}', '${dataContatada}' )`,
             (error, results) => {
                 if (error) {
                     reject(error);
@@ -34,9 +34,9 @@ const insertReceipt = async(idOrdem, idUsuario, novoSetor,novoNProposta, novoNum
 
 
 // controller para alteração do recibo 
-const updateReceipt = async(idRecebimento, idOrdem, alterarSetor, alterarNProposta , alterarNumNotaFiscal, alterarDataRecebimento, alterarRecebidoPrevisao, alterarPrevisaoInicio, alterarPrevisaoTermino, alterarClienteConcorda, alterarDataAssinatura, alterarPessoaContatada, alterarDataContatada) =>{
+const updateReceipt = async(idRecebimento, idOrdem, setor, nProposta, nNotaFiscal, dataDeRecebimento, recebidoNaPrevisao, previsaoInicio, previsaoTermino, clienteConcorda, dataAssinatura, pessoaContatada, dataContatada) =>{
     return new Promise((resolve, reject) =>{
-        db.query(` CALL modificarRecebimento ('${idRecebimento}' '${idOrdem}', '${alterarSetor}','${alterarNProposta}', '${alterarNumNotaFiscal}', '${alterarDataRecebimento}', '${alterarRecebidoPrevisao}', '${alterarPrevisaoInicio}', '${alterarPrevisaoTermino}', '${alterarClienteConcorda}', '${alterarDataAssinatura}','${alterarPessoaContatada}','${alterarDataContatada}')`,
+        db.query(` CALL modificarRecebimento('${idRecebimento}' '${idOrdem}', '${setor}','${nProposta}', '${nNotaFiscal}', '${dataDeRecebimento}', '${recebidoNaPrevisao}', '${previsaoInicio}', '${previsaoTermino}', '${clienteConcorda}', '${dataAssinatura}','${pessoaContatada}','${dataContatada}')`,
         (error, results) => {
             if (error){
                 reject (error);
@@ -54,7 +54,7 @@ const updateReceipt = async(idRecebimento, idOrdem, alterarSetor, alterarNPropos
 // controller para visualizar o recibo pelo seu ID
 const getReceiptById = async(idOrdem, infoTipo,  infoContratante, infoEmail, infoTelefone, infoClient) =>{
     return new Promise((resolve, reject) =>{
-        db.query(` CALL infosRecebidos ('${idOrdem}','${infoTipo}', '${infoContratante}', '${infoEmail}', '${infoTelefone}', '${infoClient}')`,
+        db.query(` CALL infosRecebidos('${idOrdem}','${infoTipo}', '${infoContratante}', '${infoEmail}', '${infoTelefone}', '${infoClient}')`,
         (error, results) => {
             if (error){
                 reject (error);
@@ -72,7 +72,7 @@ const getReceiptById = async(idOrdem, infoTipo,  infoContratante, infoEmail, inf
 // controller para visualizar  todos os recibos 
 const getAllReceipt = async () =>{
     return new Promise((resolve, reject)=>{
-        db.query(`SELECT * FROM recibos`,
+        db.query(`SELECT * FROM recebidos`,
         (erro, results) => {
             if (erro) {
                 reject(erro);
@@ -86,7 +86,7 @@ const getAllReceipt = async () =>{
 }
 
 module.exports={
-    insertReceipt, 
+    registerReceipt, 
     updateReceipt,
     getReceiptById,
     getAllReceipt
