@@ -20,7 +20,7 @@ const registerReport = async(idRelatorio, idInstrumento, idUsuario, idPeca, inic
           }   
 
         const save = await new Promise((resolve, reject) =>{  
-            db.query(`CALL criarRelatorio('${idRelatorio}','${idInstrumento}', '${idUsuario}', '${idPeca}', '${inicio}', '${termino}', '${tempoTotal}', '${temperaturaC}', '${umidadeRelativa}', '${observacoes}', '${localDaMedicao}', '${dia}', '${assinatura}')`,
+            db.query(`CALL criarRelatorio('${idRelatorio}', '${idInstrumento}', '${idUsuario}', '${idPeca}', '${inicio}', '${termino}', '${tempoTotal}', '${temperaturaC}', '${umidadeRelativa}', '${observacoes}', '${localDaMedicao}', '${dia}', '${assinatura}')`,
                 (error, results) => {
                     if (error) {
                         reject(error);
@@ -67,7 +67,7 @@ const getAllReports = async() => {
 // função para obter as informações de dentro do relatório
 const getAllInfos = async(id_report) =>{
     return new Promise((resolve, reject) => {
-        db.query(`Select * FROM relatorio WHERE pk_idRelatorio = ${id_report}`,
+        db.query(`SELECT * FROM relatorio WHERE pk_idRelatorio = ${id_report}`,
             (error, results) => {
                 if(error){
                     reject(error);

@@ -13,7 +13,7 @@ const validacaoRecebimentos  = z.object({
     clienteConcorda: z.enum(['sim', 'não']),
     dataAssinatura: z.date({ invalid_type_error: "Precisa ser do tipo date"}),
     pessoaContatada: z.string().min(1).max(60),
-    dataContatada: z.date({ invalid_type_error: "Precisa ser do tipo date"}),
+    dataContatada: z.date({ invalid_type_error: "Precisa ser do tipo date"})
 })
 
 module.exports = validacaoRecebimentos;
