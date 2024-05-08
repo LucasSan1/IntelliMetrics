@@ -7,7 +7,7 @@ const validacaoCliente  = z.object({
     telefone: z.string().min(1).max(12),
     endereco: z.string().min(1).max(100),
     cnpj: z.string().length(14),
-    status: z.enum(['ativo', 'inativo']).default('ativo')
+    status: z.enum(['ativo', 'inativo'])
 })
 
 module.exports = validacaoCliente;
