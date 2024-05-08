@@ -23,7 +23,7 @@ const registerCliente = async(nomeEmpresa, representante, email, telefone, ender
 
         // Insere os detalhes do novo cliente no banco de dados
         const save = db.query(`
-        CALL criarCliente ( '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}') `)
+        CALL criarCliente ( '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}', '${status}') `)
 
         if (!save){
             return 400; // Retorna 400 (Bad Request) se a operação der errado
@@ -110,9 +110,9 @@ const activateclient = async (id_cliente) => {
 } 
 
 // Função para atualizar informações de um cliente pelo seu ID
-const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telefone, endereco, cnpj) => {
+const updateCliente = async(id_cliente, nomeEmpresa, representante, email, telefone, endereco, cnpj, status) => {
     return new Promise((resolve, reject) => {
-        db.query(`CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}')`,   
+        db.query(`CALL modificarCliente ('${id_cliente}', '${nomeEmpresa}', '${representante}', '${email}', '${telefone}', '${endereco}', '${cnpj}', '${status}')`,   
             (error, results) => {
                 if (error) {
                     reject (error);
