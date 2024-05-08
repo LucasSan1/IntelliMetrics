@@ -32,7 +32,6 @@ if(!insert){
 }
 
 // controller para alterar o paralelismo do paquimetro
-
 const upPaqParalelismo = async(alterarValorNominalOrelha, alterarValorProxOrelha1, alterarValorProxOrelha2, alterarValorProxOrelha3, alterarValorAfasOrelha1, alterarValorAfasOrelha2, alterarValorAfasOrelha3, alterarValorNominalBico, alterarValorProxBico1, alterarValorProxBico2, alterarValorProxBico3, alterarValorAfasBico1, alterarValorAfasBico2,  alterarValorAfasBico3)=>{
 
   const existing = await new Promise((resolve, reject) =>{
@@ -44,24 +43,24 @@ const upPaqParalelismo = async(alterarValorNominalOrelha, alterarValorProxOrelha
       }
       resolve(results);
     });
-  })
+  });
   if(existing.length == 0){
     return 404;
   }
-  
-  
 
-//   const update = await new Promise((resolve, reject) =>{
-//     db.query(` CALL alterarParalelismoPaq ('${alterarValorNominalOrelha}', '${alterarValorProxOrelha1}', '${alterarValorProxOrelha2}', '${ alterarValorProxOrelha3}', '${alterarValorAfasOrelha1}', '${ alterarValorAfasOrelha2}', '${alterarValorAfasOrelha3}', '${alterarValorNominalBico}' , '${alterarValorProxBico1}' ,'${alterarValorProxBico2}' ,'${alterarValorProxBico3}' ,'${alterarValorAfasBico1}' ,'${alterarValorAfasBico2}' ,'${alterarValorAfasBico3}' )`,
-//       (error, results) =>{
-//         if(error){
-//         reject(400, error);
-//         return;
-//     }else{
-//       resolve(200);
-//     }
-//   }
-//   )
-// }
 
+  return new Promise((resolve, reject) =>{
+    db.query(` CALL alterarParalelismoPaq ('${alterarValorNominalOrelha}', '${alterarValorProxOrelha1}', '${alterarValorProxOrelha2}', '${ alterarValorProxOrelha3}', '${alterarValorAfasOrelha1}', '${ alterarValorAfasOrelha2}', '${alterarValorAfasOrelha3}', '${alterarValorNominalBico}' , '${alterarValorProxBico1}' ,'${alterarValorProxBico2}' ,'${alterarValorProxBico3}' ,'${alterarValorAfasBico1}' ,'${alterarValorAfasBico2}' ,'${alterarValorAfasBico3}' )`,
+      (error, results) =>{
+        if(error){
+          reject(400, error);
+          return;
+        }
+        results(200);
+      }
+    );
+  });
 }
+
+
+//controller 
