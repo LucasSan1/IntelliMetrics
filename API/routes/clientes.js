@@ -19,6 +19,7 @@ router
                 telefone,
                 endereco,
                 cnpj,
+                status
             }
             
             const clienteValidado = validacaoCliente.parse(cliente);
@@ -31,6 +32,7 @@ router
                 clienteValidado.telefone,
                 clienteValidado.endereco,
                 clienteValidado.cnpj,
+                clienteValidado.status
             );
 
             // Verifica o resultado do cadastro e retorna a resposta adequada
@@ -140,7 +142,7 @@ router
     .put("/updateClient/:id", async (req, res) => {
         try {
             const id_cliente = req.params.id;
-            const { nomeEmpresa, representante, email, telefone, endereco, cnpj} = req.body;
+            const { nomeEmpresa, representante, email, telefone, endereco, cnpj, status} = req.body;
 
             const cliente = {
                 nomeEmpresa,
@@ -149,6 +151,7 @@ router
                 telefone,
                 endereco,
                 cnpj,
+                status
             }
             
             const clienteValidado = validacaoCliente.parse(cliente);
@@ -162,6 +165,7 @@ router
                 clienteValidado.telefone,
                 clienteValidado.endereco,
                 clienteValidado.cnpj,
+                clienteValidado.status
             )
             console.log(resultUpdate)
             // Verifica o resultado da atualização e retorna a resposta adequada
