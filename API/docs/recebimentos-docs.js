@@ -7,41 +7,57 @@
  *  recebimento:
  *     type: object
  *     properties:
- *       :
+ *       idOrdem:
+ *         type: integer
+ *       idUsuario:
+ *         type: integer
+ *       setor:
  *         type: string
- *       representante:
+ *       nProposta:
+ *         type: integer
+ *       nNotaFiscal:
+ *         type: integer
+ *       dataDeRecebimento:
  *         type: string
- *       email:
- *          type: string
- *       telefone:
- *          type: string
- *       endereco:
- *          type: string
- *       cnpj:
- *          type: string
+ *         pattern: 2024-03-01
+ *       recebidoNaPrevisao:
+ *         type: string
+ *         pattern: sim/nao
+ *       previsaoInicio:
+ *         type: string
+ *         pattern: 2024-03-01
+ *       previsaoTermino:
+ *         type: string
+ *         pattern: 2024-03-01
+ *       clienteConcorda:
+ *         type: string
+ *         pattern: sim/nao
+ *       dataAssinatura:
+ *         type: string
+ *         pattern: 2024-06-01
+ *       pessoaContatada:
+ *         type: string
+ *       dataContatada:
+ *         type: string
+ *         pattern: 2024-07-31
  *          
- *  disableCliente:
- *     type: object
- *     properties:
- *       email:
- *          type: string
  *      
  * 
- * /registerClient:
+ * /registerReceipt:
  *   post:
  *     tags:
- *       - Cliente
- *     summary: cadastro de clientes
- *     description: cadastra um novo cliente no banco de dados
+ *       - Recebimentos
+ *     summary: cadastro de um recebimento
+ *     description: cadastra um novo recebimento no banco de dados
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/definitions/cliente'
+ *             $ref: '#/definitions/recebimento
  *     responses:
  *       200:
- *         description: Cliente cadastrado
+ *         description: Recibo cadastrado com sucesso
  *       400:
  *         description: Erro ao cadastrar cliente
  *       409:
