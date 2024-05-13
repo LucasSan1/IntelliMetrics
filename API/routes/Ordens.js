@@ -43,38 +43,44 @@ router
         status,
       };
 
-      const ordensValidadas = validacaoOrdens.parse(ordensVal);
+      try {
+        const ordensValidadas = validacaoOrdens.parse(ordensVal);
 
-      // Chama a função para registrar um novo certificado de calibração
-      let register = await registerOrder(
-        pk_idOs,
-        fk_idCliente,
-        fk_idUsuario,
-        ordensValidadas.titulo,
-        ordensValidadas.tipo,
-        ordensValidadas.descricao,
-        dataInicio,
-        dataTermino,
-        ordensValidadas.contratante,
-        ordensValidadas.email,
-        ordensValidadas.telefone,
-        ordensValidadas.status
-      );
+        // Chama a função para registrar um novo certificado de calibração
+        let register = await registerOrder(
+          pk_idOs,
+          fk_idCliente,
+          fk_idUsuario,
+          ordensValidadas.titulo,
+          ordensValidadas.tipo,
+          ordensValidadas.descricao,
+          dataInicio,
+          dataTermino,
+          ordensValidadas.contratante,
+          ordensValidadas.email,
+          ordensValidadas.telefone,
+          ordensValidadas.status
+        );
 
-      // Verifica o resultado do registro e retorna a resposta adequada
-      switch (register) {
-        case 200:
-          res.status(200).json("Ordem de calibração cadastrada com sucesso");
-          break;
-        case 400:
-          res.status(400).json("Erro ao cadastrar ordem de calibração");
-          break;
-        case 409:
-          res.status(409).json("ID ja cadastrada");
-          break;
-        default:
-          res.status(500).json("Erro interno do servidor");
+        // Verifica o resultado do registro e retorna a resposta adequada
+        switch (register) {
+          case 200:
+            res.status(200).json("Ordem de calibração cadastrada com sucesso");
+            break;
+          case 400:
+            res.status(400).json("Erro ao cadastrar ordem de calibração");
+            break;
+          case 409:
+            res.status(409).json("ID ja cadastrada");
+            break;
+          default:
+            res.status(500).json("Erro interno do servidor");
+        }
+      } catch (validationError) {
+        // Captura os erros de validação e envia como resposta
+        return res.status(400).json({ error: validationError.errors });
       }
+
     } catch (error) {
       console.log(error); // Registra o erro no console
     }
@@ -132,27 +138,33 @@ router
         telefone,
       };
 
-      const ordensValidadas = validacaoOrdens.parse(ordensVal);
+      try{ 
+        const ordensValidadas = validacaoOrdens.parse(ordensVal);
 
-      let resultUpdate = await updateOrders(
-        id_antigo,
-        id_order,
-        fk_idCliente,
-        fk_idUsuario,
-        ordensValidadas.titulo,
-        ordensValidadas.tipo,
-        ordensValidadas.descricao,
-        dataTermino,
-        ordensValidadas.contratante,
-        ordensValidadas.email,
-        ordensValidadas.telefone
-      );
+        let resultUpdate = await updateOrders(
+          id_antigo,
+          id_order,
+          fk_idCliente,
+          fk_idUsuario,
+          ordensValidadas.titulo,
+          ordensValidadas.tipo,
+          ordensValidadas.descricao,
+          dataTermino,
+          ordensValidadas.contratante,
+          ordensValidadas.email,
+          ordensValidadas.telefone
+        );
 
-      if (resultUpdate) {
-        res.status(200).json("Ordem atualizada");
-      } else {
-        res.status(500).json("Erro interno do servidor");
+        if (resultUpdate) {
+          res.status(200).json("Ordem atualizada");
+        } else {
+          res.status(500).json("Erro interno do servidor");
+        }
+      } catch (validationError) {
+        // Captura os erros de validação e envia como resposta
+        return res.status(400).json({ error: validationError.errors });
       }
+      
     } catch (error) {
       console.log(error);
     }

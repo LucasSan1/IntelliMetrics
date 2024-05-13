@@ -19,37 +19,43 @@ router
                 telefone,
                 endereco,
                 cnpj,
-                status
+                status: "ativo"
+            }
+
+            try {
+                const clienteValidado = validacaoCliente.parse(cliente);
+
+                  // Chama a função para registrar um novo cliente
+                let resultCad = await registerCliente(
+                    clienteValidado.nomeEmpresa,
+                    clienteValidado.representante,
+                    clienteValidado.email,
+                    clienteValidado.telefone,
+                    clienteValidado.endereco,
+                    clienteValidado.cnpj,
+                    clienteValidado.status
+                );
+
+                // Verifica o resultado do cadastro e retorna a resposta adequada
+                switch (resultCad) { 
+                    case 200:
+                        res.status(200).json("Cliente cadastrado");
+                        break;
+                    case 400:
+                        res.status(400).json("Erro ao cadastrar cliente");
+                        break;
+                    case 409:
+                        res.status(409).json("Este cliente já está cadastrado");
+                        break;
+                    default:
+                        res.status(500).json("Erro interno do servidor");
+                }
+
+            } catch (validationError) {
+                // Captura os erros de validação e envia como resposta
+                return res.status(400).json({ error: validationError.errors });
             }
             
-            const clienteValidado = validacaoCliente.parse(cliente);
-
-            // Chama a função para registrar um novo cliente
-            let resultCad = await registerCliente(
-                clienteValidado.nomeEmpresa,
-                clienteValidado.representante,
-                clienteValidado.email,
-                clienteValidado.telefone,
-                clienteValidado.endereco,
-                clienteValidado.cnpj,
-                clienteValidado.status
-            );
-
-            // Verifica o resultado do cadastro e retorna a resposta adequada
-            switch (resultCad) { 
-                case 200:
-                    res.status(200).json("Cliente cadastrado");
-                    break;
-                case 400:
-                    res.status(400).json("Erro ao cadastrar cliente");
-                    break;
-                case 409:
-                    res.status(409).json("Este cliente já está cadastrado");
-                    break;
-                default:
-                    res.status(500).json("Erro interno do servidor");
-            }
-
         } catch (error) {
             console.log(error); // Registra o erro no console
         }
@@ -154,26 +160,32 @@ router
                 status
             }
             
-            const clienteValidado = validacaoCliente.parse(cliente);
+            try {
+                const clienteValidado = validacaoCliente.parse(cliente);
 
-            // Chama a função para atualizar um cliente pelo ID
-            let resultUpdate = await updateCliente(
-                id_cliente,
-                clienteValidado.nomeEmpresa,
-                clienteValidado.representante,
-                clienteValidado.email,
-                clienteValidado.telefone,
-                clienteValidado.endereco,
-                clienteValidado.cnpj,
-                clienteValidado.status
-            )
-            console.log(resultUpdate)
-            // Verifica o resultado da atualização e retorna a resposta adequada
-            if(resultUpdate){
-                res.status(200).json("Cliente atualizado");
-            } else{
-                res.status(500).json("Erro interno do servidor");
+                // Chama a função para atualizar um cliente pelo ID
+                let resultUpdate = await updateCliente(
+                    id_cliente,
+                    clienteValidado.nomeEmpresa,
+                    clienteValidado.representante,
+                    clienteValidado.email,
+                    clienteValidado.telefone,
+                    clienteValidado.endereco,
+                    clienteValidado.cnpj,
+                    clienteValidado.status
+                )
+                console.log(resultUpdate)
+                // Verifica o resultado da atualização e retorna a resposta adequada
+                if(resultUpdate){
+                    res.status(200).json("Cliente atualizado");
+                } else{
+                    res.status(500).json("Erro interno do servidor");
+                }
+            } catch (validationError) {
+                // Captura os erros de validação e envia como resposta
+                return res.status(400).json({ error: validationError.errors });
             }
+            
         } catch (error) {
             console.log(error); // Registra o erro no console
         }

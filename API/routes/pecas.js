@@ -18,29 +18,34 @@ router
                 descricao
             }
 
-            const pecaValidada = validacaoPecas.parse(valPeca);
+            try{
+                const pecaValidada = validacaoPecas.parse(valPeca);
 
-            // Chama a função para cadastrar uma nova peça
-            let resultCad = await registerPeca(
-                pecaValidada.idOs,
-                pecaValidada.idCliente,
-                pecaValidada.nome,
-                pecaValidada.material,
-                pecaValidada.nDesenho,
-                pecaValidada.descricao
-            );
+                // Chama a função para cadastrar uma nova peça
+                let resultCad = await registerPeca(
+                    pecaValidada.idOs,
+                    pecaValidada.idCliente,
+                    pecaValidada.nome,
+                    pecaValidada.material,
+                    pecaValidada.nDesenho,
+                    pecaValidada.descricao
+                );
 
-            // Verifica o resultado do cadastro e retorna a resposta adequada
-            switch (resultCad) { 
-                case 200:
-                    res.status(200).json("Peça cadastrada");
-                    break;
-                case 400:
-                    res.status(400).json("Erro ao cadastrar peça");
-                    break;
-                default:
-                    res.status(500).json("Erro interno do servidor");
-            }
+                // Verifica o resultado do cadastro e retorna a resposta adequada
+                switch (resultCad) { 
+                    case 200:
+                        res.status(200).json("Peça cadastrada");
+                        break;
+                    case 400:
+                        res.status(400).json("Erro ao cadastrar peça");
+                        break;
+                    default:
+                        res.status(500).json("Erro interno do servidor");
+                }
+            } catch (validationError) {
+                // Captura os erros de validação e envia como resposta
+                return res.status(400).json({ error: validationError.errors });
+              }
 
         } catch (error) {
             console.log(error); // Registra o erro no console
@@ -62,29 +67,34 @@ router
                 descricao
             }
 
-            const pecaValidada = validacaoPecas.parse(valPeca);
+            try{
+                const pecaValidada = validacaoPecas.parse(valPeca);
 
-            let resultUpdate = await updatePeca(
-                idPeca,
-                pecaValidada.fk_idOs,
-                pecaValidada.fk_idCliente,
-                pecaValidada.nome,
-                pecaValidada.material,
-                pecaValidada.nDesenho,
-                pecaValidada.descricao
-            )
+                let resultUpdate = await updatePeca(
+                    idPeca,
+                    pecaValidada.fk_idOs,
+                    pecaValidada.fk_idCliente,
+                    pecaValidada.nome,
+                    pecaValidada.material,
+                    pecaValidada.nDesenho,
+                    pecaValidada.descricao
+                )
 
-            switch(resultUpdate){
-                case 200:
-                    res.status(200).json('Peça atualizada');
-                    break;
-                case 400:
-                    res.status(400).json('Erro ao atualizar peça');
-                    break;
-                default:
-                    res.status(500).json('Erro interno do servidor');
-            }  
-            
+                switch(resultUpdate){
+                    case 200:
+                        res.status(200).json('Peça atualizada');
+                        break;
+                    case 400:
+                        res.status(400).json('Erro ao atualizar peça');
+                        break;
+                    default:
+                        res.status(500).json('Erro interno do servidor');
+                }  
+            } catch (validationError) {
+                // Captura os erros de validação e envia como resposta
+                return res.status(400).json({ error: validationError.errors });
+              }
+              
         } catch(error) {
             console.log(error);
             res.status(500).json("Erro interno no servidor");
