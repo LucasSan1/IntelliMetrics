@@ -13,22 +13,28 @@ router
                 nome
             };
 
-            const categoriaValidada = validacaoCategoria.parse(valCategoria);
+            try{
 
-            let resultCad = await registerCategoria(
-                categoriaValidada.nome
-            );
+                const categoriaValidada = validacaoCategoria.parse(valCategoria);
 
-            switch (resultCad) { 
-                case 200:
-                    res.status(200).json("Categoria cadastrada");
-                    break;
-                case 400:
-                    res.status(400).json("Erro ao cadastrar categoria");
-                    break;
-                default:
-                    res.status(500).json("Erro interno do servidor");
-            }
+                let resultCad = await registerCategoria(
+                    categoriaValidada.nome
+                );
+
+                switch (resultCad) { 
+                    case 200:
+                        res.status(200).json("Categoria cadastrada");
+                        break;
+                    case 400:
+                        res.status(400).json("Erro ao cadastrar categoria");
+                        break;
+                    default:
+                        res.status(500).json("Erro interno do servidor");
+                }
+            } catch (validationError) {
+                // Captura os erros de validação e envia como resposta
+                return res.status(400).json({ error: validationError.errors });
+              }
 
         } catch (error) {
             console.log(error); // Registra o erro no console
@@ -47,23 +53,29 @@ router
                 nome
             }
 
-            const categoriaValidada = validacaoCategoria.parse(valCategoria);
+            try{
 
-            let resultUpdate = await updateCategoria(
-                idCategoria,
-                categoriaValidada.nome
-            )
-            
-            switch(resultUpdate){
-                case 200:
-                    res.status(200).json('Categoria atualizado');
-                    break;
-                case 404:
-                    res.status(400).json('Categoria não encontrada');
-                    break;
-                default:
-                    res.status(500).json('Erro interno do servidor');
-            }
+                const categoriaValidada = validacaoCategoria.parse(valCategoria);
+
+                let resultUpdate = await updateCategoria(
+                    idCategoria,
+                    categoriaValidada.nome
+                )
+                
+                switch(resultUpdate){
+                    case 200:
+                        res.status(200).json('Categoria atualizado');
+                        break;
+                    case 404:
+                        res.status(400).json('Categoria não encontrada');
+                        break;
+                    default:
+                        res.status(500).json('Erro interno do servidor');
+                }
+            } catch (validationError) {
+                // Captura os erros de validação e envia como resposta
+                return res.status(400).json({ error: validationError.errors });
+              }
 
         } catch (error) {
             console.log(error);
