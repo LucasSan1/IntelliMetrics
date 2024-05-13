@@ -44,35 +44,42 @@ router
         orgaoResponsavel,
       };
 
-      const instrumentoValidado = validacaoInstrumentos.parse(valInstrumento);
+      try {
 
-      // Chama a função para registrar um novo instrumento
-      let resultCad = await registerInstrumento(
-        instrumentoValidado.fk_idCliente,
-        instrumentoValidado.fk_idOs,
-        instrumentoValidado.fk_idCategoria,
-        instrumentoValidado.nome,
-        instrumentoValidado.nSerie,
-        instrumentoValidado.identificacaoCliente,
-        instrumentoValidado.fabricante,
-        instrumentoValidado.faixaNominalNum,
-        instrumentoValidado.faixaNominalUni,
-        instrumentoValidado.divisaoResolucaoNum,
-        instrumentoValidado.divisaoResolucaoUni,
-        instrumentoValidado.orgaoResponsavel
-      );
+        const instrumentoValidado = validacaoInstrumentos.parse(valInstrumento);
 
-      // Verifica o resultado do cadastro e retorna a resposta adequada
-      switch (resultCad) {
-        case 200:
-          res.status(200).json("Instrumento cadastrado");
-          break;
-        case 400:
-          res.status(400).json("Erro ao cadastrar instrumento");
-          break;
-        default:
-          res.status(500).json("Erro interno do servidor");
+        // Chama a função para registrar um novo instrumento
+        let resultCad = await registerInstrumento(
+          instrumentoValidado.fk_idCliente,
+          instrumentoValidado.fk_idOs,
+          instrumentoValidado.fk_idCategoria,
+          instrumentoValidado.nome,
+          instrumentoValidado.nSerie,
+          instrumentoValidado.identificacaoCliente,
+          instrumentoValidado.fabricante,
+          instrumentoValidado.faixaNominalNum,
+          instrumentoValidado.faixaNominalUni,
+          instrumentoValidado.divisaoResolucaoNum,
+          instrumentoValidado.divisaoResolucaoUni,
+          instrumentoValidado.orgaoResponsavel
+        );
+
+        // Verifica o resultado do cadastro e retorna a resposta adequada
+        switch (resultCad) {
+          case 200:
+            res.status(200).json("Instrumento cadastrado");
+            break;
+          case 400:
+            res.status(400).json("Erro ao cadastrar instrumento");
+            break;
+          default:
+            res.status(500).json("Erro interno do servidor");
+        }
+      } catch (validationError) {
+        // Captura os erros de validação e envia como resposta
+        return res.status(400).json({ error: validationError.errors });
       }
+
     } catch (error) {
       console.log(error); // Registra o erro no console
       res.status(500).json("Erro interno do servidor");
@@ -115,36 +122,43 @@ router
         orgaoResponsavel,
       };
 
-      const instrumentoValidado = validacaoInstrumentos.parse(valInstrumento);
+      try {
 
-      // Chama a função para atualizar um instrumento pelo ID
-      let resultUpdate = await updateInstrumento(
-        id_instrumento,
-        instrumentoValidado.fk_idCliente,
-        instrumentoValidado.fk_idOs,
-        instrumentoValidado.fk_idCategoria,
-        instrumentoValidado.nome,
-        instrumentoValidado.nSerie,
-        instrumentoValidado.identificacaoCliente,
-        instrumentoValidado.fabricante,
-        instrumentoValidado.faixaNominalNum,
-        instrumentoValidado.faixaNominalUni,
-        instrumentoValidado.divisaoResolucaoNum,
-        instrumentoValidado.divisaoResolucaoUni,
-        instrumentoValidado.orgaoResponsavel
-      );
+        const instrumentoValidado = validacaoInstrumentos.parse(valInstrumento);
 
-      // Verifica o resultado da atualização e retorna a resposta adequada
-      switch (resultUpdate) {
-        case 200:
-          res.status(200).json("Instrumento atualizado");
-          break;
-        case 400:
-          res.status(400).json("Erro ao atualizar instrumento");
-          break;
-        default:
-          res.status(500).json("Erro interno do servidor");
+        // Chama a função para atualizar um instrumento pelo ID
+        let resultUpdate = await updateInstrumento(
+          id_instrumento,
+          instrumentoValidado.fk_idCliente,
+          instrumentoValidado.fk_idOs,
+          instrumentoValidado.fk_idCategoria,
+          instrumentoValidado.nome,
+          instrumentoValidado.nSerie,
+          instrumentoValidado.identificacaoCliente,
+          instrumentoValidado.fabricante,
+          instrumentoValidado.faixaNominalNum,
+          instrumentoValidado.faixaNominalUni,
+          instrumentoValidado.divisaoResolucaoNum,
+          instrumentoValidado.divisaoResolucaoUni,
+          instrumentoValidado.orgaoResponsavel
+        );
+
+        // Verifica o resultado da atualização e retorna a resposta adequada
+        switch (resultUpdate) {
+          case 200:
+            res.status(200).json("Instrumento atualizado");
+            break;
+          case 400:
+            res.status(400).json("Erro ao atualizar instrumento");
+            break;
+          default:
+            res.status(500).json("Erro interno do servidor");
+        }
+      } catch (validationError) {
+        // Captura os erros de validação e envia como resposta
+        return res.status(400).json({ error: validationError.errors });
       }
+      
     } catch (error) {
       console.log(error);
       res.status(500).json("Erro interno do servidor");

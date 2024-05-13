@@ -18,26 +18,31 @@ router
         cargo
       }
       
-      const usuarioValidado = validacaoUsuario.parse(valUsuario);
+      try{
+        const usuarioValidado = validacaoUsuario.parse(valUsuario);
 
-      let resultado = await createUser(
-        usuarioValidado.nome.toLowerCase(),
-        usuarioValidado.email.toLowerCase(),
-        usuarioValidado.cargo.toLowerCase()
-      )
+        let resultado = await createUser(
+          usuarioValidado.nome.toLowerCase(),
+          usuarioValidado.email.toLowerCase(),
+          usuarioValidado.cargo.toLowerCase()
+        )
 
-      switch (resultado) {
-        case 200:
-          res.status(200).json('Usuário cadastrado')
-          break;
-        case 409:
-          res.status(409).json('Este e-mail já está em uso')
-          break;
-        case 400:
-          res.status(400).json('Erro ao cadastrar usuário')
-          break;
-        default:
-          res.status(500).json('Erro interno do servidor')
+        switch (resultado) {
+          case 200:
+            res.status(200).json('Usuário cadastrado')
+            break;
+          case 409:
+            res.status(409).json('Este e-mail já está em uso')
+            break;
+          case 400:
+            res.status(400).json('Erro ao cadastrar usuário')
+            break;
+          default:
+            res.status(500).json('Erro interno do servidor')
+        }
+      } catch (validationError) {
+        // Captura os erros de validação e envia como resposta
+        return res.status(400).json({ error: validationError.errors });
       }
 
     } catch (error) {
@@ -207,23 +212,28 @@ router
         cargo
       }
       
-      const usuarioValidado = validacaoUsuario.parse(valUsuario);
+      try{
+        const usuarioValidado = validacaoUsuario.parse(valUsuario);
 
-      let resultado = await putUser(
-        usuarioValidado.nome.toLowerCase(),
-        usuarioValidado.email.toLowerCase(),
-        usuarioValidado.cargo.toLowerCase()
-      )
+        let resultado = await putUser(
+          usuarioValidado.nome.toLowerCase(),
+          usuarioValidado.email.toLowerCase(),
+          usuarioValidado.cargo.toLowerCase()
+        )
 
-      switch (resultado) {
-        case 200:
-          res.status(200).json('Usuário atualizado')
-          break;
-        case 400:
-          res.status(400).json('Erro ao atualizar usuário')
-          break;
-        default:
-          res.status(500).json('Erro interno do servidor')
+        switch (resultado) {
+          case 200:
+            res.status(200).json('Usuário atualizado')
+            break;
+          case 400:
+            res.status(400).json('Erro ao atualizar usuário')
+            break;
+          default:
+            res.status(500).json('Erro interno do servidor')
+        }
+      } catch (validationError) {
+        // Captura os erros de validação e envia como resposta
+        return res.status(400).json({ error: validationError.errors });
       }
 
     } catch (error) {

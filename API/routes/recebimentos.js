@@ -26,37 +26,44 @@ router
                 dataContatada
             }
 
-            const reciboValidado = validacaoRecebimentos.parse(valRecebidos)
-             
-            let resultCad = await registerReceipt(
-                reciboValidado.idOrdem,
-                reciboValidado.idUsuario,
-                reciboValidado.setor,
-                reciboValidado.nProposta,
-                reciboValidado.nNotaFiscal,
-                reciboValidado.dataDeRecebimento,
-                reciboValidado.recebidoNaPrevisao,
-                reciboValidado.previsaoInicio,
-                reciboValidado.previsaoTermino,
-                reciboValidado.clienteConcorda,
-                reciboValidado.dataAssinatura,
-                reciboValidado.pessoaContatada,
-                reciboValidado.dataContatada
-            );
+            try{
 
-            switch(resultCad){
-                case 200:
-                    res.status(200).json("Recibo cadastrado com sucesso");
-                    break;
-                case 400:
-                    res.status(400).json("Erro ao cadastrar recibo");
-                    break;
-                case 409:
-                    res.status(409).json("ID ja cadastrado");
-                    break;
-                default:
-                    res.status(500).json("Erro interno do servidor");
-            }
+                const reciboValidado = validacaoRecebimentos.parse(valRecebidos)
+                
+                let resultCad = await registerReceipt(
+                    reciboValidado.idOrdem,
+                    reciboValidado.idUsuario,
+                    reciboValidado.setor,
+                    reciboValidado.nProposta,
+                    reciboValidado.nNotaFiscal,
+                    reciboValidado.dataDeRecebimento,
+                    reciboValidado.recebidoNaPrevisao,
+                    reciboValidado.previsaoInicio,
+                    reciboValidado.previsaoTermino,
+                    reciboValidado.clienteConcorda,
+                    reciboValidado.dataAssinatura,
+                    reciboValidado.pessoaContatada,
+                    reciboValidado.dataContatada
+                );
+
+                switch(resultCad){
+                    case 200:
+                        res.status(200).json("Recibo cadastrado com sucesso");
+                        break;
+                    case 400:
+                        res.status(400).json("Erro ao cadastrar recibo");
+                        break;
+                    case 409:
+                        res.status(409).json("ID ja cadastrado");
+                        break;
+                    default:
+                        res.status(500).json("Erro interno do servidor");
+                }
+            } catch (validationError) {
+                // Captura os erros de validação e envia como resposta
+                return res.status(400).json({ error: validationError.errors });
+              }
+              
         }catch(error){
             console.log(error);
         }

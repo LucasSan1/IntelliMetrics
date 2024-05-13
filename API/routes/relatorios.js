@@ -22,41 +22,46 @@ router
                 dia, 
                 assinatura
             }
-       
-            const relatorioValidado = validacaoRelatorios.parse(valRelatorio);
+            
+            try{
+                const relatorioValidado = validacaoRelatorios.parse(valRelatorio);
 
-            // Chama a função para registrar um relatório de calibração
-            let register = await registerReport(
-                idRelatorio, 
-                relatorioValidado.idInstrumento, 
-                relatorioValidado.idUsuario, 
-                relatorioValidado.idPeca, 
-                relatorioValidado.inicio, 
-                relatorioValidado.termino,
-                relatorioValidado.tempoTotal, 
-                relatorioValidado.temperaturaC, 
-                relatorioValidado.umidadeRelativa, 
-                relatorioValidado.observacoes, 
-                relatorioValidado.localDaMedicao, 
-                relatorioValidado.dia, 
-                relatorioValidado.assinatura
-            );
+                // Chama a função para registrar um relatório de calibração
+                let register = await registerReport(
+                    idRelatorio, 
+                    relatorioValidado.idInstrumento, 
+                    relatorioValidado.idUsuario, 
+                    relatorioValidado.idPeca, 
+                    relatorioValidado.inicio, 
+                    relatorioValidado.termino,
+                    relatorioValidado.tempoTotal, 
+                    relatorioValidado.temperaturaC, 
+                    relatorioValidado.umidadeRelativa, 
+                    relatorioValidado.observacoes, 
+                    relatorioValidado.localDaMedicao, 
+                    relatorioValidado.dia, 
+                    relatorioValidado.assinatura
+                );
 
-            // Verifica o resultado do registro e retorna a resposta adequada
-            switch(register){
-                case 200:
-                    res.status(200).json("Relatorio cadastrado com sucesso");
-                    break;
-                case 400:
-                    res.status(400).json("Erro ao cadastrar relatorio");
-                    break;
-                case 409:
-                    res.status(409).json("ID ja cadastrada");
-                    break;
-                default:
-                    res.status(500).json("Erro interno do servidor");
-            }
+                // Verifica o resultado do registro e retorna a resposta adequada
+                switch(register){
+                    case 200:
+                        res.status(200).json("Relatorio cadastrado com sucesso");
+                        break;
+                    case 400:
+                        res.status(400).json("Erro ao cadastrar relatorio");
+                        break;
+                    case 409:
+                        res.status(409).json("ID ja cadastrada");
+                        break;
+                    default:
+                        res.status(500).json("Erro interno do servidor");
+                }
 
+            } catch (validationError) {
+                // Captura os erros de validação e envia como resposta
+                return res.status(400).json({ error: validationError.errors });
+              }
 
         } catch(error) {
             console.log(error); // Registra o erro no console

@@ -1,11 +1,11 @@
 const router = require("express").Router();
 
 // Importa as funções de cálculo da planicidade e paralelismo do micrômetro
-const { calculoPlaneza, calculoParalelismo, controleDimensional, incerteza_medAU, incerteza_medERES, incertez_medl1, incertez_medl2, incerteza_medPAR, incertez_medEader, incertezaUC } = require("../util/calculosMicrometro");
+const { calculoPlaneza, calculoParalelismo, controleDimensional, incerteza_medAU, incerteza_UP, incerteza_medERES, incertez_medl1, incertez_medl2, incerteza_medPAR, incertez_medEader, incertezaUC, incetPara0_25 } = require("../util/calculosMicrometro");
 
 router
      // Rota para calcular a planicidade do micrômetro
-    .post("/calculateMicrometer", async (req, res) => {
+    .post("/calculateMicrometro", async (req, res) => {
 
         const {cMovel, cFixo, dadosParalelismo, dadosControle, faixaCalibrada, valorDivResolucao, dig_anal} = req.body
 
@@ -15,10 +15,11 @@ router
            req.desvpadMedio = 0
            req.ultimoValor = 0
            req.incerteza = []
-           req.valpara = 0
+           req.desvpadPara3Ult = 0
+           req.valParaMM = 0
 
 
-            !!dadosParalelismo == true ? response.calculoParalelismo =  calculoParalelismo(dadosParalelismo) : response.calculoParalelismo = "Sem dados" 
+            !!dadosParalelismo == true ? response.calculoParalelismo =  calculoParalelismo(dadosParalelismo, req) : response.calculoParalelismo = "Sem dados" 
 
             !!cMovel == true && !!cFixo == true ? response.calculoPlaneza = calculoPlaneza(cFixo, cMovel) : response.calculoParalelismo = "Sem dados"
 
@@ -27,6 +28,8 @@ router
 
             // calculo incerteza micromico 
             !!faixaCalibrada == true ? response.incertez_medAU = incerteza_medAU(req) : response.incertez_medAU = "Sem dados"
+
+            !!valorDivResolucao == true ? response.incerteza_UP = incerteza_UP(req) :  response.incerteza_UP ="semm dados"
 
             !!valorDivResolucao == true ? response.incerteza_medEres = incerteza_medERES(valorDivResolucao, dig_anal, req) : response.incerteza_medERES = "Sem dados"
 
@@ -39,6 +42,8 @@ router
             !!valorDivResolucao == true ? response.incertez_medEader = incertez_medEader(req) : response.incertez_medEader =  "Sem dados"
             
             !!valorDivResolucao == true ? response.incertezaUC = incertezaUC(req) : response.incertezaUC = "Sem dados"
+
+            !!valorDivResolucao == true ? response.incetPara0_25 = incetPara0_25(req) :response.incetPara0_25 = "Sem dados"
 
             return res.status(200).json(response)
             
