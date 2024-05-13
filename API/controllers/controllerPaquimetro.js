@@ -64,3 +64,8 @@ const upPaqParalelismo = async(alterarValorNominalOrelha, alterarValorProxOrelha
 
 
 //controller 
+
+module.exports = {
+  paralelismoPaquimetro,
+  upPaqParalelismo
+}
