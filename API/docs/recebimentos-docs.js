@@ -54,7 +54,7 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/definitions/recebimento
+ *             $ref: '#/definitions/recebimento'
  *     responses:
  *       200:
  *         description: Recibo cadastrado com sucesso
