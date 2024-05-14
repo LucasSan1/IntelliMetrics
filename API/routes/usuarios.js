@@ -50,7 +50,7 @@ router
     }
   })
   
-  .put("/disableUser", middlewareValidarJWT, async (req, res) => {
+  .put("/disableUser", async (req, res) => {
     try {
         const {email} = req.body
 
@@ -73,7 +73,7 @@ router
     }
   })
 
-  .put("/enableUser", middlewareValidarJWT, async (req, res) => {
+  .put("/enableUser", async (req, res) => {
     try {
         const {email} = req.body
 
@@ -96,7 +96,7 @@ router
     }
   })
 
-  .get("/allUsers", middlewareValidarJWT, async (req, res) => {
+  .get("/allUsers", async (req, res) => {
     try {
     
       let resultado = await getCol()
@@ -107,7 +107,7 @@ router
     }
   })
 
-  .get("/user/:id", middlewareValidarJWT, async (req, res) => {
+  .get("/user/:id", async (req, res) => {
     try {
       const id = req.params.id;
 
@@ -201,7 +201,7 @@ router
   })
 
   //atualiza o user
-  .put("/updateUser", middlewareValidarJWT, async (req, res) => {
+  .put("/updateUser", async (req, res) => {
     try {
 
       const { email, nome, cargo } = req.body;
