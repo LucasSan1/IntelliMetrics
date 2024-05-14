@@ -188,7 +188,7 @@ const upResultMicro = async(antigoNrCertificad,alterarNrCertificado,idControle, 
     });
   }
 
-
+//
 
 
 
