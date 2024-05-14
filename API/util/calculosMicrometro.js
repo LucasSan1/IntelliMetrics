@@ -1,7 +1,7 @@
 const { media, desvpad, arredondarParaCima } = require("./funcoesCalculos");
 const jStat = require("jstat");
 
-function calculoPlaneza(CMovel, CFixo) {
+function calculoPlaneza(CMovel, CFixo, req) {
   // Desvio padrao do CMovel
   // Calcula a média dos valores de CMovel
   const mediaCM = media(CMovel);
@@ -20,6 +20,10 @@ function calculoPlaneza(CMovel, CFixo) {
   const planezaMedia = ((mediaCM + mediaCF) / 2) * 0.0003;
   const planezaMediaTratada = parseFloat(planezaMedia.toFixed(4));
 
+  req.CMovel = desvioPadraoCM
+  req.CFixo = desvioPadraoCF
+  req.planezaMedia = planezaMedia
+
   const resultados = {
     media_CMovel: mediaCM,
     media_CFixo: mediaCF,
@@ -27,12 +31,19 @@ function calculoPlaneza(CMovel, CFixo) {
     desvioPadraoCFixo: desvioPadraoCF,
     planezaMedia: planezaMediaTratada,
   };
-
+  
   return resultados;
 }
 
 function calculoParalelismo(dadosParalelismo, req) {
-  const mediaParalelismo = media(dadosParalelismo);
+
+  const ultmos3 = [
+    dadosParalelismo[3],
+    dadosParalelismo[4],
+    dadosParalelismo[5],
+  ];
+
+  const mediaParalelismo = media(ultmos3);
 
   const resultadoMedicao = [
     dadosParalelismo[0],
@@ -55,13 +66,8 @@ function calculoParalelismo(dadosParalelismo, req) {
     valorEmMilimetro: valormmTratado,
   };
 
-  const valorparalelismo = [
-    dadosParalelismo[3],
-    dadosParalelismo[4],
-    dadosParalelismo[5],
-  ];
 
-  const desvPadparalelismo = desvpad(valorparalelismo);
+  const desvPadparalelismo = desvpad(ultmos3);
 
   req.desvpadPara3Ult = desvPadparalelismo;
   req.valParaMM = valormm;
@@ -405,13 +411,65 @@ function incertezaUC(req) {
 // incerteza pararelismo 0-25
 
 function incetPara0_25(req) {
-  let incertezaAU = (req.valParaMM * 0.0003) / Math.sqrt(3);
+  let incertezaAU = (req.desvpadPara3Ult * 0.0003) / Math.sqrt(3);
 
   incertezaAU = incertezaAU == 0 ? 0.0001 : incertezaAU;
 
-  const response = { incertezaAU: parseFloat(incertezaAU) };
+  const contriIncertezaAU = incertezaAU / 1 * 1
+
+  const contriIncertezaUp = 0.00005 / 2 * 1
+
+  const contriIncertezaEres = 0.00036 / Math.sqrt(3) * 1
+
+  const lista25 = [contriIncertezaAU, contriIncertezaUp, contriIncertezaEres]
+
+  const somaQuadrados = lista25.reduce((acc, val) => acc + Math.pow(val, 2),0);
+
+  const raizUC = Math.sqrt(somaQuadrados).toFixed(4);  
+
+  let veff = Math.pow(raizUC, 4) / ((Math.pow(contriIncertezaAU, 4)) / 2); 
+
+ 
+  const K = jStat.studentt.inv(1 - 0.0455 / 2, veff);
+  const K_Resposta = K.toFixed(2);
+
+  const U = raizUC * K;
+  const U_Arredondado = arredondarParaCima(U);
+
+  const response = { incertezaAU: parseFloat(incertezaAU.toFixed(5)), contribuoção_incereteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuoção_incereteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuoção_incereteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))};
 
   return response;
+}
+
+function incertplaneza0_25(req){
+  let incertezaAU = (Math.pow(req.CMovel, 2) + Math.pow(req.CFixo, 2)) / 4;
+
+  console.log(incertezaAU)
+  incertezaAU = incertezaAU == 0 ? 0.0001 : incertezaAU;
+
+  const contriIncertezaAU = incertezaAU / 1 * 1;
+  
+  const contriIncertezaUp = 0.00005 / 2 * 1;
+
+  const contriIncertezaEres  = 0.00012 / Math.sqrt(3) * 1;
+
+  const lista25 = [contriIncertezaAU, contriIncertezaUp, contriIncertezaEres];
+
+  const somaQuadrados = lista25.reduce((acc, val) => acc + Math.pow(val, 2),0);
+
+  const raizUC = Math.sqrt(somaQuadrados).toFixed(4);  
+
+  let veff = Math.pow(raizUC, 4) / ((Math.pow(contriIncertezaAU, 4)) / 2); 
+
+  const K = jStat.studentt.inv(1 - 0.0455 / 2, veff);
+  const K_Resposta = K.toFixed(2);
+
+  const U = raizUC * K;
+  const U_Arredondado = arredondarParaCima(U);
+
+  const response = { incertezaAU: parseFloat(incertezaAU.toFixed(5)), contribuoção_incereteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuoção_incereteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuoção_incereteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))}
+
+  return response
 }
 
 module.exports = {
@@ -427,4 +485,5 @@ module.exports = {
   incertez_medEader,
   incertezaUC,
   incetPara0_25,
+  incertplaneza0_25
 };
