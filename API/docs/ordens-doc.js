@@ -7,11 +7,11 @@
  *  ordem:
  *     type: object
  *     properties:
- *       pk_idOs:
+ *       idOs:
  *          type: integer
- *       fk_idCliente:
+ *       idCliente:
  *          type: integer
- *       fk_idUsuario:
+ *       idUsuario:
  *          type: integer
  *       titulo:
  *          type: string
