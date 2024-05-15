@@ -121,12 +121,16 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
               tendencias.push(parseFloat(tendencia));
               ultimoValor = list0_25[10];
               req.ultimoValor = ultimoValor;
+              primeiroValor = list0_25[0];
+              req.primeiroValor = primeiroValor
               break;
             case 1:
               tendencia = (mediaValor[i] - list1_25[i]).toFixed(3);
               tendencias.push(parseFloat(tendencia));
               ultimoValor = list1_25[10];
               req.ultimoValor = ultimoValor;
+              primeiroValor = list1_25[0];
+              req.primeiroValor = primeiroValor
               break;
 
             case 25:
@@ -134,6 +138,8 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
               tendencias.push(parseFloat(tendencia));
               ultimoValor = list25_50[10];
               req.ultimoValor = ultimoValor;
+              primeiroValor = list25_50[0];
+              req.primeiroValor = primeiroValor
               break;
 
             case 50:
@@ -141,6 +147,8 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
               tendencias.push(parseFloat(tendencia));
               ultimoValor = list50_75[10];
               req.ultimoValor = ultimoValor;
+              primeiroValor = list50_75[0];
+              req.primeiroValor = primeiroValor
               break;
 
             case 75:
@@ -148,6 +156,8 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
               tendencias.push(parseFloat(tendencia));
               ultimoValor = list75_100[10];
               req.ultimoValor = ultimoValor;
+              primeiroValor = list75_100[0];
+              req.primeiroValor = primeiroValor
               break;
 
             case 100:
@@ -155,6 +165,8 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
               tendencias.push(parseFloat(tendencia));
               ultimoValor = list100_125[10];
               req.ultimoValor = ultimoValor;
+              primeiroValor = list100_125[0];
+              req.primeiroValor = primeiroValor
               break;
 
             case 125:
@@ -162,6 +174,8 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
               tendencias.push(parseFloat(tendencia));
               ultimoValor = list125_150[10];
               req.ultimoValor = ultimoValor;
+              primeiroValor = list125_150[0];
+              req.primeiroValor = primeiroValor
               break;
 
             case 150:
@@ -169,6 +183,8 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
               tendencias.push(parseFloat(tendencia));
               ultimoValor = list150_175[10];
               req.ultimoValor = ultimoValor;
+              primeiroValor = list150_175[0];
+              req.primeiroValor = primeiroValor
               break;
 
             case 175:
@@ -176,6 +192,8 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
               tendencias.push(parseFloat(tendencia));
               ultimoValor = list175_200[10];
               req.ultimoValor = ultimoValor;
+              primeiroValor = list175_200[0];
+              req.primeiroValor = primeiroValor
               break;
             default:
               return "Não consta faixa calibrada";
@@ -400,7 +418,7 @@ function incertezaUC(req) {
 
   const response = {
     UC: parseFloat(raiz),
-    veff: parseFloat(veff),
+    veff: parseFloat(veff.toFixed(0)),
     "K=": parseFloat(K_Resposta),
     "U=": parseFloat(U_Arredondado.toFixed(3)),
   };
@@ -427,7 +445,7 @@ function incetPara0_25(req) {
 
   const raizUC = Math.sqrt(somaQuadrados).toFixed(4);  
 
-  let veff = Math.pow(raizUC, 4) / ((Math.pow(contriIncertezaAU, 4)) / 2); 
+  let veff = (Math.pow(raizUC, 4)) / ((Math.pow(contriIncertezaAU, 4)) / 2); 
 
  
   const K = jStat.studentt.inv(1 - 0.0455 / 2, veff);
@@ -442,9 +460,8 @@ function incetPara0_25(req) {
 }
 
 function incertplaneza0_25(req){
-  let incertezaAU = (Math.pow(req.CMovel, 2) + Math.pow(req.CFixo, 2)) / 4;
+  let incertezaAU = Math.sqrt(Math.pow(req.CMovel, 2) + Math.pow(req.CFixo, 2) / 4);
 
-  console.log(incertezaAU)
   incertezaAU = incertezaAU == 0 ? 0.0001 : incertezaAU;
 
   const contriIncertezaAU = incertezaAU / 1 * 1;
@@ -472,6 +489,136 @@ function incertplaneza0_25(req){
   return response
 }
 
+// incerteza pararelismo 25-50
+
+function incetPara25_50(req) {
+  let incertezaAU = Math.sqrt(Math.pow(req.CMovel, 2) + Math.pow(req.CFixo, 2) / 4);
+
+  const contriIncertezaAU = incertezaAU / 1 * 1
+
+  const contriIncertezaUp = 0.00005 / 2 * 1
+
+  const contriIncertezaEres = 0.00009 / Math.sqrt(3) * 1
+
+  const lista50 = [contriIncertezaAU, contriIncertezaUp, contriIncertezaEres]
+
+  const somaQuadrados = lista50.reduce((acc, val) => acc + Math.pow(val, 2),0);
+
+  const raizUC = Math.sqrt(somaQuadrados).toFixed(4);  
+
+  let veff = (Math.pow(raizUC, 4)) / ((Math.pow(contriIncertezaAU, 4)) / 2); 
+
+ 
+  const K = jStat.studentt.inv(1 - 0.05 / 2, veff);
+  const K_Resposta = K.toFixed(2);
+
+  const U = raizUC * K;
+  const U_Arredondado = arredondarParaCima(U);
+
+  const response = { incertezaAU: parseFloat(incertezaAU.toFixed(5)), contribuoção_incereteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuoção_incereteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuoção_incereteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))};
+
+  return response;
+}
+
+function incertplaneza25_50(req){
+  let incertezaAU = Math.sqrt(Math.pow(req.CMovel, 2) + Math.pow(req.CFixo, 2) / 4);
+
+  incertezaAU = incertezaAU == 0 ? 0.0001 : incertezaAU;
+
+  const contriIncertezaAU = incertezaAU / 1 * 1;
+  
+  const contriIncertezaUp = 0.00007 / 2 * 1;
+
+  const contriIncertezaEres  = 0.00013 / Math.sqrt(3) * 1;
+
+  const lista50 = [contriIncertezaAU, contriIncertezaUp, contriIncertezaEres];
+
+  const somaQuadrados = lista50.reduce((acc, val) => acc + Math.pow(val, 2),0);
+
+  const raizUC = Math.sqrt(somaQuadrados).toFixed(4);  
+
+  let veff = Math.pow(raizUC, 4) / ((Math.pow(contriIncertezaAU, 4)) / 2); 
+
+  const K = jStat.studentt.inv(1 - 0.05 / 2, veff);
+  const K_Resposta = K.toFixed(2);
+
+  const U = raizUC * K;
+  const U_Arredondado = arredondarParaCima(U);
+
+  const response = { incertezaAU: parseFloat(incertezaAU.toFixed(5)), contribuoção_incereteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuoção_incereteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuoção_incereteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))}
+
+  return response
+}
+
+// incerteza pararelismo 50-100
+
+function incetPara50_100(req) {
+  let incertezaAU = (req.desvpadPara3Ult * 0.0003) / Math.sqrt(3);
+
+  const contriIncertezaAU = incertezaAU / 1 * 1
+  
+  const incertUbloco = (0.07 + (req.primeiroValor / 1500)) / 1000
+  
+  const contriIncertezaUbloco = incertUbloco / 2 * 1 
+
+  const contriIncertezaUp = 0.00005 / 2 * 1
+  
+  const contriIncertezaEres = 0.00009 / Math.sqrt(3) * 1
+
+  const lista100 = [contriIncertezaAU, contriIncertezaUbloco, contriIncertezaUp, contriIncertezaEres]
+
+  const somaQuadrados = lista100.reduce((acc, val) => acc + Math.pow(val, 2),0);
+
+  const raizUC = Math.sqrt(somaQuadrados).toFixed(4);  
+
+  let veff = (Math.pow(raizUC, 4)) / ((Math.pow(contriIncertezaAU, 4)) / 2); 
+
+ 
+  const K = jStat.studentt.inv(1 - 0.05 / 2, veff);
+  const K_Resposta = K.toFixed(2);
+
+  const U = raizUC * K;
+  const U_Arredondado = arredondarParaCima(U);
+
+  const response = { incertezaAU: parseFloat(incertezaAU.toFixed(5)), incertUbloco: parseFloat(incertUbloco.toFixed(5)) ,contribuoção_incereteza: parseFloat(contriIncertezaAU.toFixed(5)), contriIncertezaUbloco: parseFloat(contriIncertezaUbloco.toFixed(5)),contribuoção_incereteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuoção_incereteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))};
+
+  return response;
+}
+
+function incertplaneza50_100(req){
+  let incertezaAU = Math.sqrt((Math.pow(req.CMovel, 2) + Math.pow(req.CFixo, 2) / 4));
+
+  incertezaAU = incertezaAU == 0 ? 0.0001 : incertezaAU;
+
+  const contriIncertezaAU = incertezaAU / 1 * 1;
+
+  const incertUbloco = (0.07 + (req.primeiroValor / 1500)) / 1000
+  
+  const contriIncertezaUbloco = incertUbloco / 2 * 1 
+  
+  const contriIncertezaUp = 0.00007 / 2 * 1;
+
+  const contriIncertezaEres  = 0.00013 / Math.sqrt(3) * 1;
+
+  const lista100 = [contriIncertezaAU, contriIncertezaUp, contriIncertezaEres];
+
+  const somaQuadrados = lista100.reduce((acc, val) => acc + Math.pow(val, 2),0);
+
+  const raizUC = Math.sqrt(somaQuadrados).toFixed(4);  
+
+  let veff = Math.pow(raizUC, 4) / ((Math.pow(contriIncertezaAU, 4)) / 2); 
+
+  const K = jStat.studentt.inv(1 - 0.05 / 2, veff);
+  const K_Resposta = K.toFixed(2);
+
+  const U = raizUC * K;
+  const U_Arredondado = arredondarParaCima(U);
+
+  const response = { incertezaAU: parseFloat(incertezaAU.toFixed(5)), incertUbloco: parseFloat(incertUbloco.toFixed(5)) ,contribuoção_incereteza: parseFloat(contriIncertezaAU.toFixed(5)), contriIncertezaUbloco: parseFloat(contriIncertezaUbloco.toFixed(5)) ,contribuoção_incereteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuoção_incereteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))}
+
+  return response
+}
+
 module.exports = {
   calculoPlaneza,
   calculoParalelismo,
@@ -485,5 +632,9 @@ module.exports = {
   incertez_medEader,
   incertezaUC,
   incetPara0_25,
-  incertplaneza0_25
+  incertplaneza0_25,
+  incetPara25_50,
+  incertplaneza25_50,
+  incetPara50_100,
+  incertplaneza50_100
 };
