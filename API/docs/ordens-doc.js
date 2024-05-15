@@ -7,11 +7,11 @@
  *  ordem:
  *     type: object
  *     properties:
- *       pk_idOs:
+ *       idOs:
  *          type: integer
- *       fk_idCliente:
+ *       idCliente:
  *          type: integer
- *       fk_idUsuario:
+ *       idUsuario:
  *          type: integer
  *       titulo:
  *          type: string
@@ -99,7 +99,7 @@
  *      500:
  *        description: Erro interno do servidor
  * 
- * /orders/{id}:
+ * /order/{id}:
  *  get:
  *    tags:
  *      - Ordens de serviço

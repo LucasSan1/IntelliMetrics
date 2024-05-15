@@ -7,7 +7,7 @@ router
     .post("/registerPieces", async(req, res) => {
         try {
             // Extrai os dados do corpo da requisição
-            const {idOs, idCliente, nome, material, nDesenho, descricao} = req.body;
+            const {idOs, idCliente, nome, material, nDesenho, descricao, estadoEmbalagem } = req.body;
 
             const valPeca = {
                 idOs,
@@ -15,7 +15,8 @@ router
                 nome,
                 material,
                 nDesenho,
-                descricao
+                descricao,
+                estadoEmbalagem
             }
 
             try{
@@ -28,7 +29,8 @@ router
                     pecaValidada.nome,
                     pecaValidada.material,
                     pecaValidada.nDesenho,
-                    pecaValidada.descricao
+                    pecaValidada.descricao,
+                    pecaValidada.estadoEmbalagem
                 );
 
                 // Verifica o resultado do cadastro e retorna a resposta adequada

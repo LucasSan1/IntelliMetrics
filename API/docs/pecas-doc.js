@@ -22,6 +22,9 @@
  *       descricao:
  *         type: string
  *         nullable: true
+ *       estadoEmbalagem:
+ *         type: string
+ *         pattern: rum / medio / bom
  * 
  * /registerPieces:
  *   post:

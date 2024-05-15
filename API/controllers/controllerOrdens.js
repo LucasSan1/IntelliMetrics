@@ -1,10 +1,10 @@
 const db = require('../connector/conn')
 
 // Função para registrar uma nova ordem de calibração
-const registerOrder = async(pk_idOs, fk_idCliente, fk_idUsuario, titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone, status)  => {
+const registerOrder = async(idOs, idCliente, idUsuario, titulo, tipo, descricao, dataInicio, dataTermino, contratante, email, telefone, status)  => {
     try{
         const save =  await new Promise((resolve, reject) =>{ 
-            db.query(`CALL criarOrdens( '${pk_idOs}', '${fk_idCliente}', '${fk_idUsuario}', '${titulo}', '${tipo}', '${descricao}', '${dataInicio}', '${dataTermino}', '${contratante}', '${email}', '${telefone}', '${status}' )`,
+            db.query(`CALL criarOrdens( '${idOs}', '${idCliente}', '${idUsuario}', '${titulo}', '${tipo}', '${descricao}', '${dataInicio}', '${dataTermino}', '${contratante}', '${email}', '${telefone}', '${status}' )`,
                 (error, results) => {
                     if (error) {
                         reject(error);
