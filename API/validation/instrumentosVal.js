@@ -1,9 +1,9 @@
 const { z } = require ("zod");
 
 const validacaoInstrumentos  = z.object({
-    fk_idCliente: z.number(),
-    fk_idOs: z.number(),
-    fk_idCategoria: z.number(),
+    idCliente: z.number(),
+    idOs: z.number(),
+    idCategoria: z.number(),
     nome: z.string().min(1).max(60),
     nSerie: z.number(),
     identificacaoCliente: z.string().min(1).max(40),
@@ -12,7 +12,8 @@ const validacaoInstrumentos  = z.object({
     faixaNominalUni: z.enum(['mm', 'pol']),
     divisaoResolucaoNum: z.number(),
     divisaoResolucaoUni: z.enum(['mm', 'pol']),
-    orgaoResponsavel: z.string().min(1).max(60)
+    orgaoResponsavel: z.string().min(1).max(60),
+    estadoEmbalagem: z.enum(["ruim", "medio", "bom"])
 })
 
 module.exports = validacaoInstrumentos;

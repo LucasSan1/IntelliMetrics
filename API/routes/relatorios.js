@@ -32,14 +32,14 @@ router
                     relatorioValidado.idInstrumento, 
                     relatorioValidado.idUsuario, 
                     relatorioValidado.idPeca, 
-                    relatorioValidado.inicio, 
-                    relatorioValidado.termino,
-                    relatorioValidado.tempoTotal, 
+                    inicio, 
+                    termino,
+                    tempoTotal, 
                     relatorioValidado.temperaturaC, 
                     relatorioValidado.umidadeRelativa, 
                     relatorioValidado.observacoes, 
                     relatorioValidado.localDaMedicao, 
-                    relatorioValidado.dia, 
+                        dia, 
                     relatorioValidado.assinatura
                 );
 

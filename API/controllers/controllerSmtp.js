@@ -28,7 +28,7 @@ async function enviarEmail (req, res) {
                     reject(err);
                     return;
                 }
-                if (result.length > 0) {
+                if (verificarUser.length > 0) {
                     const gestor = result[0].gestor; 
                     const estagiario = result[0].estagiario; 
 
@@ -115,3 +115,4 @@ module.exports ={
     enviarEmail
 }
 
+x

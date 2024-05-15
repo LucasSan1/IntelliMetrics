@@ -17,9 +17,9 @@ router
     try {
       // Extrai os dados do corpo da requisição
       const {
-        pk_idOs,
-        fk_idCliente,
-        fk_idUsuario,
+        idOs,
+        idCliente,
+        idUsuario,
         titulo,
         tipo,
         descricao,
@@ -48,9 +48,9 @@ router
 
         // Chama a função para registrar um novo certificado de calibração
         let register = await registerOrder(
-          pk_idOs,
-          fk_idCliente,
-          fk_idUsuario,
+          idOs,
+          idCliente,
+          idUsuario,
           ordensValidadas.titulo,
           ordensValidadas.tipo,
           ordensValidadas.descricao,

@@ -1,22 +1,10 @@
 const db = require("../connector/conn");
 
 // Função para registrar um novo instrumento
-const registerInstrumento = async (
-  fk_idCliente,
-  fk_idOs,
-  fk_idCategoria,
-  nome,
-  nSerie,
-  identificacaoCliente,
-  fabricante,
-  faixaNominalNum,
-  faixaNominalUni,
-  divisaoResolucaoNum,
-  divisaoResolucaoUni,
-  orgaoResponsavel
-) => {
+const registerInstrumento = async (idCliente, idOs, idCategoria, nome, nSerie, identificacaoCliente, fabricante, faixaNominalNum, faixaNominalUni, divisaoResolucaoNum, divisaoResolucaoUni, orgaoResponsavel, estadoEmbalagem) => {
+  
   const save = db.query(
-    `CALL cadastrarInstrumento( '${fk_idCliente}', '${fk_idOs}', '${fk_idCategoria}', '${nome}', '${nSerie}', '${identificacaoCliente}', '${fabricante}', '${faixaNominalNum}', '${faixaNominalUni}', '${divisaoResolucaoNum}', '${divisaoResolucaoUni}', '${orgaoResponsavel}')`
+    `CALL cadastrarInstrumento('${idCliente}', '${idOs}', '${idCategoria}', '${nome}', '${nSerie}', '${identificacaoCliente}', '${fabricante}', '${faixaNominalNum}', '${faixaNominalUni}', '${divisaoResolucaoNum}', '${divisaoResolucaoUni}', '${orgaoResponsavel}', '${estadoEmbalagem}')`
   );
 
   // Verifica se a inserção foi bem-sucedida

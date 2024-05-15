@@ -11,7 +11,7 @@ const validacaoRelatorios  = z.object({
     umidadeRelativa: z.string().min(1).max(20),
     observacoes: z.string().min(1).max(300),
     localDaMedicao: z.string().min(1).max(100),
-    dia: z.date({ invalid_type_error: "Precisa ser do tipo date"}),
+    // dia: z.date({ invalid_type_error: "Precisa ser do tipo date"}),
     assinatura: z.string().min(1).max(100)
 })
 

@@ -52,7 +52,7 @@ router
     }
   })
   
-  .put("/disableUser", middlewareValidarJWT, async (req, res) => {
+  .put("/disableUser", async (req, res) => {
     try {
         const {email} = req.body
 

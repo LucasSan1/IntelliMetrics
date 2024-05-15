@@ -7,11 +7,11 @@
  *   instrumento:
  *     type: object
  *     properties:
- *       fk_idCliente:
+ *       idCliente:
  *         type: number
- *       fk_idOs:
+ *       idOs:
  *         type: number
- *       fk_idCategoria:
+ *       idCategoria:
  *         type: number
  *       nome:
  *         type: string
@@ -38,6 +38,9 @@
  *       orgaoResponsavel:
  *         type: string
  *         pattern: Suiclab
+ *       estadoEmbalagem:
+ *         type: string
+ *         pattern: ruim / medio / bom1
  *
  *   updateInstrumento:
  *     type: object
