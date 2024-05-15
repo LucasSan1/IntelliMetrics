@@ -18,8 +18,7 @@ router
                 email,
                 telefone,
                 endereco,
-                cnpj,
-                status: "ativo"
+                cnpj
             }
 
             try {

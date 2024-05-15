@@ -99,7 +99,7 @@
  *      500:
  *        description: Erro interno do servidor
  * 
- * /orders/{id}:
+ * /order/{id}:
  *  get:
  *    tags:
  *      - Ordens de serviço

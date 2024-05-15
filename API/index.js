@@ -13,7 +13,7 @@ app.use(express.json());
 
 //Rotas
 const rotas_usuario = require('./routes/usuarios');
-const rotas_ordemCertificado = require('./routes/Ordens')
+const rotas_ordensServicos = require('./routes/Ordens')
 const rotas_clientes = require('./routes/clientes'); 
 const rotas_pecas = require('./routes/pecas');
 const rotas_relatorios = require('./routes/relatorios')
@@ -26,7 +26,7 @@ const rotas_categorias = require('./routes/categorias')
 app.use("", rotas_pecas); 
 app.use("", rotas_clientes);
 app.use("", rotas_usuario); 
-app.use("", rotas_ordemCertificado)
+app.use("", rotas_ordensServicos)
 app.use("", rotas_relatorios)
 app.use("", rotas_instrumentos); 
 app.use("", certificado_paquimetro)

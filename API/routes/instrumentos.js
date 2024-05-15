@@ -14,25 +14,12 @@ router
   .post("/registerTools", async (req, res) => {
     try {
       // Extrai os dados do corpo da requisição
-      const {
-        fk_idCliente,
-        fk_idOs,
-        fk_idCategoria,
-        nome,
-        nSerie,
-        identificacaoCliente,
-        fabricante,
-        faixaNominalNum,
-        faixaNominalUni,
-        divisaoResolucaoNum,
-        divisaoResolucaoUni,
-        orgaoResponsavel,
-      } = req.body;
+      const { idCliente, idOs, idCategoria, nome, nSerie, identificacaoCliente, fabricante, faixaNominalNum, faixaNominalUni, divisaoResolucaoNum, divisaoResolucaoUni, orgaoResponsavel, estadoEmbalagem } = req.body;
 
       const valInstrumento = {
-        fk_idCliente,
-        fk_idOs,
-        fk_idCategoria,
+        idCliente,
+        idOs,
+        idCategoria,
         nome,
         nSerie,
         identificacaoCliente,
@@ -42,6 +29,7 @@ router
         divisaoResolucaoNum,
         divisaoResolucaoUni,
         orgaoResponsavel,
+        estadoEmbalagem
       };
 
       try {
@@ -50,9 +38,9 @@ router
 
         // Chama a função para registrar um novo instrumento
         let resultCad = await registerInstrumento(
-          instrumentoValidado.fk_idCliente,
-          instrumentoValidado.fk_idOs,
-          instrumentoValidado.fk_idCategoria,
+          instrumentoValidado.idCliente,
+          instrumentoValidado.idOs,
+          instrumentoValidado.idCategoria,
           instrumentoValidado.nome,
           instrumentoValidado.nSerie,
           instrumentoValidado.identificacaoCliente,
@@ -61,7 +49,8 @@ router
           instrumentoValidado.faixaNominalUni,
           instrumentoValidado.divisaoResolucaoNum,
           instrumentoValidado.divisaoResolucaoUni,
-          instrumentoValidado.orgaoResponsavel
+          instrumentoValidado.orgaoResponsavel,
+          instrumentoValidado.estadoEmbalagem
         );
 
         // Verifica o resultado do cadastro e retorna a resposta adequada

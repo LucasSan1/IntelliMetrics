@@ -6,7 +6,8 @@ const validacaoPecas  = z.object({
     nome: z.string().min(1).max(60),
     material: z.string().min(1).max(60),
     nDesenho: z.number(),
-    descricao: z.string().min(1).max(300)
+    descricao: z.string().min(1).max(300),
+    estadoEmbalagem: z.enum(["ruim", "medio", "bom"])
 })
 
 module.exports = validacaoPecas;
