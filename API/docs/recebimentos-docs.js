@@ -65,24 +65,24 @@
  *       500:
  *         description: Erro interno do servidor
  * 
- * /getAllClients:
+ * /getAllReceipts:
  *  get:
  *    tags:
- *      - Cliente
- *    summary: retorna clientes
- *    description: retorna todos os clientes cadastrados
+ *      - Recebimentos
+ *    summary: retorna recebimentos
+ *    description: retorna todos recebimentos cadastrados
  *    responses:
  *      200:
  *        description: Retorna todos os clientes
  *      500:
  *        description: Erro interno do servidor
  * 
- * /client/{id}:
+ * /receipts/:id:
  *  get:
  *    tags:
- *      - Cliente
- *    summary: retorna dados de cliente
- *    description: retorna o cliente com base em um id especifico
+ *      - Recebimentos
+ *    summary: retorna dados de um recebimento
+ *    description: retorna o recebimento com base em um id especifico
  *    parameters:
  *      - in: path
  *        name: id
@@ -96,17 +96,23 @@
  *      500:
  *        description: Erro interno do servidor.
  * 
- * /clients/disable/{id}:
+ * /updateReceipt/:id:
  *   put:
  *     tags:
- *       - Cliente
- *     summary: atualiza o estado do cliente
- *     description: atualiza o status do cliente para desativado/fora de uso
+ *       - Recebimentos
+ *     summary: atualiza os dados recebimentos
+ *     description: atualiza o status do recebimentos
  *     parameters:
  *      - in: path
  *        name: id
  *        type: number
  *        required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/recebimento'
  *     responses:
  *      200:
  *        description: Cliente desativado com sucesso
@@ -118,50 +124,5 @@
  *        description: Erro interno do servidor
  * 
  * 
- * /client/active/{id}:
- *   put:
- *     tags:
- *       - Cliente 
- *     summary: atualiza o estado do cliente
- *     description: atualiza o status do cliente para ativado
- *     parameters:
- *       - in: path
- *         name: id
- *         type: number
- *         required: true
- *     responses:
- *       200:
- *         description: Cliente ativado com sucesso
- *       400:
- *         description: Erro ao ativar cliente
- *       409:
- *         description: Este cliente já esta ativado
- *       500:
- *         description: Erro interno do servidor
- * 
- * /updateClient/{id}:
- *   put:
- *     tags:
- *       - Cliente
- *     summary: atualiza os dados
- *     description: atualiza os dados do cliente especificado pelo id 
- *     parameters:
- *       - in: path
- *         name: id
- *         type: number
- *         required: true
- *     requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/definitions/cliente'
- *     responses:
- *       200:
- *         description: Cliente atualizado
- *       404:
- *         description: Cliente não encontrado
- *       500:
- *         description: Erro interno do servidor
  *
  */

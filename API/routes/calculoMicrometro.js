@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // Importa as funções de cálculo da planicidade e paralelismo do micrômetro
-const { calculoPlaneza, calculoParalelismo, controleDimensional, incerteza_medAU, incerteza_UP, incerteza_medERES, incertez_medl1, incertez_medl2, incerteza_medPAR, incertez_medEader, incertezaUC, incetPara0_25, incertplaneza0_25 } = require("../util/calculosMicrometro");
+const { calculoPlaneza, calculoParalelismo, controleDimensional, incerteza_medAU, incerteza_UP, incerteza_medERES, incertez_medl1, incertez_medl2, incerteza_medPAR, incertez_medEader, incertezaUC, incetPara0_25, incertplaneza0_25,   incetPara25_50, incertplaneza25_50, incetPara50_100, incertplaneza50_100 } = require("../util/calculosMicrometro");
 
 router
      // Rota para calcular a planicidade do micrômetro
@@ -14,6 +14,7 @@ router
            const response =  {} 
            req.desvpadMedio = 0
            req.ultimoValor = 0
+           req.primeiroValor = 0
            req.incerteza = []
            req.desvpadPara3Ult = 0
            req.valParaMM = 0
@@ -48,6 +49,14 @@ router
             !!valorDivResolucao == true ? response.incetPara0_25 = incetPara0_25(req) : response.incetPara0_25 = "Sem dados"
 
             !!valorDivResolucao == true ? response.incertplaneza0_25 = incertplaneza0_25(req) : response.incertplaneza0_25 = "Sem dados"
+
+            !!valorDivResolucao == true ? response.incetPara25_50 = incetPara25_50(req) : response.incetPara25_50 = "Sem dados"
+
+            !!valorDivResolucao == true ? response.incertplaneza25_50 = incertplaneza25_50(req) : response.incertplaneza25_50 = "Sem dados"
+
+            !!valorDivResolucao == true ? response.incetPara50_100 = incetPara50_100(req) : response.incetPara50_100 = "Sem dados"
+
+            !!valorDivResolucao == true ? response.incertplaneza50_100 = incertplaneza50_100(req) : response.incertplaneza50_100 = "Sem dados"
 
             return res.status(200).json(response)
             

@@ -182,6 +182,192 @@ const upResultPaq = async(antigoNrCertificado,alterarNrCertificado,idInstrumento
   });
 }
 
+//controller para inserir medições internas
+const insertMedInt = async (novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3,novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida, novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3) =>{
+  try{
+    const insert = await new Promise(( resolve, reject ) => {
+      db.query(` CALL criarMedicaoInterna('${novaPrimeiraMedida}','${novoValorNominal1_1}','${novoValorNominal1_2}','${novoValorNominal1_3}','${novaSegundaMedida}','${novoValorNominal2_1}','${novoValorNominal2_2}','${novoValorNominal2_3}','${novaTerceiraMedida}','${novoValorNominal3_1}','${novoValorNominal3_2}','${novoValorNominal3_3}')`,
+      
+      (error, results) =>{
+        if(error){
+        reject(error);
+        return;
+      }else{
+        resolve(results);
+      
+      }
+    }
+  );
+});
+
+if(!insert){
+  return 400;
+}else{
+  return 200;
+}
+  }catch(error){
+    console.log(error);
+    return 500;
+  }
+
+}
+
+//controller para alterar medições internas
+const upMedInt = async(idMedicaoInterna, alterarPrimeiraMedida,alterarValorNominal1_1, alterarValorNominal1_2, alterarValorNominal1_3, alterarSegundaMedida, alterarValorNominal2_1, alterarValorNominal2_2, alterarValorNominal2_3, alterarTerceiraMedida,alterarValorNominal3_1, alterarValorNominal3_2, alterarValorNominal3_3 )=>{
+
+  const existing = await new Promise((resolve, reject) =>{
+    db.query(`SELECT * FROM medicoesinternas
+    WHERE idMedicaoInterna = '${idMedicaoInterna}'`,
+    (error, results) =>{
+      if(error){
+        reject(error);
+        return;
+      }
+      resolve(results);
+    });
+  });
+  if(existing.length == 0){
+    return 404;
+  }
+  return new Promise((resolve, reject) =>{
+    db.query(` CALL alterarMedicoesInternas('${idMedicaoInterna}','${alterarPrimeiraMedida}','${alterarValorNominal1_1}','${alterarValorNominal1_2}','${alterarValorNominal1_3}','${alterarSegundaMedida}','${alterarValorNominal2_1}','${alterarValorNominal2_2}','${alterarValorNominal2_3}','${alterarTerceiraMedida}','${alterarValorNominal3_1}','${alterarValorNominal3_2}','${alterarValorNominal3_3}',)`,
+      (error, results) =>{
+        if(error){
+          reject(400, error);
+          return;
+        }
+        results(200);
+      }
+    );
+  });
+}
+
+//controller para inserir medições de ressaltos
+const insertMedRes = async (novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1,  novoValorNominal2_2,  novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3 ) =>{
+  try{
+    const insert = await new Promise(( resolve, reject ) => {
+      db.query(` CALL criarMedicaoInterna('${novaPrimeiraMedida}','${novoValorNominal1_1}','${novoValorNominal1_2}','${novoValorNominal1_3}','${novaSegundaMedida}','${ novoValorNominal2_1}','${ novoValorNominal2_2}','${ novoValorNominal2_3}','${novaTerceiraMedida}','${novoValorNominal3_1}','${novoValorNominal3_2}','${novoValorNominal3_3}')`,
+      
+      (error, results) =>{
+        if(error){
+        reject(error);
+        return;
+      }else{
+        resolve(results);
+      
+      }
+    }
+  );
+});
+
+if(!insert){
+  return 400;
+}else{
+  return 200;
+}
+  }catch(error){
+    console.log(error);
+    return 500;
+  }
+
+}
+
+//controller para alterar as medições de ressalto
+const upMedRes = async(idMedicaoRessalto,novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3 )=>{
+
+  const existing = await new Promise((resolve, reject) =>{
+    db.query(`SELECT * FROM medicoesRessaltos
+    WHERE  idMedicaoRessalto = '${idMedicaoRessalto}'`,
+    (error, results) =>{
+      if(error){
+        reject(error);
+        return;
+      }
+      resolve(results);
+    });
+  });
+  if(existing.length == 0){
+    return 404;
+  }
+  return new Promise((resolve, reject) =>{
+    db.query(` CALL alterarMedicoesRessaltos('${ idMedicaoRessalto}','${novaPrimeiraMedida}','${novoValorNominal1_1}','${novoValorNominal1_2}','${novoValorNominal1_3}','${novaSegundaMedida}','${novoValorNominal2_1}','${novoValorNominal2_2}','${novoValorNominal2_3}','${novaTerceiraMedida}','${novoValorNominal3_1}','${novoValorNominal3_2}','${novoValorNominal3_3}')`,
+      (error, results) =>{
+        if(error){
+          reject(400, error);
+          return;
+        }
+        results(200);
+      }
+    );
+  });
+}
+
+
+// controller para adicionar medições de profundidade
+
+const insertMedPro = async (nova_primeiraMedida,novo_valorNominal1_1,novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3, nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3) =>{
+  try{
+    const insert = await new Promise(( resolve, reject ) => {
+      db.query(` CALL inserirMedicaoProfundidade('${nova_primeiraMedida}','${novo_valorNominal1_1}','${novo_valorNominal1_2}','${novo_valorNominal1_3}','${nova_segundaMedida}','${novo_valorNominal2_1}','${novo_valorNominal2_2}'${novo_valorNominal2_3}','${nova_terceiraMedida}','${novo_valorNominal3_1}','${novo_valorNominal3_2}','${novo_valorNominal3_3}','${}','${}',)`,
+      
+      (error, results) =>{
+        if(error){
+        reject(error);
+        return;
+      }else{
+        resolve(results);
+      
+      }
+    }
+  );
+});
+
+if(!insert){
+  return 400;
+}else{
+  return 200;
+}
+  }catch(error){
+    console.log(error);
+    return 500;
+  }
+
+}
+
+// rota para alterar as medições de profundidade
+const upMedPro = async(idMedicao, nova_primeiraMedida, novo_valorNominal1_1, novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3,nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3 )=>{
+
+  const existing = await new Promise((resolve, reject) =>{
+    db.query(`SELECT * FROM medicoesProfundidades
+    WHERE  idMedicao = '${idMedicao}'`,
+    (error, results) =>{
+      if(error){
+        reject(error);
+        return;
+      }
+      resolve(results);
+    });
+  });
+  if(existing.length == 0){
+    return 404;
+  }
+  return new Promise((resolve, reject) =>{
+    db.query(` CALL alterarMedicaoProfundidade('${idMedicao}','${nova_primeiraMedida}','${novo_valorNominal1_1}','${novo_valorNominal1_2}','${novo_valorNominal1_3}','${ nova_segundaMedida}','${novo_valorNominal2_1}','${novo_valorNominal2_2}','${novo_valorNominal2_3}','${nova_terceiraMedida}','${novo_valorNominal3_1}','${novo_valorNominal3_2}','${novo_valorNominal3_3}',)`,
+      (error, results) =>{
+        if(error){
+          reject(400, error);
+          return;
+        }
+        results(200);
+      }
+    );
+  });
+}
+
+
+
+
+
 
 module.exports = {
   paralelismoPaquimetro,
@@ -189,5 +375,12 @@ module.exports = {
   insertMedExt,
   upMedExt, 
   insertResultPaq, 
-  upResultPaq
+  upResultPaq,
+  insertMedInt,
+  upMedInt,
+  insertMedRes,
+  upMedRes,
+  insertMedPro,
+  upMedPro
+
 }

@@ -1,9 +1,10 @@
 const db = require("../connector/conn");
+const bcrypt = require("bcrypt")
 
 //cria um novo usuario
-const createUser = async (nome, email, cargo) => {
+const createUser = async (nome, email, senha, cargo) => {
   try {
-    if (!nome || !email || !cargo) {
+    if (!nome || !email || !senha || !cargo) {
       return 400;
     }
 
@@ -22,19 +23,27 @@ const createUser = async (nome, email, cargo) => {
     if (verificarUser.length > 0) {
       return 409;
     }
+    
+    const hashedPassword = await bcrypt.hash(senha, 10);
 
     //Se não existir nenhum usuario com esse email cadastrado, inserir os dados do novo usuario
-    const inserir = db.query(`call criarUsuario('${nome}', '${email}', '${cargo}')`
-    );
-
-    if (inserir) {
-      return 200;
-    } else {
-      return 400;
-    }
-  } catch (error) {
-    return 500;
+    const inserir = await new Promise((resolve, reject) => {
+    db.query(`call criarUsuario('${nome}', '${email}', '${hashedPassword}', '${cargo}')`, (error, results) => {
+      if (error) {
+        reject(error);
+        return;
+      } resolve (results)
+    });
+    });
+  
+  if (inserir) {
+    return 200;
+  } else {
+    return 400;
   }
+} catch (error) {
+  return 500;
+}
 };
 
 // busca o user no banco
@@ -44,7 +53,7 @@ const login = async (email, senha) => {
       return 400;
     }
 
-    return await new Promise((resolve, reject) => {
+      const usuarios = await new Promise((resolve, reject) => {
       db.query(
         `SELECT * FROM usuarios WHERE email = '${email}' and senha = '${senha}'`,
         (erro, results) => {
@@ -52,16 +61,30 @@ const login = async (email, senha) => {
             reject(401);
             return;
           } else if (results.length == 0) {
-            resolve(404);
+            resolve(404); 
             return;
           }
           resolve(results);
         }
       );
+      
     });
+    if (!usuarios) {
+      return 404;
+    }
+    
+    const passwordMatch = bcrypt.compare(senha, usuarios.senha);
+    if (passwordMatch) {
+      return usuarios;
+    } else {
+      return res.status(401)
+    }
+
+
   } catch (error) {
     return 500;
   }
+
 };
 
 // busca todos os colaboradores
@@ -104,7 +127,7 @@ const disableUser = async (email) => {
       }
       resolve(200);
     });
-  });
+  }); 
 };
 
 //atualiza o status do user para ativo
@@ -142,9 +165,11 @@ const putPass = async (email, senhaNova) => {
     return 404;
   }
 
+  const newHashedPassword = await bcrypt.hash(senhaNova, 10);
+
   return new Promise((resolve, reject) => {
     db.query(
-      `call redefinirSenha('${email}', '${senhaNova}')`,
+      `call redefinirSenha('${email}', '${newHashedPassword}')`,
       (erro, results) => {
         if (erro) {
           reject(erro);

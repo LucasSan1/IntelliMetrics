@@ -10,11 +10,12 @@ router
   .post("/newUser", async (req, res) => {
     try {
 
-      const { email, nome, cargo } = req.body;
+      const { nome, email, senha, cargo } = req.body;
 
       const valUsuario = {
         nome,
         email,
+        senha,
         cargo
       }
       
@@ -24,6 +25,7 @@ router
         let resultado = await createUser(
           usuarioValidado.nome.toLowerCase(),
           usuarioValidado.email.toLowerCase(),
+          senha.toLowerCase(),
           usuarioValidado.cargo.toLowerCase()
         )
 
