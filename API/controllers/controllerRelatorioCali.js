@@ -3,7 +3,7 @@ const db = require('../connector/conn')
 // Função para registrar um novo relatório
 const registerReport = async(idRelatorio, idInstrumento, idUsuario, idPeca, inicio, termino, tempoTotal, temperaturaC, umidadeRelativa, observacoes, localDaMedicao, dia, assinatura )  => {
     try{
-
+        console.log()
         const existingReport = await new Promise((resolve, reject) =>{
             db.query(`SELECT * FROM relatorio WHERE pk_idRelatorio = '${idRelatorio}'`,
             (error, results) => {

@@ -10,7 +10,7 @@ router
     .post("/registerClient", async(req, res) => {
         try {
             // Extrai os dados do corpo da requisição
-            const {nomeEmpresa, representante, email, telefone, endereco , cnpj, status} = req.body
+            const {nomeEmpresa, representante, email, telefone, endereco , cnpj} = req.body
             
             const cliente = {
                 nomeEmpresa,
@@ -18,8 +18,7 @@ router
                 email,
                 telefone,
                 endereco,
-                cnpj,
-                status: "ativo"
+                cnpj
             }
 
             try {
