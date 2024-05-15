@@ -40,7 +40,7 @@
  *         pattern: Suiclab
  *       estadoEmbalagem:
  *         type: string
- *         pattern: ruim / medio / bom
+ *         pattern: ruim / medio / bom1
  *
  *   updateInstrumento:
  *     type: object
