@@ -20,30 +20,30 @@ const createUser = async (nome, email, cargo) => {
         }
       );
     });
-    if (verificarUser.length > 0) { 
+    if (verificarUser.length > 0) {
       return 409;
     }
-    
- 
+
+
 
     //Se não existir nenhum usuario com esse email cadastrado, inserir os dados do novo usuario
     const inserir = await new Promise((resolve, reject) => {
-    db.query(`call criarUsuario('${nome}', '${email}', '${cargo}')`, (error, results) => {
-      if (error) {
-        reject(error);
-        return;
-      } resolve (results)
+      db.query(`call criarUsuario('${nome}', '${email}', '${cargo}')`, (error, results) => {
+        if (error) {
+          reject(error);
+          return;
+        } resolve(results)
+      });
     });
-    });
-  
-  if (inserir) {
-    return 200;
-  } else {
-    return 400;
+
+    if (inserir) {
+      return 200;
+    } else {
+      return 400;
+    }
+  } catch (error) {
+    return 500;
   }
-} catch (error) {
-  return 500;
-}
 };
 
 // busca o user no banco
@@ -53,40 +53,45 @@ const login = async (email, senha) => {
       return 400;
     }
 
-      const usuarios = await new Promise((resolve, reject) => {
+    const usuarios = await new Promise((resolve, reject) => {
       db.query(`SELECT * FROM usuarios WHERE email = '${email}'`,
         (erro, results) => {
           if (erro) {
             reject(401);
             return;
           } else if (results.length == 0) {
-            resolve(404); 
+            resolve(404);
             return;
           }
           resolve(results);
         }
       );
-      
-    });
-    if (!usuarios) {
-      return 404;
-    }
-    
-    const passwordMatch = bcrypt.compare(senha, usuarios.senha);
-    console.log(passwordMatch)
 
-    if (passwordMatch) {
-      return usuarios;
-    } else {
-      return res.status(401)
-    }
+  });
 
-
-  } catch (error) {
-    return 500;
+  if (!usuarios) {
+    return 404;
   }
 
+  const passwordMatch = await bcrypt.compare(senha, usuarios[0].senha);
+
+  if (passwordMatch) {
+    return usuarios;
+  } else {
+    return 405
+  }
+
+
+} catch (error) {
+  console.log(error)
+  return 500;
+}
+
 };
+
+const inserirToken = async (email, token) => {
+  db.query(`CALL inserirToken('${email}', '${token}')`,)
+}
 
 // busca todos os colaboradores
 const getCol = async () => {
@@ -129,7 +134,7 @@ const disableUser = async (email) => {
       }
       resolve(200);
     });
-  }); 
+  });
 };
 
 //atualiza o status do user para ativo
@@ -215,4 +220,5 @@ module.exports = {
   putPass,
   putUser,
   login,
+  inserirToken
 };

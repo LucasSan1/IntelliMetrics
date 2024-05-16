@@ -1,8 +1,9 @@
 const router = require('express').Router();
+const db = require("../connector/conn")
 const validacaoUsuario = require("../validation/usuariosVal");
 
 // const { generateToken, verifica, removerToken } = require("../controller/token");
-const { createUser, getCol, getColById, disableUser, enableUser, putPass, putUser, login } = require("../controllers/controllerUser");
+const { createUser, getCol, getColById, disableUser, enableUser, putPass, putUser, login, inserirToken } = require("../controllers/controllerUser");
 const { middlewareValidarJWT } = require("../middleware/authMiddleware");
 
 router
@@ -191,9 +192,19 @@ router
           return;
         }
 
-        res.set("json", token).json({ mensagem: "Login Efetuado com Sucesso", Nome: resultado[0].nome, cargo: resultado[0].cargo, token});
-        res.end();
-      });
+        console.log(resultado)
+      
+          db.query(`CALL inserirToken('${email}', '${token}')`, 
+          (error, results) => {
+            if (error) {
+              res.status(500).json({ mensagem: "Erro ao inserir o token no banco de dados" });
+              return;
+            }
+            res.json({ mensagem: "Login Efetuado com Sucesso", Nome: resultado[0].nome, cargo: resultado[0].cargo, token });
+          });
+
+        });
+
     } catch (error) {
       res.status(500).json('Erro interno do servidor');
     }
