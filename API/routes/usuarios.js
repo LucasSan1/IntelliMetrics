@@ -10,12 +10,11 @@ router
   .post("/newUser", async (req, res) => {
     try {
 
-      const { nome, email, senha, cargo } = req.body;
+      const { nome, email, cargo } = req.body;
 
       const valUsuario = {
         nome,
         email,
-        senha,
         cargo
       }
       
@@ -24,8 +23,7 @@ router
 
         let resultado = await createUser(
           usuarioValidado.nome.toLowerCase(),
-          usuarioValidado.email.toLowerCase(),
-          senha.toLowerCase(),
+          usuarioValidado.email,
           usuarioValidado.cargo.toLowerCase()
         )
 
@@ -130,19 +128,19 @@ router
   // atualizar senha usuario
   .put("/updatePass", async (req, res) => {
     try {
-      const { email, senhaNova } = req.body;
+      const { email, senha } = req.body;
 
       let resultado = await putPass(
         email.toLowerCase(),
-        senhaNova
+        senha
       );
 
       switch(resultado){
         case 404:
-          res.status(404).json("Cliente Não Encontrado")
+          res.status(404).json("Usuário Não Encontrado")
           break
         case 200:
-            res.status(200).json("Cliente atualizado")
+            res.status(200).json("Senha atualizada")
             break;
         case 400:
             res.status(400).json("Não foi possivel redefinir senha")
@@ -219,7 +217,7 @@ router
 
         let resultado = await putUser(
           usuarioValidado.nome.toLowerCase(),
-          usuarioValidado.email.toLowerCase(),
+          usuarioValidado.email,
           usuarioValidado.cargo.toLowerCase()
         )
 

@@ -148,7 +148,7 @@
  *         description: Erro interno do servidor
  * 
  * /updatePass:
- *   post:
+ *   put:
  *     tags:
  *       - Users
  *     summary: atualiza a senha

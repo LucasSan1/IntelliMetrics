@@ -2,9 +2,9 @@ const db = require("../connector/conn");
 const bcrypt = require("bcrypt")
 
 //cria um novo usuario
-const createUser = async (nome, email, senha, cargo) => {
+const createUser = async (nome, email, cargo) => {
   try {
-    if (!nome || !email || !senha || !cargo) {
+    if (!nome || !email || !cargo) {
       return 400;
     }
 
@@ -20,15 +20,15 @@ const createUser = async (nome, email, senha, cargo) => {
         }
       );
     });
-    if (verificarUser.length > 0) {
+    if (verificarUser.length > 0) { 
       return 409;
     }
     
-    const hashedPassword = await bcrypt.hash(senha, 10);
+ 
 
     //Se não existir nenhum usuario com esse email cadastrado, inserir os dados do novo usuario
     const inserir = await new Promise((resolve, reject) => {
-    db.query(`call criarUsuario('${nome}', '${email}', '${hashedPassword}', '${cargo}')`, (error, results) => {
+    db.query(`call criarUsuario('${nome}', '${email}', '${cargo}')`, (error, results) => {
       if (error) {
         reject(error);
         return;
@@ -54,8 +54,7 @@ const login = async (email, senha) => {
     }
 
       const usuarios = await new Promise((resolve, reject) => {
-      db.query(
-        `SELECT * FROM usuarios WHERE email = '${email}' and senha = '${senha}'`,
+      db.query(`SELECT * FROM usuarios WHERE email = '${email}'`,
         (erro, results) => {
           if (erro) {
             reject(401);
@@ -74,6 +73,8 @@ const login = async (email, senha) => {
     }
     
     const passwordMatch = bcrypt.compare(senha, usuarios.senha);
+    console.log(passwordMatch)
+
     if (passwordMatch) {
       return usuarios;
     } else {
@@ -99,6 +100,7 @@ const getCol = async () => {
     });
   });
 };
+
 // busca o colaborador selecionado
 const getColById = async (idUser) => {
   return new Promise((resolve, reject) => {
