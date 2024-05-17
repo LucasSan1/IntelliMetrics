@@ -105,6 +105,8 @@
  * 
  * /disableUser:
  *   put:
+ *     security:
+*       - bearerAuth: []
  *     tags:
  *       - Users 
  *     summary: desativa o usuario

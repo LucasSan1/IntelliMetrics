@@ -49,10 +49,7 @@ const createUser = async (nome, email, cargo) => {
 // busca o user no banco
 const login = async (email, senha) => {
   try {
-    if (!email || !senha) {
-      return 400;
-    }
-
+  
     const usuarios = await new Promise((resolve, reject) => {
       db.query(`SELECT * FROM usuarios WHERE email = '${email}'`,
         (erro, results) => {
@@ -69,7 +66,7 @@ const login = async (email, senha) => {
 
   });
 
-  if (!usuarios) {
+  if (usuarios == 404) {
     return 404;
   }
 

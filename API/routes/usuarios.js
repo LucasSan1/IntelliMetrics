@@ -4,13 +4,13 @@ const validacaoUsuario = require("../validation/usuariosVal");
 
 // const { generateToken, verifica, removerToken } = require("../controller/token");
 const { createUser, getCol, getColById, disableUser, enableUser, putPass, putUser, login, inserirToken } = require("../controllers/controllerUser");
-const { middlewareValidarJWT } = require("../middleware/authMiddleware");
+const { middlewareValidarRota } = require("../middleware/authMiddleware");
 
 router
   // criar um perfil
   .post("/newUser", async (req, res) => {
     try {
-
+      
       const { nome, email, cargo } = req.body;
 
       const valUsuario = {
@@ -51,9 +51,13 @@ router
     }
   })
   
-  .put("/disableUser", async (req, res) => {
+  .put("/disableUser", middlewareValidarRota, async (req, res) => {
     try {
         const {email} = req.body
+        
+        if(req.cargo != "gestor"){
+            res.status(401).json("Não autorizado")
+        }
 
       let resultado = await disableUser(
         email.toLowerCase()
@@ -74,7 +78,7 @@ router
     }
   })
 
-  .put("/enableUser", async (req, res) => {
+  .put("/enableUser", middlewareValidarRota, async (req, res) => {
     try {
         const {email} = req.body
 
@@ -168,45 +172,44 @@ router
       );
 
       switch(resultado){
-        case 400:
-            res.status(400).json("Preencha todos os campos")
-            break;
         case 401:
             res.status(401).json("Credenciais inválidas")
-            break;
+          break;
         case 404:
-            res.status(404).json("Usuário não encontrado")
-            break;
+          res.status(404).json("Usuário não encontrado")
+          break;
       }
-     
-      const dadosUsuario = { email, senha }
-      const dotenv = require("dotenv");
-      const jwt = require("jsonwebtoken");
-      dotenv.config()
-      jwt.sign(dadosUsuario, process.env.CHAVEPRIVADA, { expiresIn: 5 }, (err, token) => {
-        if (err) {
-          res
-            .status(500)
-            .json({ mensagem: "Erro ao gerar o JWT" });
+      if(resultado != 401 && resultado != 404){
 
-          return;
-        }
+        const dadosUsuario = { email, senha }
+        const dotenv = require("dotenv");
+        const jwt = require("jsonwebtoken");
+        dotenv.config()
+        jwt.sign(dadosUsuario, process.env.CHAVEPRIVADA, { expiresIn: 5 }, (err, token) => {
+          if (err) {
+            res
+              .status(500)
+              .json({ mensagem: "Erro ao gerar o JWT" });
 
-        console.log(resultado)
-      
-          db.query(`CALL inserirToken('${email}', '${token}')`, 
-          (error, results) => {
-            if (error) {
-              res.status(500).json({ mensagem: "Erro ao inserir o token no banco de dados" });
-              return;
-            }
-            res.json({ mensagem: "Login Efetuado com Sucesso", Nome: resultado[0].nome, cargo: resultado[0].cargo, token });
+            return;
+          }
+
+            db.query(`CALL inserirToken('${email}', '${token}')`, 
+            (error, results) => {
+              if (error) {
+                res.status(500).json({ mensagem: "Erro ao inserir o token no banco de dados" });
+                return;
+              }
+              res.json({ mensagem: "Login Efetuado com Sucesso", Nome: resultado[0].nome, cargo: resultado[0].cargo, token });
+            });
+
           });
 
-        });
-
+      }
+     
     } catch (error) {
-      res.status(500).json('Erro interno do servidor');
+
+      res.status(erro.status).json(error.message);
     }
 
   })
