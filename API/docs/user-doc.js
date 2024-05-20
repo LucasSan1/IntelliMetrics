@@ -48,6 +48,8 @@
  *  
  * /newUser:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: cadastro de usuario
@@ -70,6 +72,8 @@
  * 
  * /allUsers:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: retorna usuário
@@ -84,6 +88,8 @@
  * 
  * /user/{id}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: retorna dados
@@ -129,6 +135,8 @@
  * 
  * /enableUser:
  *   put:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users 
  *     summary: ativa o usuario
@@ -151,6 +159,8 @@
  * 
  * /updatePass:
  *   put:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: atualiza a senha
@@ -199,6 +209,8 @@
  * 
  * /updateUser:
  *   put:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: atualiza os dados 
@@ -221,6 +233,8 @@
  * 
  * /logout:
  *   put:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: atualiza os dados 

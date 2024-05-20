@@ -54,7 +54,7 @@ const login = async (email, senha) => {
       db.query(`SELECT * FROM usuarios WHERE email = '${email}'`,
         (erro, results) => {
           if (erro) {
-            reject(401);
+            reject(erro);
             return;
           } else if (results.length == 0) {
             resolve(404);

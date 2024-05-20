@@ -8,9 +8,13 @@ const { middlewareValidarRota } = require("../middleware/authMiddleware");
 
 router
   // criar um perfil
-  .post("/newUser", async (req, res) => {
+  .post("/newUser", middlewareValidarRota, async (req, res) => {
     try {
-      
+
+      if(req.cargo != "gestor"){
+        res.status(401).json("Não autorizado")
+      }
+ 
       const { nome, email, cargo } = req.body;
 
       const valUsuario = {
@@ -53,11 +57,12 @@ router
   
   .put("/disableUser", middlewareValidarRota, async (req, res) => {
     try {
-        const {email} = req.body
-        
-        if(req.cargo != "gestor"){
-            res.status(401).json("Não autorizado")
-        }
+      
+      if(req.cargo != "gestor"){
+        res.status(401).json("Não autorizado")
+      }
+
+      const {email} = req.body
 
       let resultado = await disableUser(
         email.toLowerCase()
@@ -101,8 +106,12 @@ router
     }
   })
 
-  .get("/allUsers", async (req, res) => {
+  .get("/allUsers", middlewareValidarRota,  async (req, res) => {
     try {
+
+      if(req.cargo != "gestor"){
+        res.status(401).json("Não autorizado")
+      }
     
       let resultado = await getCol()
       res.status(200).json(resultado);
@@ -112,10 +121,15 @@ router
     }
   })
 
-  .get("/user/:id", async (req, res) => {
+  .get("/user/:id", middlewareValidarRota, async (req, res) => {
     try {
-      const id = req.params.id;
+      
+      if(req.cargo != "gestor"){
+        res.status(401).json("Não autorizado")
+      }
 
+      const id = req.params.id;
+      
       let resultado = await getColById(
         id
       )
@@ -131,8 +145,9 @@ router
   })
 
   // atualizar senha usuario
-  .put("/updatePass", async (req, res) => {
+  .put("/updatePass", middlewareValidarRota, async (req, res) => {
     try {
+
       const { email, senha } = req.body;
 
       let resultado = await putPass(
@@ -166,6 +181,7 @@ router
     try {
 
       const { email, senha } = req.body;
+
       let resultado = await login(
         email.toLowerCase(),
         senha
@@ -220,8 +236,12 @@ router
   })
 
   //atualiza o user
-  .put("/updateUser", async (req, res) => {
+  .put("/updateUser", middlewareValidarRota, async (req, res) => {
     try {
+
+      if(req.cargo != "gestor"){
+        res.status(401).json("Não autorizado")
+      }
 
       const { email, nome, cargo } = req.body;
 
@@ -260,7 +280,7 @@ router
     }
   })
 
-  .put("/logout", async(req, res)=>{
+  .put("/logout", middlewareValidarRota, async(req, res)=>{
     const { email } = req.body
 
      let resultado = await logout(email)
