@@ -3,7 +3,7 @@ const db = require("../connector/conn")
 const validacaoUsuario = require("../validation/usuariosVal");
 
 // const { generateToken, verifica, removerToken } = require("../controller/token");
-const { createUser, getCol, getColById, disableUser, enableUser, putPass, putUser, login, inserirToken } = require("../controllers/controllerUser");
+const { createUser, getCol, getColById, disableUser, enableUser, putPass, putUser, login, logout } = require("../controllers/controllerUser");
 const { middlewareValidarRota } = require("../middleware/authMiddleware");
 
 router
@@ -178,8 +178,13 @@ router
         case 404:
           res.status(404).json("Usuário não encontrado")
           break;
+        case 403:
+          res.status(403).json("Usuário não autorizado, status: Inativo")
+          break;
+          
       }
-      if(resultado != 401 && resultado != 404){
+
+      if(resultado != 401 && resultado != 404 && resultado != 403){ // famoso if 200 Gambiarra do Marcos
 
         const dadosUsuario = { email, senha }
         const dotenv = require("dotenv");
@@ -208,8 +213,8 @@ router
       }
      
     } catch (error) {
-
-      res.status(erro.status).json(error.message);
+      res.status(500).json("Erro interno do servidor");
+      console.log(error)
     }
 
   })
@@ -253,6 +258,23 @@ router
     } catch (error) {
       console.log(error)
     }
+  })
+
+  .put("/logout", async(req, res)=>{
+    const { email } = req.body
+
+     let resultado = await logout(email)
+
+     switch(resultado){
+      case 200:
+        res.status(200).json("Usuario desconectado")
+        break;
+      case 400:
+        res.status(400).json("Erro ao desconectar")
+      default:
+        res.status(500).json("Erro interno do servidor")
+     }
+
   })
 
 module.exports = router;

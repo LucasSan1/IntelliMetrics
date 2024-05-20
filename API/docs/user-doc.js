@@ -187,12 +187,12 @@
  *     responses:
  *       200:
  *         description: Gera o token
- *       400:
- *         description: Preencha todos os campos
  *       404:
  *         description: Usuário não encontrado
  *       401:
  *         description: Credenciais inválidas
+ *       403:
+ *         description: "Usuário não autorizado, status: Inativo"
  *       500:
  *         description: Erro interno do servidor
  * 
@@ -214,6 +214,28 @@
  *         description: Usuario atualizado
  *       400:
  *         description: Erro ao atualizar usuário
+ *       404:
+ *         description: Usuario Não Encontrado
+ *       500:
+ *         description: Erro interno do servidor
+ * 
+ * /logout:
+ *   put:
+ *     tags:
+ *       - Users
+ *     summary: atualiza os dados 
+ *     description: atualiza os dados do usuario
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/email'
+ *     responses:
+ *       200:
+ *         description: Usuário desconectado
+ *       400:
+ *         description: Erro ao desconectar
  *       404:
  *         description: Usuario Não Encontrado
  *       500:
