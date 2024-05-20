@@ -65,7 +65,7 @@ const upMicroParalelismo = async(idParalelismo,  novovalorNominal1,  novovalorNo
     });
   }
 
-// controller para  inserir o controle dimencional 
+// controller para  inserir o controle dimensional 
 
 const insertDimensionalMicro = async(novoVp1,novoVp1_1,novoVp1_2, novoVp1_3,novoVp2,novoVp2_1,novoVp2_2,novoVp2_3,novoVp3,novoVp3_1,novoVp3_2, novoVp3_3,novoVp4,novoVp4_1, novoVp4_2, novoVp4_3,novoVp5, novoVp5_1, novoVp5_2,novoVp5_3, novoVp6,novoVp6_1, novoVp6_2,novoVp6_3, novoVp7,novoVp7_1, novoVp7_2, novoVp7_3,novoVp8,novoVp8_1, novoVp8_2, novoVp8_3,novoVp9, novoVp9_1, novoVp9_2, novoVp9_3,novoVp10,novoVp10_1, novoVp10_2, novoVp10_3, novoVp11, novoVp11_1, novoVp11_2, novoVp11_3 )=>{
 
@@ -174,6 +174,7 @@ const upResultMicro = async(antigoNrCertificad,alterarNrCertificado,idControle, 
       return 404;
     }
   
+    
   
     return new Promise((resolve, reject) =>{
       db.query(` CALL alterarParalelismoPaq('${antigoNrCertificad}','${alterarNrCertificado}','${idControle}','${idPlaneza}','${idParalelismoMicro}','${ idInstrumento}','${alterarTecnico}','${ alterarResponsável}','${alterarFaixaCalibradaNum}','${alterarFaixaCalibradaUni}','${alterarDataCalibracao}','${alterarInspecao}','${alterarTipoEscala}','${alterarVersaoMetodo}','${alterarTempInicia}','${alterarTempFinal}' )`,
@@ -189,8 +190,64 @@ const upResultMicro = async(antigoNrCertificad,alterarNrCertificado,idControle, 
   }
 
 // inserção de planeza
-// alteração de planeza
+const insertPlaneza = async(novoCMovel1,novoCMovel2, novoCMovel3, novoCFixo1, novoCFixo2, novoCFixo3)  => {
+  try{
+      const save =  await new Promise((resolve, reject) =>{ 
+          db.query(`CALL criarPlaneza('${novoCMovel1}','${novoCMovel2}','${novoCMovel3}','${novoCFixo1}','${novoCFixo2}','${novoCFixo3}') )`,
+              (error, results) => {
+                  if (error) {
+                      reject(error);
+                      return;
+                  } else {
+                      resolve(results);
+                  }
+              }
+          );
+    });
 
+   // Verificar se a inserção foi bem-sucedida
+      if(!save){
+          return 400; // Retorna status 400 se não foi bem-sucedido
+      } else {
+          return 200; // Retorna status 200 se foi bem-sucedido
+      }
+
+  } catch(error){
+      console.log(error)
+      return 500; // Retorna status 500 em caso de erro
+  }   
+}
+
+// alteração de planeza
+const upPlanezaMicro = async(idPlaneza,alterarCMovel1,alterarCMovel2, alterarCMovel3,alterarCFixo1, alterarCFixo2, alterarCFixo3)=>{
+
+  const existing = await new Promise((resolve, reject) =>{
+    db.query(`SELECT * FROM planeza WHERE idPlaneza = '${idPlaneza}'`,
+    (error, results) =>{
+      if(error){
+        reject(error);
+        return;
+      }
+      resolve(results);
+    });
+  });
+  if(existing.length == 0){
+    return 404;
+  }
+
+
+  return new Promise((resolve, reject) =>{
+    db.query(` CALL modificarPlaneza('${idPlaneza}','${alterarCMovel1}','${alterarCMovel2}','${alterarCMovel3}','${alterarCFixo1}','${alterarCFixo2}','${alterarCFixo3}')`,
+      (error, results) =>{
+        if(error){
+          reject(400, error);
+          return;
+        }
+        results(200);
+      }
+    );
+  });
+}
 
 
 
@@ -201,7 +258,9 @@ const upResultMicro = async(antigoNrCertificad,alterarNrCertificado,idControle, 
     insertDimensionalMicro,
     upDimencionalMicro, 
     insertResult, 
-    upResultMicro
+    upResultMicro,
+    insertPlaneza,
+    upPlanezaMicro
 
   }
 

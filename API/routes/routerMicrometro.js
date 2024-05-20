@@ -84,4 +84,225 @@ router
     //     }
     // })
 
+
+
+  // rota para inserir paralelismo do micrometro
+.post("/insertMicrometerParallelism", async (res, req) =>{
+    try{
+        const { novovalorNominal1,novovalorNominal2,novovalorNominal3,novovalorNominal4,novocMovelcFixo1, novocMovelcFixo2,novocMovelcFixo3,novocMovelcFixo4,novocMovelcFixo5, novocMovelcFixo6 } = req.body;
+        
+        let result = await insertMicrometro(
+            novovalorNominal1,novovalorNominal2,novovalorNominal3,novovalorNominal4,novocMovelcFixo1, novocMovelcFixo2,novocMovelcFixo3,novocMovelcFixo4,novocMovelcFixo5, novocMovelcFixo6 
+        );
+        switch (result) {
+            case 200:
+              res.status(200).json(" valor inserido com sucesso")
+              break;
+      
+            case 400:
+              res.status(401).json('erro ao inserir ')
+              break;
+      
+            default:
+              res.status(500).json('Erro interno do servidor')
+          }
+    }catch (error) {
+        console.log(error)
+      }
+})  
+
+
+// rota para atualizar o paralelismo micrometro
+.put("/updateMicrometerParallelism/:id", async(req, res) =>{
+    try{
+        const { novovalorNominal1,  novovalorNominal2, novovalorNominal3,  novovalorNominal4,  novocMovelcFixo1,  novocMovelcFixo2,  novocMovelcFixo3,  novocMovelcFixo4,  novocMovelcFixo5,  novocMovelcFixo6}= req.body;
+        const idParalelismo = req.params;
+
+        let atualiza = await upMicroParalelismo(
+            idParalelismo, novovalorNominal1,  novovalorNominal2, novovalorNominal3,  novovalorNominal4,  novocMovelcFixo1,  novocMovelcFixo2,  novocMovelcFixo3,  novocMovelcFixo4,  novocMovelcFixo5,  novocMovelcFixo6
+
+        );
+        switch(atualiza){
+            case 200:
+                res.status(200).json('Paralelismo atualizado');
+                break;
+            case 400:
+                res.status(400).json('Erro ao atualizar Paralelismo');
+                break;
+            case 404:
+                res.status(404).json('Relatório não encontrado');
+                break;
+            default:
+                res.status(500).json('Erro interno do servidor');
+        }
+    }catch (error) {
+        console.log(error)
+      }
+})
+
+
+// rota para inserir controle dimencional 
+.post("/insertDimensionalControl", async (res, req) =>{
+    try{
+        const { novoVp1,novoVp1_1,novoVp1_2, novoVp1_3,novoVp2,novoVp2_1,novoVp2_2,novoVp2_3,novoVp3,novoVp3_1,novoVp3_2, novoVp3_3,novoVp4,novoVp4_1, novoVp4_2, novoVp4_3,novoVp5, novoVp5_1, novoVp5_2,novoVp5_3, novoVp6,novoVp6_1, novoVp6_2,novoVp6_3, novoVp7,novoVp7_1, novoVp7_2, novoVp7_3,novoVp8,novoVp8_1, novoVp8_2, novoVp8_3,novoVp9, novoVp9_1, novoVp9_2, novoVp9_3,novoVp10,novoVp10_1, novoVp10_2, novoVp10_3, novoVp11, novoVp11_1, novoVp11_2, novoVp11_3 } = req.body;
+        
+        let result = await insertMicrometro(
+            novoVp1,novoVp1_1,novoVp1_2, novoVp1_3,novoVp2,novoVp2_1,novoVp2_2,novoVp2_3,novoVp3,novoVp3_1,novoVp3_2, novoVp3_3,novoVp4,novoVp4_1, novoVp4_2, novoVp4_3,novoVp5, novoVp5_1, novoVp5_2,novoVp5_3, novoVp6,novoVp6_1, novoVp6_2,novoVp6_3, novoVp7,novoVp7_1, novoVp7_2, novoVp7_3,novoVp8,novoVp8_1, novoVp8_2, novoVp8_3,novoVp9, novoVp9_1, novoVp9_2, novoVp9_3,novoVp10,novoVp10_1, novoVp10_2, novoVp10_3, novoVp11, novoVp11_1, novoVp11_2, novoVp11_3
+        );
+        switch (result) {
+            case 200:
+              res.status(200).json(" valor inserido com sucesso")
+              break;
+      
+            case 400:
+              res.status(401).json('erro ao inserir ')
+              break;
+      
+            default:
+              res.status(500).json('Erro interno do servidor')
+          }
+    }catch (error) {
+        console.log(error)
+      }
+}) 
+
+
+//rota para alterar o controle dimencional
+// .put("/updateMicrometerParallelism/:id", async(req, res) =>{
+//     try{
+//         const { novovalorNominal1,  novovalorNominal2, novovalorNominal3,  novovalorNominal4,  novocMovelcFixo1,  novocMovelcFixo2,  novocMovelcFixo3,  novocMovelcFixo4,  novocMovelcFixo5,  novocMovelcFixo6}= req.body;
+//         const idParalelismo = req.params;
+
+//         let atualiza = await upMicroParalelismo(
+//             idParalelismo, novovalorNominal1,  novovalorNominal2, novovalorNominal3,  novovalorNominal4,  novocMovelcFixo1,  novocMovelcFixo2,  novocMovelcFixo3,  novocMovelcFixo4,  novocMovelcFixo5,  novocMovelcFixo6
+
+//         );
+//         switch(atualiza){
+//             case 200:
+//                 res.status(200).json('Paralelismo atualizado');
+//                 break;
+//             case 400:
+//                 res.status(400).json('Erro ao atualizar Paralelismo');
+//                 break;
+//             case 404:
+//                 res.status(404).json('Relatório não encontrado');
+//                 break;
+//             default:
+//                 res.status(500).json('Erro interno do servidor');
+//         }
+//     }catch (error) {
+//         console.log(error)
+//       }
+// })
+
+//  rota  para inserir o resultado do micrometro
+.post("/insertResultMicrometer", async (res, req) =>{
+    try{
+        const {nrCertificado,idControle,idPlaneza,idParalelismoMicro,idInstrumento,novoTecnico,novoResponsável,novaFaixaCalibradaNum,novaFaixaCalibradaUni, novaDataCalibracao,novaInspecao, novoTipoEscala, novaVersaoMetodo,novoTempInicial, novoTempFinal } = req.body;
+        
+        let result = await insertMicrometro(
+            nrCertificado,idControle,idPlaneza,idParalelismoMicro,idInstrumento,novoTecnico,novoResponsável,novaFaixaCalibradaNum,novaFaixaCalibradaUni, novaDataCalibracao,novaInspecao, novoTipoEscala, novaVersaoMetodo,novoTempInicial, novoTempFinal
+        );
+        switch (result) {
+            case 200:
+              res.status(200).json(" valor inserido com sucesso")
+              break;
+      
+            case 400:
+              res.status(401).json('erro ao inserir ')
+              break;
+      
+            default:
+              res.status(500).json('Erro interno do servidor')
+          }
+    }catch (error) {
+        console.log(error)
+      }
+}) 
+
+
+//  rota  para alterar o resultado do micrometro
+// .put("/insertResult/:id", async(req, res) =>{
+//     try{
+//         const alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal}= req.body;
+//         const  antigoNrCertificad = req.params;
+
+//         let atualiza = await upResultMicro(
+//             antigoNrCertificad,alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal
+
+//         );
+//         switch(atualiza){
+//             case 200:
+//                 res.status(200).json('Paralelismo atualizado');
+//                 break;
+//             case 400:
+//                 res.status(400).json('Erro ao atualizar Paralelismo');
+//                 break;
+//             case 404:
+//                 res.status(404).json('Relatório não encontrado');
+//                 break;
+//             default:
+//                 res.status(500).json('Erro interno do servidor');
+//         }
+//     }catch (error) {
+//         console.log(error)
+//       }
+// })
+
+// inserção de planeza
+.post("/insertPlaneza", async (res, req) =>{
+    try{
+        const { novoCMovel1,novoCMovel2, novoCMovel3, novoCFixo1, novoCFixo2, novoCFixo3 } = req.body;
+        
+        let result = await insertMicrometro(
+            novoCMovel1,novoCMovel2, novoCMovel3, novoCFixo1, novoCFixo2, novoCFixo3
+        );
+        switch (result) {
+            case 200:
+              res.status(200).json(" valor inserido com sucesso")
+              break;
+      
+            case 400:
+              res.status(401).json('erro ao inserir ')
+              break;
+      
+            default:
+              res.status(500).json('Erro interno do servidor')
+          }
+    }catch (error) {
+        console.log(error)
+      }
+}) 
+
+//  rota alteração de planeza
+
+.put("/updatePlaneza/:id", async(req, res) =>{
+    try{
+        const { alterarCMovel1,alterarCMovel2, alterarCMovel3,alterarCFixo1, alterarCFixo2, alterarCFixo3}= req.body;
+        const idPlaneza = req.params;
+
+        let atualiza = await upPlanezaMicro(
+           
+
+        );
+        switch(atualiza){
+            case 200:
+                res.status(200).json('Planeza atualizado');
+                break;
+            case 400:
+                res.status(400).json('Erro ao atualizar Planeza');
+                break;
+            case 404:
+                res.status(404).json('Relatório não encontrado');
+                break;
+            default:
+                res.status(500).json('Erro interno do servidor');
+        }
+    }catch (error) {
+        console.log(error)
+      }
+})
+
+
+
 module.exports = router;
