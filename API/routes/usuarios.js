@@ -3,14 +3,18 @@ const db = require("../connector/conn")
 const validacaoUsuario = require("../validation/usuariosVal");
 
 // const { generateToken, verifica, removerToken } = require("../controller/token");
-const { createUser, getCol, getColById, disableUser, enableUser, putPass, putUser, login, inserirToken } = require("../controllers/controllerUser");
+const { createUser, getCol, getColById, disableUser, enableUser, putPass, putUser, login, logout } = require("../controllers/controllerUser");
 const { middlewareValidarRota } = require("../middleware/authMiddleware");
 
 router
   // criar um perfil
-  .post("/newUser", async (req, res) => {
+  .post("/newUser", middlewareValidarRota, async (req, res) => {
     try {
-      
+
+      if(req.cargo != "gestor"){
+        res.status(401).json("Não autorizado")
+      }
+ 
       const { nome, email, cargo } = req.body;
 
       const valUsuario = {
@@ -53,11 +57,12 @@ router
   
   .put("/disableUser", middlewareValidarRota, async (req, res) => {
     try {
-        const {email} = req.body
-        
-        if(req.cargo != "gestor"){
-            res.status(401).json("Não autorizado")
-        }
+      
+      if(req.cargo != "gestor"){
+        res.status(401).json("Não autorizado")
+      }
+
+      const {email} = req.body
 
       let resultado = await disableUser(
         email.toLowerCase()
@@ -101,8 +106,12 @@ router
     }
   })
 
-  .get("/allUsers", async (req, res) => {
+  .get("/allUsers", middlewareValidarRota,  async (req, res) => {
     try {
+
+      if(req.cargo != "gestor"){
+        res.status(401).json("Não autorizado")
+      }
     
       let resultado = await getCol()
       res.status(200).json(resultado);
@@ -112,10 +121,15 @@ router
     }
   })
 
-  .get("/user/:id", async (req, res) => {
+  .get("/user/:id", middlewareValidarRota, async (req, res) => {
     try {
-      const id = req.params.id;
+      
+      if(req.cargo != "gestor"){
+        res.status(401).json("Não autorizado")
+      }
 
+      const id = req.params.id;
+      
       let resultado = await getColById(
         id
       )
@@ -131,8 +145,9 @@ router
   })
 
   // atualizar senha usuario
-  .put("/updatePass", async (req, res) => {
+  .put("/updatePass", middlewareValidarRota, async (req, res) => {
     try {
+
       const { email, senha } = req.body;
 
       let resultado = await putPass(
@@ -166,6 +181,7 @@ router
     try {
 
       const { email, senha } = req.body;
+
       let resultado = await login(
         email.toLowerCase(),
         senha
@@ -178,8 +194,13 @@ router
         case 404:
           res.status(404).json("Usuário não encontrado")
           break;
+        case 403:
+          res.status(403).json("Usuário não autorizado, status: Inativo")
+          break;
+          
       }
-      if(resultado != 401 && resultado != 404){
+
+      if(resultado != 401 && resultado != 404 && resultado != 403){ // famoso if 200 Gambiarra do Marcos
 
         const dadosUsuario = { email, senha }
         const dotenv = require("dotenv");
@@ -208,15 +229,19 @@ router
       }
      
     } catch (error) {
-
-      res.status(erro.status).json(error.message);
+      res.status(500).json("Erro interno do servidor");
+      console.log(error)
     }
 
   })
 
   //atualiza o user
-  .put("/updateUser", async (req, res) => {
+  .put("/updateUser", middlewareValidarRota, async (req, res) => {
     try {
+
+      if(req.cargo != "gestor"){
+        res.status(401).json("Não autorizado")
+      }
 
       const { email, nome, cargo } = req.body;
 
@@ -253,6 +278,23 @@ router
     } catch (error) {
       console.log(error)
     }
+  })
+
+  .put("/logout", middlewareValidarRota, async(req, res)=>{
+    const { email } = req.body
+
+     let resultado = await logout(email)
+
+     switch(resultado){
+      case 200:
+        res.status(200).json("Usuario desconectado")
+        break;
+      case 400:
+        res.status(400).json("Erro ao desconectar")
+      default:
+        res.status(500).json("Erro interno do servidor")
+     }
+
   })
 
 module.exports = router;
