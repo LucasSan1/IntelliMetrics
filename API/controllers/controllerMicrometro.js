@@ -103,7 +103,7 @@ const insertDimensionalMicro = async(novoVp1,novoVp1_1,novoVp1_2, novoVp1_3,novo
 const upDimencionalMicro = async(idControle, alterarVp1,alterarVp1_1, alterarVp1_2, alterarVp1_3, alterarVp2,alterarVp2_1,alterarVp2_2, alterarVp2_3,alterarVp3,alterarVp3_1, alterarVp3_2, alterarVp3_3, alterarVp4,alterarVp4_1, alterarVp4_2, alterarVp4_3, alterarVp4,alterarVp4_1, alterarVp4_2,alterarVp4_3, alterarVp5, alterarVp5_1, alterarVp5_2, alterarVp5_3, alterarVp6,alterarVp6_1, alterarVp6_2, alterarVp6_3,alterarVp7, alterarVp7_1, alterarVp7_2, alterarVp7_3,  alterarVp8,alterarVp8_1, alterarVp8_2, alterarVp8_3, alterarVp9, alterarVp9_1, alterarVp9_2, alterarVp9_3, alterarVp10, alterarVp10_1, alterarVp10_2, alterarVp10_3,  alterarVp11, alterarVp11_1, alterarVp11_2, alterarVp11_3 )=>{
 
     const existing = await new Promise((resolve, reject) =>{
-      db.query(`SELECT * FROM paralelismoMicro WHERE  idControle = '${idControle}'`,
+      db.query(`SELECT * FROM controleDimensional   WHERE  idControle = '${idControle}'`,
       (error, results) =>{
         if(error){
           reject(error);
@@ -113,7 +113,7 @@ const upDimencionalMicro = async(idControle, alterarVp1,alterarVp1_1, alterarVp1
       });
     });
     if(existing.length == 0){
-      return 404;
+      return 404; 
     }
     return new Promise((resolve, reject) =>{
       db.query(` CALL modificarControleDimensional('${idControle}','${alterarVp1}','${alterarVp1_1}','${alterarVp1_2}','${alterarVp1_3}','${alterarVp2}','${alterarVp2_1}','${alterarVp2_2}','${alterarVp2_3}','${alterarVp3}','${alterarVp3_1}','${alterarVp3_2}','${alterarVp3_3}','${alterarVp4}','${alterarVp4_1}','${alterarVp4_2}','${alterarVp4_3}','${alterarVp4}','${alterarVp4_1}','${alterarVp4_2}','${alterarVp4_3}','${alterarVp5}','${alterarVp5_1}','${alterarVp5_2}','${alterarVp5_3}','${alterarVp6}','${alterarVp6_1}','${alterarVp6_2}','${alterarVp6_3}','${alterarVp7}','${alterarVp7_1}','${alterarVp7_2}','${alterarVp7_3}','${ alterarVp8}','${alterarVp8_1}','${alterarVp8_2}','${alterarVp8_3}','${alterarVp9}','${alterarVp9_1}','${alterarVp9_2}','${alterarVp9_3}','${alterarVp10}','${alterarVp10_1}','${alterarVp10_2}','${alterarVp10_3}','${alterarVp11}','${alterarVp11_1}','${alterarVp11_2}','${alterarVp11_3}'  )`,
@@ -132,7 +132,7 @@ const upDimencionalMicro = async(idControle, alterarVp1,alterarVp1_1, alterarVp1
 const insertResult = async(nrCertificado,idControle,idPlaneza,idParalelismoMicro,idInstrumento,novoTecnico,novoResponsável,novaFaixaCalibradaNum,novaFaixaCalibradaUni, novaDataCalibracao,novaInspecao, novoTipoEscala, novaVersaoMetodo,novoTempInicial, novoTempFinal)  => {
     try{
         const save =  await new Promise((resolve, reject) =>{ 
-            db.query(`CALL criarOrdens('${nrCertificado}', '${idControle}', '${idPlaneza}','${idParalelismoMicro}','${idInstrumento}','${novoTecnico}','${novoResponsável}','${novaFaixaCalibradaNum}','${novaFaixaCalibradaUni}','${novaDataCalibracao}','${novaInspecao}','${novoTipoEscala}','${novaVersaoMetodo}','${novoTempInicial}','${novoTempFinal}') )`,
+            db.query(`CALL criarResultadosMicrometros('${nrCertificado}', '${idControle}', '${idPlaneza}','${idParalelismoMicro}','${idInstrumento}','${novoTecnico}','${novoResponsável}','${novaFaixaCalibradaNum}','${novaFaixaCalibradaUni}','${novaDataCalibracao}','${novaInspecao}','${novoTipoEscala}','${novaVersaoMetodo}','${novoTempInicial}','${novoTempFinal}') )`,
                 (error, results) => {
                     if (error) {
                         reject(error);
@@ -161,7 +161,7 @@ const insertResult = async(nrCertificado,idControle,idPlaneza,idParalelismoMicro
 const upResultMicro = async(antigoNrCertificad,alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal)=>{
 
     const existing = await new Promise((resolve, reject) =>{
-      db.query(`SELECT * FROM paralelismoPaq WHERE antigoNrCertificad = '${antigoNrCertificad}'`,
+      db.query(`SELECT * FROM modificarResultadosMicrometros WHERE antigoNrCertificad = '${antigoNrCertificad}'`,
       (error, results) =>{
         if(error){
           reject(error);
@@ -188,7 +188,8 @@ const upResultMicro = async(antigoNrCertificad,alterarNrCertificado,idControle, 
     });
   }
 
-//
+// inserção de planeza
+// alteração de planeza
 
 
 

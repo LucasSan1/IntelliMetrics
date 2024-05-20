@@ -48,6 +48,8 @@
  *  
  * /newUser:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: cadastro de usuario
@@ -70,6 +72,8 @@
  * 
  * /allUsers:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: retorna usuário
@@ -84,6 +88,8 @@
  * 
  * /user/{id}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: retorna dados
@@ -105,6 +111,8 @@
  * 
  * /disableUser:
  *   put:
+ *     security:
+*       - bearerAuth: []
  *     tags:
  *       - Users 
  *     summary: desativa o usuario
@@ -127,6 +135,8 @@
  * 
  * /enableUser:
  *   put:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users 
  *     summary: ativa o usuario
@@ -149,6 +159,8 @@
  * 
  * /updatePass:
  *   put:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: atualiza a senha
@@ -185,18 +197,20 @@
  *     responses:
  *       200:
  *         description: Gera o token
- *       400:
- *         description: Preencha todos os campos
  *       404:
  *         description: Usuário não encontrado
  *       401:
  *         description: Credenciais inválidas
+ *       403:
+ *         description: "Usuário não autorizado, status: Inativo"
  *       500:
  *         description: Erro interno do servidor
  * 
  * 
  * /updateUser:
  *   put:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: atualiza os dados 
@@ -212,6 +226,30 @@
  *         description: Usuario atualizado
  *       400:
  *         description: Erro ao atualizar usuário
+ *       404:
+ *         description: Usuario Não Encontrado
+ *       500:
+ *         description: Erro interno do servidor
+ * 
+ * /logout:
+ *   put:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Users
+ *     summary: atualiza os dados 
+ *     description: atualiza os dados do usuario
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/email'
+ *     responses:
+ *       200:
+ *         description: Usuário desconectado
+ *       400:
+ *         description: Erro ao desconectar
  *       404:
  *         description: Usuario Não Encontrado
  *       500:

@@ -308,7 +308,7 @@ const upMedRes = async(idMedicaoRessalto,novaPrimeiraMedida,novoValorNominal1_1,
 const insertMedPro = async (nova_primeiraMedida,novo_valorNominal1_1,novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3, nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3) =>{
   try{
     const insert = await new Promise(( resolve, reject ) => {
-      db.query(` CALL inserirMedicaoProfundidade('${nova_primeiraMedida}','${novo_valorNominal1_1}','${novo_valorNominal1_2}','${novo_valorNominal1_3}','${nova_segundaMedida}','${novo_valorNominal2_1}','${novo_valorNominal2_2}'${novo_valorNominal2_3}','${nova_terceiraMedida}','${novo_valorNominal3_1}','${novo_valorNominal3_2}','${novo_valorNominal3_3}','${}','${}',)`,
+      db.query(` CALL inserirMedicaoProfundidade('${nova_primeiraMedida}','${novo_valorNominal1_1}','${novo_valorNominal1_2}','${novo_valorNominal1_3}','${nova_segundaMedida}','${novo_valorNominal2_1}','${novo_valorNominal2_2}'${novo_valorNominal2_3}','${nova_terceiraMedida}','${novo_valorNominal3_1}','${novo_valorNominal3_2}','${novo_valorNominal3_3}')`,
       
       (error, results) =>{
         if(error){
@@ -352,7 +352,7 @@ const upMedPro = async(idMedicao, nova_primeiraMedida, novo_valorNominal1_1, nov
     return 404;
   }
   return new Promise((resolve, reject) =>{
-    db.query(` CALL alterarMedicaoProfundidade('${idMedicao}','${nova_primeiraMedida}','${novo_valorNominal1_1}','${novo_valorNominal1_2}','${novo_valorNominal1_3}','${ nova_segundaMedida}','${novo_valorNominal2_1}','${novo_valorNominal2_2}','${novo_valorNominal2_3}','${nova_terceiraMedida}','${novo_valorNominal3_1}','${novo_valorNominal3_2}','${novo_valorNominal3_3}',)`,
+    db.query(` CALL alterarMedicaoProfundidade('${idMedicao}','${nova_primeiraMedida}','${novo_valorNominal1_1}','${novo_valorNominal1_2}','${novo_valorNominal1_3}','${ nova_segundaMedida}','${novo_valorNominal2_1}','${novo_valorNominal2_2}','${novo_valorNominal2_3}','${nova_terceiraMedida}','${novo_valorNominal3_1}','${novo_valorNominal3_2}','${novo_valorNominal3_3}')`,
       (error, results) =>{
         if(error){
           reject(400, error);
@@ -363,6 +363,7 @@ const upMedPro = async(idMedicao, nova_primeiraMedida, novo_valorNominal1_1, nov
     );
   });
 }
+
 
 
 

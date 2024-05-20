@@ -49,15 +49,12 @@ const createUser = async (nome, email, cargo) => {
 // busca o user no banco
 const login = async (email, senha) => {
   try {
-    if (!email || !senha) {
-      return 400;
-    }
-
+  
     const usuarios = await new Promise((resolve, reject) => {
       db.query(`SELECT * FROM usuarios WHERE email = '${email}'`,
         (erro, results) => {
           if (erro) {
-            reject(401);
+            reject(erro);
             return;
           } else if (results.length == 0) {
             resolve(404);
@@ -69,8 +66,10 @@ const login = async (email, senha) => {
 
   });
 
-  if (!usuarios) {
+  if (usuarios == 404) {
     return 404;
+  } else if(usuarios[0].status == "inativo"){
+    return 403;
   }
 
   const passwordMatch = await bcrypt.compare(senha, usuarios[0].senha);
@@ -78,9 +77,8 @@ const login = async (email, senha) => {
   if (passwordMatch) {
     return usuarios;
   } else {
-    return 405
+    return 401
   }
-
 
 } catch (error) {
   console.log(error)
@@ -89,9 +87,6 @@ const login = async (email, senha) => {
 
 };
 
-const inserirToken = async (email, token) => {
-  db.query(`CALL inserirToken('${email}', '${token}')`,)
-}
 
 // busca todos os colaboradores
 const getCol = async () => {
@@ -192,24 +187,33 @@ const putPass = async (email, senhaNova) => {
 
 // atualiza informaçoes do user
 const putUser = async (nome, email, cargo) => {
-  try {
-    if (!nome || !email || !cargo) {
-      return 400;
-    }
-
+ 
     const update = db.query(
       `call modificarUsuario('${email}', '${nome}', '${cargo}')`
     );
-    console.log(update);
+
     if (update) {
       return 200;
     } else {
       return 400;
     }
-  } catch (error) {
-    return 500;
-  }
 };
+
+const logout = async(email) => {
+  return new Promise((resolve, reject) => {
+    db.query(`UPDATE usuarios SET token = null WHERE email = "${email}"`,
+      (erro, results) => {
+        if (erro) {
+          reject(erro);
+          return;
+        } else if (results.affectedRows == 0) {
+          resolve(400);
+        }
+        resolve(200);
+      }
+    );
+  });
+}
 
 module.exports = {
   createUser,
@@ -220,5 +224,5 @@ module.exports = {
   putPass,
   putUser,
   login,
-  inserirToken
+  logout
 };

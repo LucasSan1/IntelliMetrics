@@ -18,8 +18,8 @@ const rotas_clientes = require('./routes/clientes');
 const rotas_pecas = require('./routes/pecas');
 const rotas_relatorios = require('./routes/relatorios')
 const rotas_instrumentos = require('./routes/instrumentos');
-const certificado_paquimetro = require('./routes/calculoPaquimetro')
-const certificado_micrometro =  require('./routes/calculoMicrometro')
+const certificado_paquimetro = require('./routes/routerPaquimetro')
+const certificado_micrometro =  require('./routes/routerMicrometro')
 const rotas_categorias = require('./routes/categorias')
 
 
