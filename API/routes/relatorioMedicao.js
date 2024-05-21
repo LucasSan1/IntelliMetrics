@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { novoDocumento } = require("../controllers/relatorioMedicao")
+const { novoDocumento } = require("../controllers/controllerRelatorioMedicao")
 
 router
     
