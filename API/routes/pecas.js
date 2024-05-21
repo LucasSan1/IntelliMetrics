@@ -44,6 +44,7 @@ router
                     default:
                         res.status(500).json("Erro interno do servidor");
                 }
+                
             } catch (validationError) {
                 // Captura os erros de validação e envia como resposta
                 return res.status(400).json({ error: validationError.errors });

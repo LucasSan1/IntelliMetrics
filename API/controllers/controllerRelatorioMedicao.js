@@ -15,13 +15,13 @@ const Model = require('../model/model'); // Substitua o caminho pelo caminho rea
     ]
   });
 
-  novoDocumento.save()
-    .then(doc => {
-      console.log('Documento inserido com sucesso:', doc);
-    })
-    .catch(err => {
-      console.error('Erro ao inserir documento:', err);
-    });
+  // novoDocumento.save()
+  //   .then(doc => {
+  //     console.log('Documento inserido com sucesso:', doc);
+  //   })
+  //   .catch(err => {
+  //     console.error('Erro ao inserir documento:', err);
+  //   });
 
 module.exports ={
   novoDocumento

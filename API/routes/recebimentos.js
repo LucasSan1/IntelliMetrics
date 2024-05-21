@@ -1,7 +1,6 @@
 const router = require('express').Router();
 
-const { registerPeca } = require('../controllers/controllerPecas');
-const {registerReceipt, updateReceipt,getReceiptById,getAllReceipt} = require("../controllers/controllerRecibos");
+const {registerReceipt, updateReceipt,getReceiptById,getAllReceipt} = require("../controllers/controllerRecebimento");
 
 const validacaoRecebimentos = require("../validation/recebimentoVal")
 router
@@ -36,14 +35,14 @@ router
                     reciboValidado.setor,
                     reciboValidado.nProposta,
                     reciboValidado.nNotaFiscal,
-                    reciboValidado.dataDeRecebimento,
+                    dataDeRecebimento,
                     reciboValidado.recebidoNaPrevisao,
-                    reciboValidado.previsaoInicio,
-                    reciboValidado.previsaoTermino,
+                    previsaoInicio,
+                    previsaoTermino,
                     reciboValidado.clienteConcorda,
-                    reciboValidado.dataAssinatura,
+                    dataAssinatura,
                     reciboValidado.pessoaContatada,
-                    reciboValidado.dataContatada
+                    dataContatada
                 );
 
                 switch(resultCad){
@@ -73,7 +72,7 @@ router
         try {
             // const idOrdem = req.params.id;
             const idRecibo = req.params.id
-            const {idOrdem, setor, nProposta, nNotaFiscal, dataDeRecebimento, recebidoNaPrevisao, previsaoInicio, previsaoTermino, clienteConcorda, dataAssinatura, pessoaContatada, dataContatada} = req.body;
+            const {idOrdem, idUsuario, setor, nProposta, nNotaFiscal, dataDeRecebimento, recebidoNaPrevisao, previsaoInicio, previsaoTermino, clienteConcorda, dataAssinatura, pessoaContatada, dataContatada} = req.body;
 
             const valRecebidos = {
                 idOrdem,
@@ -90,7 +89,7 @@ router
                 pessoaContatada,
                 dataContatada
             }
-
+        try{
             const reciboValidado = validacaoRecebimentos.parse(valRecebidos)
              
             let resultUpdate = await updateReceipt(
@@ -99,14 +98,14 @@ router
                 reciboValidado.setor,
                 reciboValidado.nProposta,
                 reciboValidado.nNotaFiscal,
-                reciboValidado.dataDeRecebimento,
+                dataDeRecebimento,
                 reciboValidado.recebidoNaPrevisao,
-                reciboValidado.previsaoInicio,
-                reciboValidado.previsaoTermino,
+                previsaoInicio,
+                previsaoTermino,
                 reciboValidado.clienteConcorda,
-                reciboValidado.dataAssinatura,
+                dataAssinatura,
                 reciboValidado.pessoaContatada,
-                reciboValidado.dataContatada
+                dataContatada
             );
 
             switch(resultUpdate){
@@ -119,7 +118,11 @@ router
                 default:
                     res.status(500).json('Erro interno do servidor');
             }
-
+        } catch (validationError) {
+            // Captura os erros de validação e envia como resposta
+            return res.status(400).json({ error: validationError.errors });
+          }
+          
         } catch (error) {
             console.log(error);
             res.status(500).json("Erro interno no servidor");
@@ -142,7 +145,7 @@ router
         const idRecibo = req.params.id;
 
         try {
-            const recibo = await getPecaById(idRecibo);
+            const recibo = await getReceiptById(idRecibo);
             res.status(200).json(recibo);
         } catch(error) {
             console.log(error); // Registra o erro no console
