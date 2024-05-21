@@ -161,7 +161,7 @@ const insertResult = async(nrCertificado,idControle,idPlaneza,idParalelismoMicro
 const upResultMicro = async(antigoNrCertificad,alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal)=>{
 
     const existing = await new Promise((resolve, reject) =>{
-      db.query(`SELECT * FROM modificarResultadosMicrometros WHERE antigoNrCertificad = ?;`,[antigoNrCertificad],
+      db.query(`SELECT * FROM resultadosMicrometros WHERE antigoNrCertificad = ?;`,[antigoNrCertificad],
       (error, results) =>{
         if(error){
           reject(error);
@@ -177,7 +177,7 @@ const upResultMicro = async(antigoNrCertificad,alterarNrCertificado,idControle, 
     
   
     return new Promise((resolve, reject) =>{
-      db.query(` CALL alterarParalelismoPaq('${antigoNrCertificad}','${alterarNrCertificado}','${idControle}','${idPlaneza}','${idParalelismoMicro}','${ idInstrumento}','${alterarTecnico}','${ alterarResponsável}','${alterarFaixaCalibradaNum}','${alterarFaixaCalibradaUni}','${alterarDataCalibracao}','${alterarInspecao}','${alterarTipoEscala}','${alterarVersaoMetodo}','${alterarTempInicia}','${alterarTempFinal}' )`,
+      db.query(` CALL modificarResultadosMicrometros('${antigoNrCertificad}','${alterarNrCertificado}','${idControle}','${idPlaneza}','${idParalelismoMicro}','${ idInstrumento}','${alterarTecnico}','${ alterarResponsável}','${alterarFaixaCalibradaNum}','${alterarFaixaCalibradaUni}','${alterarDataCalibracao}','${alterarInspecao}','${alterarTipoEscala}','${alterarVersaoMetodo}','${alterarTempInicia}','${alterarTempFinal}' )`,
         (error, results) =>{
           if(error){
             reject(400, error);
