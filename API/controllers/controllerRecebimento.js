@@ -5,7 +5,7 @@ const registerReceipt = async(idOrdem, idUsuario, setor, nProposta, nNotaFiscal,
     try{
         const insert = await new Promise((resolve, reject)=>{ 
 
-            db.query(` CALL inserirRecebimento('${idOrdem}' '${idUsuario}', '${setor}','${nProposta}', '${nNotaFiscal}', '${dataDeRecebimento}', '${recebidoNaPrevisao}', '${previsaoInicio}', '${previsaoTermino}', '${clienteConcorda}, '${dataAssinatura}', '${pessoaContatada}', '${dataContatada}' )`,
+            db.query(`CALL inserirRecebimento('${idOrdem}', '${idUsuario}', '${setor}','${nProposta}', '${nNotaFiscal}', '${dataDeRecebimento}', '${recebidoNaPrevisao}', '${previsaoInicio}', '${previsaoTermino}', '${clienteConcorda}', '${dataAssinatura}', '${pessoaContatada}', '${dataContatada}')`,
                 (error, results) => {
                     if (error) {
                         reject(error);
@@ -36,13 +36,13 @@ const registerReceipt = async(idOrdem, idUsuario, setor, nProposta, nNotaFiscal,
 // controller para alteração do recibo 
 const updateReceipt = async(idRecebimento, idOrdem, setor, nProposta, nNotaFiscal, dataDeRecebimento, recebidoNaPrevisao, previsaoInicio, previsaoTermino, clienteConcorda, dataAssinatura, pessoaContatada, dataContatada) =>{
     return new Promise((resolve, reject) =>{
-        db.query(` CALL modificarRecebimento('${idRecebimento}' '${idOrdem}', '${setor}','${nProposta}', '${nNotaFiscal}', '${dataDeRecebimento}', '${recebidoNaPrevisao}', '${previsaoInicio}', '${previsaoTermino}', '${clienteConcorda}', '${dataAssinatura}','${pessoaContatada}','${dataContatada}')`,
+        db.query(`CALL modificarRecebimento('${idRecebimento}', '${idOrdem}', '${setor}','${nProposta}', '${nNotaFiscal}', '${dataDeRecebimento}', '${recebidoNaPrevisao}', '${previsaoInicio}', '${previsaoTermino}', '${clienteConcorda}', '${dataAssinatura}','${pessoaContatada}','${dataContatada}')`,
             (error, results) => {
                 if (error){
-                    reject (error);
+                    reject (400);
                     return;
                 } else {
-                    resolve (results)
+                    resolve (200)
                 }
             }     
         );
@@ -53,7 +53,7 @@ const updateReceipt = async(idRecebimento, idOrdem, setor, nProposta, nNotaFisca
 // controller para visualizar o recibo pelo seu ID
 const getReceiptById = async(idOrdem) =>{
     return new Promise((resolve, reject) =>{
-        db.query(`SELECT * FROM recebidos WHERE = pk_idRecebimento = ? ;`, [idOrdem],
+        db.query(`SELECT * FROM recebidos WHERE pk_idRecebimento = ? ;`, [idOrdem],
             (error, results) => {
                 if (error){
                     reject (error);
