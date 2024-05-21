@@ -32,7 +32,7 @@ const getAllPecas = async () => {
 // Função para obter uma peça pelo seu ID
 const getPecaById = async (id_peca) => {
     return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM pecas Where pk_idPeca = '${id_peca}'`,
+        db.query(`SELECT * FROM pecas Where pk_idPeca = ? ;`, [id_peca],
         (error, results) => {
             if (error) {
                 reject(error); // Rejeita a promessa em caso de erro

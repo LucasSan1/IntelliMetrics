@@ -14,7 +14,7 @@ const registerCategoria = async(nome) => {
 const updateCategoria = async(idCategoria, nome) => {
 
     const verificarCategoria = await new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM categorias WHERE pk_idCategoria = '${idCategoria}'`,
+        db.query(`SELECT * FROM categorias WHERE pk_idCategoria = ?;`, [idCategoria],
             (error, results) => {
                 if (error) {
                     reject(error);

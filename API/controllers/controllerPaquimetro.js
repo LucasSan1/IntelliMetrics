@@ -34,7 +34,7 @@ if(!insert){
 const upPaqParalelismo = async(pk_idParalelismoPaq, alterarValorNominalOrelha, alterarValorProxOrelha1, alterarValorProxOrelha2, alterarValorProxOrelha3, alterarValorAfasOrelha1, alterarValorAfasOrelha2, alterarValorAfasOrelha3, alterarValorNominalBico, alterarValorProxBico1, alterarValorProxBico2, alterarValorProxBico3, alterarValorAfasBico1, alterarValorAfasBico2,  alterarValorAfasBico3)=>{
 
   const existing = await new Promise((resolve, reject) =>{
-    db.query(`SELECT * FROM paralelismoPaq WHERE pk_idParalelismoPaq = '${pk_idParalelismoPaq}'`,
+    db.query(`SELECT * FROM paralelismoPaq WHERE pk_idParalelismoPaq = ? ;`, [pk_idParalelismoPaq],
     (error, results) =>{
       if(error){
         reject(error);
@@ -96,7 +96,7 @@ if(!insert){
 const upMedExt = async(idMedicaoExterna, alterarVn1,alterarVn1_1, alterarVn1_2, alterarVn1_3,alterarVn2, alterarVn2_1, alterarVn2_2, alterarVn2_3, alterarVn3, alterarVn3_1, alterarVn3_2, alterarVn3_3,alterarVn4,alterarVn4_1,alterarVn4_2, alterarVn4_3,alterarVn5, alterarVn5_1, alterarVn5_2, alterarVn5_3,alterarVn6,alterarVn6_1, alterarVn6_2, alterarVn6_3, alterarVn7, alterarVn7_1, alterarVn7_2, alterarVn7_3, alterarVnExtra1, alterarVnExtra1_1, alterarVnExtra1_2, alterarVnExtra1_3,  alterarVnExtra2,  alterarVnExtra2_1,  alterarVnExtra2_2,  alterarVnExtra2_3,  alterarVnExtra3,  alterarVnExtra3_1,  alterarVnExtra3_2,  alterarVnExtra3_3)=>{
 
   const existing = await new Promise((resolve, reject) =>{
-    db.query(`SELECT * FROM  medicoesExternas WHERE idMedicaoExterna = '${idMedicaoExterna}'`,
+    db.query(`SELECT * FROM  medicoesExternas WHERE idMedicaoExterna = ? ;`, [idMedicaoExterna],
     (error, results) =>{
       if(error){
         reject(error);
@@ -156,7 +156,7 @@ const upResultPaq = async(antigoNrCertificado,alterarNrCertificado,idInstrumento
 
   const existing = await new Promise((resolve, reject) =>{
     db.query(`SELECT * FROM resultadosPaquimetros
-    WHERE antigoNrCertificado = '${antigoNrCertificado}'`,
+    WHERE antigoNrCertificado = ? ;`, [antigoNrCertificado],
     (error, results) =>{
       if(error){
         reject(error);
@@ -216,7 +216,7 @@ const upMedInt = async(idMedicaoInterna, alterarPrimeiraMedida,alterarValorNomin
 
   const existing = await new Promise((resolve, reject) =>{
     db.query(`SELECT * FROM medicoesinternas
-    WHERE idMedicaoInterna = '${idMedicaoInterna}'`,
+    WHERE idMedicaoInterna = ? ;`, [idMedicaoInterna],
     (error, results) =>{
       if(error){
         reject(error);
@@ -276,7 +276,7 @@ const upMedRes = async(idMedicaoRessalto,novaPrimeiraMedida,novoValorNominal1_1,
 
   const existing = await new Promise((resolve, reject) =>{
     db.query(`SELECT * FROM medicoesRessaltos
-    WHERE  idMedicaoRessalto = '${idMedicaoRessalto}'`,
+    WHERE  idMedicaoRessalto = ? ;`, [idMedicaoRessalto],
     (error, results) =>{
       if(error){
         reject(error);
@@ -338,7 +338,7 @@ const upMedPro = async(idMedicao, nova_primeiraMedida, novo_valorNominal1_1, nov
 
   const existing = await new Promise((resolve, reject) =>{
     db.query(`SELECT * FROM medicoesProfundidades
-    WHERE  idMedicao = '${idMedicao}'`,
+    WHERE  idMedicao = ? ;`, [idMedicao],
     (error, results) =>{
       if(error){
         reject(error);
@@ -362,12 +362,6 @@ const upMedPro = async(idMedicao, nova_primeiraMedida, novo_valorNominal1_1, nov
     );
   });
 }
-
-
-
-
-
-
 
 module.exports = {
   paralelismoPaquimetro,

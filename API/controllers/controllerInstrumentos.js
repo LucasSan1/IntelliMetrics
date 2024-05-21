@@ -32,7 +32,7 @@ const getAllInstrumentos = async () => {
 const getInstrumentoById = async (id_instrumento) => {
   const verificarInstru = await new Promise((resolve, reject) => {
     db.query(
-      `SELECT * FROM instrumentos WHERE pk_idInstrumento = "${id_instrumento}"`,
+      `SELECT * FROM instrumentos WHERE pk_idInstrumento = ? ;`, [id_instrumento], 
       (error, results) => {
         if (error) {
           reject(error);
@@ -49,7 +49,7 @@ const getInstrumentoById = async (id_instrumento) => {
 
   return new Promise((resolve, reject) => {
     db.query(
-      `SELECT * FROM instrumentos WHERE pk_idInstrumento = "${id_instrumento}"`,
+      `SELECT * FROM instrumentos WHERE pk_idInstrumento = ? ;`, [id_instrumento],
       (error, results) => {
         if (error) {
           reject(error); // Rejeita a promessa em caso de erro
@@ -80,7 +80,7 @@ const updateInstrumento = async (
 
 const verificarInstru = await new Promise((resolve, reject) => {
     db.query(
-      `SELECT * FROM instrumentos WHERE pk_idInstrumento = "${id_instrumento}"`,
+      `SELECT * FROM instrumentos WHERE pk_idInstrumento = ? ;`, [id_instrumento],
       (error, results) => {
         if (error) {
           reject(error);

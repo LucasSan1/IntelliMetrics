@@ -5,7 +5,7 @@ const registerReport = async(idRelatorio, idInstrumento, idUsuario, idPeca, inic
     try{
         console.log()
         const existingReport = await new Promise((resolve, reject) =>{
-            db.query(`SELECT * FROM relatorio WHERE pk_idRelatorio = '${idRelatorio}'`,
+            db.query(`SELECT * FROM relatorio WHERE pk_idRelatorio = ? ;`, [idRelatorio],
             (error, results) => {
                 if (error) {
                     reject(error); // Rejeita a promessa em caso de er ro
@@ -67,7 +67,7 @@ const getAllReports = async() => {
 // função para obter as informações de dentro do relatório
 const getAllInfos = async(id_report) =>{
     return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM relatorio WHERE pk_idRelatorio = ${id_report}`,
+        db.query(`SELECT * FROM relatorio WHERE pk_idRelatorio = ? ;`, [id_report],
             (error, results) => {
                 if(error){
                     reject(error);
@@ -83,7 +83,7 @@ const getAllInfos = async(id_report) =>{
 const updateReport = async (id, novoIdRelatorio, idInstrumento, idUsuario, idPeca, Inicio, Termino, TempoTotal, TemperaturaC, UmidadeRelativa, Observacoes, LocalDaMedicao, Dia, Assinatura ) =>{
 
     const existingReport = await new Promise((resolve, reject) =>{
-        db.query(`SELECT * FROM relatorio WHERE pk_idRelatorio = '${id}'`,
+        db.query(`SELECT * FROM relatorio WHERE pk_idRelatorio = ? ;`, [id],
         (error, results) => {
             if (error) {
                 reject(error); // Rejeita a promessa em caso de er ro

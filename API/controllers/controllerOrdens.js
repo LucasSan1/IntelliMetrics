@@ -48,7 +48,7 @@ const getCertificateOrders = async() => {
 // Função para obter uma ordem de calibração pelo seu ID 
 const getOrdersById = async(id_order) => {
     return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM ordensServico WHERE pk_idOs = '${id_order}'`,
+        db.query(`SELECT * FROM ordensServico WHERE pk_idOs = ? ;`, [id_order], 
             (erro, results) => {
                 if (erro) {
                     reject(erro);
