@@ -1,7 +1,6 @@
 const db = require('../connector/conn')
 
-// constroller para paralelismo paquimetro
-
+// constroller para inserir o paralelismo paquimetro
 const paralelismoPaquimetro = async (novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, ovoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3) =>{
   try{
     const insert = await new Promise(( resolve, reject ) => {
