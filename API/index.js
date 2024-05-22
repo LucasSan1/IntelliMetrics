@@ -29,7 +29,7 @@ const rotas_instrumentos = require('./routes/instrumentos');
 const certificado_paquimetro = require('./routes/routerPaquimetro')
 const certificado_micrometro =  require('./routes/routerMicrometro')
 const rotas_categorias = require('./routes/categorias')
-const rota_relatorio = require('./routes/relatorioMedicao')
+const rota_relatorio = require('./routes/routerMensurandos')
 const rota_recebimentos = require("./routes/recebimentos")
 
 

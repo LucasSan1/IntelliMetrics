@@ -3,7 +3,7 @@ const { infoRelatoirios } = require("../controllers/controllerRelatorioMedicao")
 
 router
     
-    .post('/module', (req, res) => {
+    .post('/mensurandos', (req, res) => {
         const {dados} = req.body
 
         let resultado = infoRelatoirios(dados)
