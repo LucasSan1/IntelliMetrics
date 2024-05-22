@@ -7,7 +7,7 @@ const registerCliente = async(nomeEmpresa, representante, email, telefone, ender
     try {
 
         const existingCliente = await new Promise((resolve, reject) =>{
-            db.query(`SELECT * FROM clientes WHERE email = '${email}'`,
+            db.query(`SELECT * FROM clientes WHERE email = ?;`, [email],
             (error, results) => {
                 if (error) {
                     reject(error); // Rejeita a promessa em caso de er ro
@@ -57,7 +57,7 @@ const getClientes = async () => {
 const getClienteById = async (id_cliente) => {
     
     return new Promise((resolve, reject) => {
-        db.query(`SELECT * FROM clientes WHERE pk_idCliente = ${id_cliente}`,
+        db.query(`SELECT * FROM clientes WHERE pk_idCliente = ?;`, [id_cliente],
             (error, results) => {
                 if (error) {
                     reject(error);

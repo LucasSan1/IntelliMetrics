@@ -30,6 +30,7 @@ const certificado_paquimetro = require('./routes/routerPaquimetro')
 const certificado_micrometro =  require('./routes/routerMicrometro')
 const rotas_categorias = require('./routes/categorias')
 const rota_relatorio = require('./routes/relatorioMedicao')
+const rota_recebimentos = require("./routes/recebimentos")
 
 
 app.use("", rotas_pecas); 
@@ -42,6 +43,7 @@ app.use("", certificado_paquimetro)
 app.use("", certificado_micrometro)
 app.use("", rotas_categorias)
 app.use("", rota_relatorio)
+app.use("", rota_recebimentos)
 
 
 // Defina as opções do Swagger JSDoc

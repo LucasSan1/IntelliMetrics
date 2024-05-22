@@ -77,7 +77,7 @@
  *      500:
  *        description: Erro interno do servidor
  * 
- * /receipts/:id:
+ * /receipts/{id}:
  *  get:
  *    tags:
  *      - Recebimentos
@@ -96,7 +96,7 @@
  *      500:
  *        description: Erro interno do servidor.
  * 
- * /updateReceipt/:id:
+ * /updateReceipt/{id}:
  *   put:
  *     tags:
  *       - Recebimentos
