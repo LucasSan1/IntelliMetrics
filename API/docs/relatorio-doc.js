@@ -79,7 +79,19 @@
  *         pattern: 2024-03-06
  *       assinatura:
  *         type: string
- * 
+ *  
+ *  mensurandos:
+ *     type: object
+ *     properties:
+ *       dados:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number 
+ *           minItems: 8
+ *      
+ *  
  * /registerReport:
  *   post:
  *     tags:
@@ -157,6 +169,26 @@
  *         description: Relatório não encontrado
  *       400:
  *         description: Erro ao atualizar relatório
+ *       500:
+ *         description: Erro interno do servidor
+ * 
+ * /mensurandos:
+ *   post:
+ *     tags:
+ *       - Relatorios
+ *     summary: cadastro os valores de mensurandos
+ *     description: cadastra os valores da tabela de mensurandos podem ser adicionadas até 10 listas com 8 elementos cada
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/mensurandos'
+ *     responses:
+ *       200:
+ *         description: Documento criado com sucesso!
+ *       400:
+ *         description: Erro ao criar documento!
  *       500:
  *         description: Erro interno do servidor
  *
