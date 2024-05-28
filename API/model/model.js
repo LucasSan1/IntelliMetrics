@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const Schema = new mongoose.Schema({
+const relatorioSchema = new mongoose.Schema({
   array: {
     type: [[Number]],
     required: true
   }
 });
 
-const Model = mongoose.model('Model', Schema);
+const Relatorio = mongoose.model('Relatorio', relatorioSchema);
 
-module.exports = Model;
+module.exports = Relatorio;
