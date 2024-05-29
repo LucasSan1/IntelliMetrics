@@ -31,8 +31,7 @@ router
                     clienteValidado.email,
                     clienteValidado.telefone,
                     clienteValidado.endereco,
-                    clienteValidado.cnpj,
-                    clienteValidado.status
+                    clienteValidado.cnpj
                 );
 
                 // Verifica o resultado do cadastro e retorna a resposta adequada
