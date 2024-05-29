@@ -16,7 +16,7 @@ const middlewareValidarRota = async (req, res, next) => {
         db.query(`SELECT * FROM usuarios WHERE token = ?`, [tokenJWT], 
             (error, results) => {
                 if(results.length == 0){
-                    return res.status(404).json('Usuário precisa estar logado');
+                    return res.status(403).json('O usuário deve estar cadastrado');
                 } else{
                     const cargo = results[0].cargo;
                     req.cargo = cargo
