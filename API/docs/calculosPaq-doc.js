@@ -102,6 +102,38 @@
  *          minItems: 3
  * 
  * 
+ *   modeloInserirParalelismo:
+ *     type: object
+ *     properties:
+ *       novoValorNominalOrelha: 
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ *       novoValorProxOrelha1:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ *       novoValorProxOrelha2
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ *       novoValorProxOrelha3
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ * 
  * /incertezaPaq:
  *   post:
  *     tags:
@@ -138,4 +170,27 @@
  *       500:
  *         description: Erro interno da API.
  *
+ * 
+ * /inserirParalelismo:
+ *    post: 
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: inserir dados
+ *     description: Inserir dados de paralelismo do paquimetro
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/modeloInserirParalelismo' 
+ *     responses:
+ *       200:
+ *         description: Valor inserido com sucesso.
+ *       400:
+ *         description: Erro ao inserir
+ *       500:
+ *         description: Erro interno do servidor.
+ *
+ * 
+ * 
  */

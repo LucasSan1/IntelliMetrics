@@ -63,7 +63,7 @@ router
   })
 
 // rota para inserir o paralelismo do paquimetro
-.post("/caliperParallelismo", async (req, res) =>{
+.post("/inserirParalelismo", async (req, res) =>{
   try{
     const {novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, ovoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3} = req.body;
     
@@ -77,7 +77,7 @@ router
         break;
 
       case 400:
-        res.status(401).json('erro ao inserir ')
+        res.status(400).json('erro ao inserir ')
         break;
 
       default:
@@ -129,7 +129,7 @@ router
         break;
 
       case 400:
-        res.status(401).json('erro ao inserir ')
+        res.status(400).json('erro ao inserir ')
         break;
 
       default:
@@ -183,7 +183,7 @@ router
         break;
 
       case 400:
-        res.status(401).json('erro ao inserir ')
+        res.status(400).json('erro ao inserir ')
         break;
 
       default:
