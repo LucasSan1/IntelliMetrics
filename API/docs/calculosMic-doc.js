@@ -5,20 +5,20 @@
  *     description: Todos os resultados dos calculos referentes a parte de micrometro
  * definitions:
  *    
- *   calculosPaq:
+ *   calculosMic:
  *     type: object
  *     properties:
  *       cMovel:
  *         type: array
  *         items:
  *           type: number
- *           minItems: 3
+ *         minItems: 3
  *       cFixo:
  *         type: array
  *         items:
  *           type: number
  *         minItems: 3
- *       dadosPararelismo:
+ *       dadosParalelismo:
  *         type: array
  *         items:
  *           type: number
@@ -30,97 +30,33 @@
  *           items:
  *             type: number
  *           minItems: 3
- *       valorNominalPara:
- *         type: array
- *         items:
- *           type: number
- *         minItems: 2
- *       valorIndicadoProxBicos:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
- *       valorIndicadoAfasBicos:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
- *       valorIndicadoMedInterna:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
- *       valorNominalMedInterna:
- *         type: array
- *         items:
- *           type: number
- *         minItems: 3
- *       valorNominalMedRessalto:
- *         type: array
- *         items:
- *           type: number
- *         minItems: 3
- *       valorIndicadoMedRessalto:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
- *       valorNominalMedProf:
- *         type: array
- *         items:
- *           type: number
- *         minItems: 3
- *       valorIndicadoMedProf:
- *        type: array
- *        items:
- *          type: array
- *          items:
- *            type: number
- *          minItems: 3
+ *       faixaCalibrada:    
+ *         type: number
+ *       valorDivResolucao:
+ *         type: number
+ *       dig_anal:
+ *         type: number
+ *         pattern: 0 analogico e 1 digital 
  * 
  * 
- * /incertezaPaq:
+ * /calculateMicrometro:
  *   post:
  *     tags:
- *       - Calculos paquimetro
- *     summary: incerteza do paquimetro
- *     description: Todos os calculos referentes a incerteza de paquimetos
+ *       - Calculos Micrometro
+ *     summary: Todos os calculos
+ *     description: Todos os calculos referentes a micrometro
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/definitions/incertezaPaq'
+ *             $ref: '#/definitions/calculosMic'
  *     responses:
  *       200:
  *         description: Retorna os resultados dos calculos.
  *       500:
  *         description: Erro interno da API.
  *
- * /calculosPaq:
- *   post:
- *     tags:
- *       - Calculos paquimetro
- *     summary: calculos de paquimetro
- *     description: Calculos de tendencia, paralelismo e desvio padrao de paquimetros
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/definitions/calculosPaq' 
- *     responses:
- *       200:
- *         description: Retorna os resultados dos calculos.
- *       500:
- *         description: Erro interno da API.
+ * 
  *
  */
