@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const db = require("../connector/conn")
 const validacaoUsuario = require("../validation/usuariosVal");
+const dotenv = require("dotenv");
+const jwt = require("jsonwebtoken");
 
 // const { generateToken, verifica, removerToken } = require("../controller/token");
 const { createUser, getCol, getColById, disableUser, enableUser, putPass, putUser, login, logout } = require("../controllers/controllerUser");
@@ -145,7 +147,7 @@ router
   })
 
   // atualizar senha usuario
-  .put("/updatePass", middlewareValidarRota, async (req, res) => {
+  .put("/updatePass", async (req, res) => {
     try {
 
       const { email, senha } = req.body;
@@ -203,8 +205,7 @@ router
       if(resultado != 401 && resultado != 404 && resultado != 403){ // famoso if 200 Gambiarra do Marcos
 
         const dadosUsuario = { email, senha }
-        const dotenv = require("dotenv");
-        const jwt = require("jsonwebtoken");
+
         dotenv.config()
         jwt.sign(dadosUsuario, process.env.CHAVEPRIVADA, { expiresIn: 5 }, (err, token) => {
           if (err) {

@@ -17,7 +17,7 @@ const connection = mysql.createConnection({
 async function conexao() {
     try {
         await connection.connect();
-        console.log("Conectado ao banco de dados");
+        console.log("Conectado ao banco de dados Mysql");
     } catch (error) {
         console.log("Erro ao conectar com o banco de dados", error)
         
