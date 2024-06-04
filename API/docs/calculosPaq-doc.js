@@ -102,12 +102,12 @@
  *          minItems: 3
  * 
  * 
- * /incertezaPaquimetro:
+ * /incertezaPaq:
  *   post:
  *     tags:
  *       - Calculos paquimetro
  *     summary: incerteza do paquimetro
- *     description: Todos os calculos referentes a incerteza de paquimetos
+ *     description: Todos os calculos referentes a incerteza de paquimetros
  *     requestBody:
  *       required: true
  *       content:
@@ -120,7 +120,7 @@
  *       500:
  *         description: Erro interno da API.
  *
- * /calcPaquimetro:
+ * /calculosPaq:
  *   post:
  *     tags:
  *       - Calculos paquimetro
