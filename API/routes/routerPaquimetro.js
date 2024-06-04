@@ -5,7 +5,7 @@ const { calculoTendenciaExterna, calculoParalelismoOrelhas, calculoParalelismoBi
 
 router
   // Rota para calcular a tendência externa do paquímetro
-  .post("/caliperCalculation", async (req, res) => {
+  .post("/calculosPaq", async (req, res) => {
     const { valorNominalMedExterna, valorIndicado, valorIndicadoProxOrelhas, valorIndicadoAfasOrelhas, valorNominalPara, valorIndicadoProxBicos, valorIndicadoAfasBicos, valorNominalMedInterna, valorIndicadoMedInterna, valorNominalMedRessalto, valorIndicadoMedRessalto, valorNominalMedProf, valorIndicadoMedProf} = req.body;
 
     try {
@@ -31,7 +31,7 @@ router
     }
   })
 
-  .post("/caliperUncertainty", async(req, res) =>{
+  .post("/incertezaPaq", async(req, res) =>{
     
     const {resolucao, desvpad, faixaNominal} = req.body
     

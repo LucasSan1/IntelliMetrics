@@ -1,44 +1,29 @@
 /**
  * @swagger
  * tags:
- *   - name: Calculos paquimetro
- *     description: Todos os resultados dos calculos referentes a parte de paquimetro 
+ *   - name: Calculos Micrometro
+ *     description: Todos os resultados dos calculos referentes a parte de micrometro
  * definitions:
- *   incertezaPaq:
- *     type: object
- *     properties:
- *       desvpad:
- *         type: array
- *         items:
- *           type: number
- *       resolucao:
- *         type: number
- *       faixaNominal:
- *         type: number
  *    
  *   calculosPaq:
  *     type: object
  *     properties:
- *       valorIndicado:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
- *       valorNominalMedExterna:
+ *       cMovel:
  *         type: array
  *         items:
  *           type: number
- *         minItems: 5
- *       valorIndicadoProxOrelhas:
+ *           minItems: 3
+ *       cFixo:
  *         type: array
  *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
- *       valorIndicadoAfasOrelhas:
+ *           type: number
+ *         minItems: 3
+ *       dadosPararelismo:
+ *         type: array
+ *         items:
+ *           type: number
+ *         minItems: 3
+ *       dadosControle:
  *         type: array
  *         items:
  *           type: array
@@ -107,7 +92,7 @@
  *     tags:
  *       - Calculos paquimetro
  *     summary: incerteza do paquimetro
- *     description: Todos os calculos referentes a incerteza de paquimetros
+ *     description: Todos os calculos referentes a incerteza de paquimetos
  *     requestBody:
  *       required: true
  *       content:
