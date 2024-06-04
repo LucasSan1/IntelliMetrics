@@ -147,7 +147,7 @@ router
   })
 
   // atualizar senha usuario
-  .put("/updatePass", middlewareValidarRota, async (req, res) => {
+  .put("/updatePass", async (req, res) => {
     try {
 
       const { email, senha } = req.body;
