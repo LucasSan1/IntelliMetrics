@@ -119,20 +119,30 @@
  *           items:
  *             type: number
  *           minItems: 3
- *       novoValorProxOrelha2
+ *       novoValorProxOrelha2:
  *         type: array
  *         items:
  *           type: array
  *           items:
  *             type: number
  *           minItems: 3
- *       novoValorProxOrelha3
+ *       novoValorProxOrelha3:
  *         type: array
  *         items:
  *           type: array
  *           items:
  *             type: number
  *           minItems: 3
+ *       novoValorAfasOrelha1:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ * 
+ * 
+ * 
  * 
  * /incertezaPaq:
  *   post:
