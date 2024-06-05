@@ -3,6 +3,8 @@ const router = require("express").Router();
 // Importa as funções de cálculo da planicidade e paralelismo do micrômetro
 const { calculoPlaneza, calculoParalelismo, controleDimensional, incerteza_medAU, incerteza_UP, incerteza_medERES, incertez_medl1, incertez_medl2, incerteza_medPAR, incertez_medEader, incertezaUC, incetPara0_25, incertplaneza0_25,   incetPara25_50, incertplaneza25_50, incetPara50_100, incertplaneza50_100 } = require("../util/calculosMicrometro");
 
+const { insertMicrometro, upMicroParalelismo, insertDimensionalMicro, upDimencionalMicro, insertResult, upResultMicro, insertPlaneza, upPlanezaMicro} = require("../controllers/controllerMicrometro")
+
 router
      // Rota para calcular a planicidade do micrômetro
     .post("/calculateMicrometro", async (req, res) => {
@@ -146,7 +148,7 @@ router
     try{
         const { novoVp1,novoVp1_1,novoVp1_2, novoVp1_3,novoVp2,novoVp2_1,novoVp2_2,novoVp2_3,novoVp3,novoVp3_1,novoVp3_2, novoVp3_3,novoVp4,novoVp4_1, novoVp4_2, novoVp4_3,novoVp5, novoVp5_1, novoVp5_2,novoVp5_3, novoVp6,novoVp6_1, novoVp6_2,novoVp6_3, novoVp7,novoVp7_1, novoVp7_2, novoVp7_3,novoVp8,novoVp8_1, novoVp8_2, novoVp8_3,novoVp9, novoVp9_1, novoVp9_2, novoVp9_3,novoVp10,novoVp10_1, novoVp10_2, novoVp10_3, novoVp11, novoVp11_1, novoVp11_2, novoVp11_3 } = req.body;
         
-        let result = await insertMicrometro(
+        let result = await insertDimensionalMicro(
             novoVp1,novoVp1_1,novoVp1_2, novoVp1_3,novoVp2,novoVp2_1,novoVp2_2,novoVp2_3,novoVp3,novoVp3_1,novoVp3_2, novoVp3_3,novoVp4,novoVp4_1, novoVp4_2, novoVp4_3,novoVp5, novoVp5_1, novoVp5_2,novoVp5_3, novoVp6,novoVp6_1, novoVp6_2,novoVp6_3, novoVp7,novoVp7_1, novoVp7_2, novoVp7_3,novoVp8,novoVp8_1, novoVp8_2, novoVp8_3,novoVp9, novoVp9_1, novoVp9_2, novoVp9_3,novoVp10,novoVp10_1, novoVp10_2, novoVp10_3, novoVp11, novoVp11_1, novoVp11_2, novoVp11_3
         );
         switch (result) {
@@ -173,7 +175,7 @@ router
         const {antigoNrCertificad,alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal}= req.body;
         
 
-        let atualiza = await upResultMicro(
+        let atualiza = await upDimencionalMicro(
             antigoNrCertificad,alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal
 
         );
@@ -200,7 +202,7 @@ router
     try{
         const {nrCertificado,idControle,idPlaneza,idParalelismoMicro,idInstrumento,novoTecnico,novoResponsável,novaFaixaCalibradaNum,novaFaixaCalibradaUni, novaDataCalibracao,novaInspecao, novoTipoEscala, novaVersaoMetodo,novoTempInicial, novoTempFinal } = req.body;
         
-        let result = await insertMicrometro(
+        let result = await insertResult(
             nrCertificado,idControle,idPlaneza,idParalelismoMicro,idInstrumento,novoTecnico,novoResponsável,novaFaixaCalibradaNum,novaFaixaCalibradaUni, novaDataCalibracao,novaInspecao, novoTipoEscala, novaVersaoMetodo,novoTempInicial, novoTempFinal
         );
         switch (result) {
@@ -254,7 +256,7 @@ router
     try{
         const { novoCMovel1,novoCMovel2, novoCMovel3, novoCFixo1, novoCFixo2, novoCFixo3 } = req.body;
         
-        let result = await insertMicrometro(
+        let result = await insertPlaneza(
             novoCMovel1,novoCMovel2, novoCMovel3, novoCFixo1, novoCFixo2, novoCFixo3
         );
         switch (result) {
