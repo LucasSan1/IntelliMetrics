@@ -140,7 +140,69 @@
  *           items:
  *             type: number
  *           minItems: 3
- * 
+ *       novoValorAfasOrelha2:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ *       novoValorAfasOrelha3:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ *       novoValorNominalBico:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ *       novoValorProxBico1:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ *       novoValorProxBico2:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ *       novoValorProxBico3:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ *       novoValorAfasBico1:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ *       novoValorAfasBico2:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
+ *       novoValorAfasBico3:
+ *         type: array
+ *         items:
+ *           type: array
+ *           items:
+ *             type: number
+ *           minItems: 3
  * 
  * 
  * 
