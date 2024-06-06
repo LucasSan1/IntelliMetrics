@@ -38,7 +38,41 @@
  *         type: number
  *         pattern: 0 analogico e 1 digital 
  * 
+ *   insertMicrometro:
+ *     type: object
+ *     properties:
+ *       novovalorNominal1:
+ *         type: number
+ *         format: flot
+ *       novovalorNominal2:
+ *         type: number
+ *         format: flot
+ *       novovalorNominal3:
+ *         type: number
+ *         format: flot
+ *       novovalorNominal4:
+ *         type: number
+ *         format: flot
+ *       novocMovelcFixo1:
+ *         type: number
+ *         format: flot
+ *       novocMovelcFixo2:
+ *         type: number
+ *         format: flot
+ *       novocMovelcFixo3:
+ *         type: number
+ *         format: flot
+ *       novocMovelcFixo4:
+ *         type: number
+ *         format: flot
+ *       novocMovelcFixo5:
+ *         type: number
+ *         format: flot
+ *       novocMovelcFixo6:
+ *         type: number
+ *         format: flot
  * 
+ *  
  * /calculateMicrometro:
  *   post:
  *     tags:
@@ -57,6 +91,10 @@
  *       500:
  *         description: Erro interno da API.
  *
- * 
+ * /insertMicrometerParallelism:
+ *   post:
+ *     tags:
+ *       - valores usados nos calculos
+ *     summary: esses valores são usados para 
  *
  */
