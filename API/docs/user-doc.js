@@ -76,6 +76,8 @@
  * 
  * /allUsers:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: retorna usuário
