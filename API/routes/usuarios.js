@@ -113,7 +113,7 @@ router
     }
   })
 
-  .get("/allUsers", async (req, res) => {
+  .get("/allUsers", middlewareValidarRota, async (req, res) => {
     try {
 
       if(req.cargo != "gestor"){
