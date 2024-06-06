@@ -87,7 +87,11 @@ router
 
   .put("/enableUser", middlewareValidarRota, async (req, res) => {
     try {
+        if(req.cargo != "gestor"){
+          res.status(401).json("Não autorizado")
+        }
         const {email} = req.body
+
 
       let resultado = await enableUser(
         email.toLowerCase()

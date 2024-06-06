@@ -100,8 +100,7 @@ const insertDimensionalMicro = async(novoVp1,novoVp1_1,novoVp1_2, novoVp1_3,novo
 
 //controller para alterar o controle dimencional
 
-const upDimencionalMicro = async(idControle, alterarVp1,alterarVp1_1, alterarVp1_2, alterarVp1_3, alterarVp2,alterarVp2_1,alterarVp2_2, alterarVp2_3,alterarVp3,alterarVp3_1, alterarVp3_2, alterarVp3_3, alterarVp4,alterarVp4_1, alterarVp4_2, alterarVp4_3, alterarVp4,alterarVp4_1, alterarVp4_2,alterarVp4_3, alterarVp5, alterarVp5_1, alterarVp5_2, alterarVp5_3, alterarVp6,alterarVp6_1, alterarVp6_2, alterarVp6_3,alterarVp7, alterarVp7_1, alterarVp7_2, alterarVp7_3,  alterarVp8,alterarVp8_1, alterarVp8_2, alterarVp8_3, alterarVp9, alterarVp9_1, alterarVp9_2, alterarVp9_3, alterarVp10, alterarVp10_1, alterarVp10_2, alterarVp10_3,  alterarVp11, alterarVp11_1, alterarVp11_2, alterarVp11_3 )=>{
-
+const upDimencionalMicro = async( idControle, alterarVp1,alterarVp1_1, alterarVp1_2, alterarVp1_3, alterarVp2,alterarVp2_1,alterarVp2_2, alterarVp2_3, alterarVp3,alterarVp3_1, alterarVp3_2, alterarVp3_3, alterarVp4,alterarVp4_1, alterarVp4_2,alterarVp4_3, alterarVp5, alterarVp5_1, alterarVp5_2, alterarVp5_3, alterarVp6,alterarVp6_1, alterarVp6_2, alterarVp6_3, alterarVp7, alterarVp7_1, alterarVp7_2, alterarVp7_3, alterarVp8,alterarVp8_1, alterarVp8_2, alterarVp8_3, alterarVp9, alterarVp9_1, alterarVp9_2, alterarVp9_3, alterarVp10, alterarVp10_1, alterarVp10_2, alterarVp10_3, alterarVp11, alterarVp11_1, alterarVp11_2, alterarVp11_3 ) => {
     const existing = await new Promise((resolve, reject) =>{
       db.query(`SELECT * FROM controleDimensional   WHERE  idControle = ? `,[idControle],
       (error, results) =>{

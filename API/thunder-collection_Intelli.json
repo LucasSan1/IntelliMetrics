@@ -19,6 +19,7 @@
             "headers": [],
             "body": {
                 "type": "json",
+                
                 "raw": "{\n  \"valorIndicado\": [\n  [1,2,3],\n  [1,2,3],\n  [1,2,3],\n  [1,4,3]\n  ],\n  \n  \"valorNominalMedExterna\": [\n  0,\n  1.30,\n  1.40,\n  20\n  ],\n  \n  \"valorIndicadoProxOrelhas\": [ [1,4,3] ],\n  \"valorIndicadoAfasOrelhas\": [ [1,2,3] ],\n  \n  \"valorNominalPara\": [ 50, 60 ],\n  \n  \"valorIndicadoProxBicos\": [ [1,4,3] ],\n  \"valorIndicadoAfasBicos\": [ [1,2,3] ],\n  \n  \"valorIndicadoMedInterna\": [\n    [1,2,3],\n    [1,4,3],\n    [1,2,3]\n  ],\n  \"valorNominalMedInterna\": [50, 40 , 30],\n  \n  \"valorNominalMedRessalto\": [50, 40, 30],\n  \"valorIndicadoMedRessalto\": [\n   [1,2,3],\n   [1,4,3],\n   [1,2,3]\n  ],\n  \n  \"valorNominalMedProf\": [ 50,40,30],\n  \"valorIndicadoMedProf\": [\n   [1,2,3],\n   [1,2,3],\n   [1,4,3]\n  ]\n}",
                 "form": []
             }

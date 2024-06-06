@@ -1,10 +1,10 @@
 const db = require('../connector/conn')
 
 // constroller para inserir o paralelismo paquimetro
-const paralelismoPaquimetro = async (novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, ovoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3) =>{
+const paralelismoPaquimetro = async (novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, novoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3) =>{
   try{
     const insert = await new Promise(( resolve, reject ) => {
-      db.query(` CALL inserirParalelismoPaq('${novoValorNominalOrelha}', '${novoValorProxOrelha1}', '${novoValorProxOrelha2}', '${novoValorProxOrelha3}', '${novoValorAfasOrelha1}', '${novoValorAfasOrelha2}', '${novoValorAfasOrelha3}', '${ovoValorNominalBico}', '${novoValorProxBico1}', '${novoValorProxBico2}', ${novoValorProxBico3}, '${novoValorAfasBico1}', '${novoValorAfasBico2}', '${novoValorAfasBico3}')`,
+      db.query(` CALL inserirParalelismoPaq('${novoValorNominalOrelha}', '${novoValorProxOrelha1}', '${novoValorProxOrelha2}', '${novoValorProxOrelha3}', '${novoValorAfasOrelha1}', '${novoValorAfasOrelha2}', '${novoValorAfasOrelha3}', '${novoValorNominalBico}', '${novoValorProxBico1}', '${novoValorProxBico2}', ${novoValorProxBico3}, '${novoValorAfasBico1}', '${novoValorAfasBico2}', '${novoValorAfasBico3}')`,
       
       (error, results) =>{
         if(error){

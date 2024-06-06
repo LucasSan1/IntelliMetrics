@@ -3,6 +3,7 @@ const router = require("express").Router();
 // Importa a função de cálculo de tendência externa do paquímetro
 const { calculoTendenciaExterna, calculoParalelismoOrelhas, calculoParalelismoBicos, calculoMedInterna, calculoMedRessalto, calculoMedProfundidade, incertezaUA, incertezaUP, incertezaERES, incertezaL1, incertezaL2, incertezaUC, incertezaUE } = require("../util/calculosPaquimetro");
 
+const {paralelismoPaquimetro, upPaqParalelismo, insertMedExt, upMedExt, insertResultPaq, upResultPaq, insertMedInt, upMedInt, insertMedRes, upMedRes, insertMedPro, upMedPro} = require("../controllers/controllerPaquimetro")
 router
   // Rota para calcular a tendência externa do paquímetro
   .post("/calculosPaq", async (req, res) => {
@@ -63,13 +64,13 @@ router
   })
 
 // rota para inserir o paralelismo do paquimetro
-.post("/caliperParallelismo", async (req, res) =>{
+.post("/inserirParalelismo", async (req, res) =>{
   try{
-    const {novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, ovoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3} = req.body;
+    const {novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, novoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3} = req.body;
     
 
-    let result = await insertMicrometro(
-      novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, ovoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3
+    let result = await paralelismoPaquimetro(
+      novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, novoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3
     );
     switch (result) {
       case 200:
@@ -77,7 +78,7 @@ router
         break;
 
       case 400:
-        res.status(401).json('erro ao inserir ')
+        res.status(400).json('erro ao inserir ')
         break;
 
       default:
@@ -129,7 +130,7 @@ router
         break;
 
       case 400:
-        res.status(401).json('erro ao inserir ')
+        res.status(400).json('erro ao inserir ')
         break;
 
       default:
@@ -183,7 +184,7 @@ router
         break;
 
       case 400:
-        res.status(401).json('erro ao inserir ')
+        res.status(400).json('erro ao inserir ')
         break;
 
       default:
