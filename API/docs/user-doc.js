@@ -65,6 +65,10 @@
  *         description: Usuário cadastrado
  *       400:
  *         description: Erro ao cadastrar usuário
+ *       401:
+ *         description: Token não fornecido
+ *       403:
+ *         description: Token invalido
  *       409:
  *         description: Este e-mail já está em uso
  *       500:
@@ -72,6 +76,8 @@
  * 
  * /allUsers:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: retorna usuário
@@ -103,7 +109,9 @@
  *       404:
  *         description: Usuário não encontrado
  *       401:
- *         description: Usuário não autorizado
+ *         description: Token não fornecido
+ *       403:
+ *         description: Token invalido
  *       500:
  *         description: Erro interno do servidor.
  * 
@@ -127,7 +135,9 @@
  *       404:
  *         description: Usuário já esta desativado
  *       401:
- *         description: Usuário não autorizado
+ *         description: Token não fornecido
+ *       403:
+ *         description: Token invalido
  *       500:
  *         description: Erro interno do servidor
  * 
@@ -151,7 +161,9 @@
  *       404:
  *         description: Usuário já esta ativado
  *       401:
- *         description: Usuário não autorizado
+ *         description: Token não fornecido
+ *       403:
+ *         description: Token invalido
  *       500:
  *         description: Erro interno do servidor
  * 
@@ -174,6 +186,10 @@
  *         description: Senha atualizada
  *       400:
  *         description: Não foi possivel redefinir senha
+ *       401:
+ *         description: Token não fornecido
+ *       403:
+ *         description: Token invalido
  *       404:
  *         description: Usuario Não Encontrado
  *       500:
@@ -198,9 +214,9 @@
  *       404:
  *         description: Usuário não encontrado
  *       401:
- *         description: Credenciais inválidas
+ *         description: Token não fornecido
  *       403:
- *         description: "Usuário não autorizado, status: Inativo"
+ *         description: Token invalido
  *       500:
  *         description: Erro interno do servidor
  * 
@@ -224,6 +240,10 @@
  *         description: Usuario atualizado
  *       400:
  *         description: Erro ao atualizar usuário
+ *       401:
+ *         description: Token não fornecido
+ *       403:
+ *         description: Token invalido
  *       404:
  *         description: Usuario Não Encontrado
  *       500:
@@ -248,6 +268,10 @@
  *         description: Usuário desconectado
  *       400:
  *         description: Erro ao desconectar
+ *       401:
+ *         description: Token não fornecido
+ *       403:
+ *         description: Token invalido
  *       404:
  *         description: Usuario Não Encontrado
  *       500:
