@@ -48,8 +48,6 @@
  *  
  * /newUser:
  *   post:
- *     security:
- *       - bearerAuth: []
  *     tags:
  *       - Users
  *     summary: cadastro de usuario

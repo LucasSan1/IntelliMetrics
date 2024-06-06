@@ -113,12 +113,8 @@ router
     }
   })
 
-  .get("/allUsers", middlewareValidarRota, async (req, res) => {
+  .get("/allUsers", async (req, res) => {
     try {
-
-      if(req.cargo != "gestor"){
-        res.status(401).json("Não autorizado")
-      }
     
       let resultado = await getCol()
       res.status(200).json(resultado);
