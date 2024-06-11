@@ -223,7 +223,7 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
     response[`resultadoControle${index + 1}`] = {
       "mediaValor": mediaValor[index],
       "desvioPadrao": desvioP[index],
-      "tendência ": tendencias[index],
+      "tendência": tendencias[index],
     };
   }
   response.desvioPadraoMedio = parseFloat(desvioPadraoMedio.toFixed(4));
