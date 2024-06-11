@@ -117,9 +117,9 @@ router
 })
 
 // rota para inserir as medições externas 
-.post ("/externalmeasurements", async(req, res)=>{
+.post ("/medicaoExterna", async(req, res)=>{
   try{
-    const {novoVn1,novoVn1_1, novoVn1_2, novoVn1_3, novoVn2, novoVn2_1, novoVn2_2, novoVn2_3, novoVn3, novoVn3_1, novoVn3_2, novoVn3_3, novoVn4,novoVn4_1, novoVn4_2, novoVn4_3, novoVn5, novoVn5_1, novoVn5_2, novoVn5_3,  novoVn6, novoVn6_1,  novoVn6_2,  novoVn6_3, novoVn7,novoVn7_1, novoVn7_2, novoVn7_3,  novoVnExtra1, novoVnExtra1_1, novoVnExtra1_2, novoVnExtra1_3, novoVnExtra2, novoVnExtra2_1, novoVnExtra2_2, novoVnExtra2_3, novoVnExtra3,novoVnExtra3_1, novoVnExtra3_2, novoVnExtra3_3} = req.body;
+    const {novoVn1, novoVn1_1, novoVn1_2, novoVn1_3, novoVn2, novoVn2_1, novoVn2_2, novoVn2_3, novoVn3, novoVn3_1, novoVn3_2, novoVn3_3, novoVn4,novoVn4_1, novoVn4_2, novoVn4_3, novoVn5, novoVn5_1, novoVn5_2, novoVn5_3,  novoVn6, novoVn6_1,  novoVn6_2,  novoVn6_3, novoVn7,novoVn7_1, novoVn7_2, novoVn7_3,  novoVnExtra1, novoVnExtra1_1, novoVnExtra1_2, novoVnExtra1_3, novoVnExtra2, novoVnExtra2_1, novoVnExtra2_2, novoVnExtra2_3, novoVnExtra3,novoVnExtra3_1, novoVnExtra3_2, novoVnExtra3_3} = req.body;
     
     let result = await insertMedExt(
       novoVn1,novoVn1_1, novoVn1_2, novoVn1_3, novoVn2, novoVn2_1, novoVn2_2, novoVn2_3, novoVn3, novoVn3_1, novoVn3_2, novoVn3_3, novoVn4,novoVn4_1, novoVn4_2, novoVn4_3, novoVn5, novoVn5_1, novoVn5_2, novoVn5_3,  novoVn6, novoVn6_1,  novoVn6_2,  novoVn6_3, novoVn7,novoVn7_1, novoVn7_2, novoVn7_3,  novoVnExtra1, novoVnExtra1_1, novoVnExtra1_2, novoVnExtra1_3, novoVnExtra2, novoVnExtra2_1, novoVnExtra2_2, novoVnExtra2_3, novoVnExtra3,novoVnExtra3_1, novoVnExtra3_2, novoVnExtra3_3

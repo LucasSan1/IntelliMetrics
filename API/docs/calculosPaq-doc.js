@@ -266,8 +266,8 @@
  * /calibrarParalelismo/{id}:
  *    put: 
  *     tags:
- *       - Calibrar paralelismo paq
- *     summary: inserir dados
+ *       - Calculos paquimetro
+ *     summary: atualizar dados
  *     description: atualizar dados de paralelismo do paquimetro
  *     parameters: 
  *       - in: path
@@ -289,6 +289,9 @@
  *         description: Relatório não encontrado
  *       500:
  *         description: Erro interno do servidor.
+ * 
+ * /medicaoExterna:
+ *    post:
  * 
  * 
  */
