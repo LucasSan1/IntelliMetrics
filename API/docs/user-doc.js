@@ -94,7 +94,7 @@
  *       - Users
  *     summary: retorna dados
  *     description: retorna os dados do usuário com base em um id especifico
- *     parameters:
+ *     parameters: 
  *       - in: path
  *         name: id
  *         type: number

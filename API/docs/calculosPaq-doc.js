@@ -205,6 +205,132 @@
  *           minItems: 3
  * 
  * 
+ *   modeloMedicaoExterna:
+ *     type: object
+ *     properties:
+ *       novoVn1: 
+ *         type: number
+ *         format: float
+ *       novoVn1_1: 
+ *         type: number
+ *         format: float
+ *       novoVn1_2: 
+ *         type: number
+ *         format: float
+ *       novoVn1_3: 
+ *         type: number
+ *         format: float
+ *       novoVn2: 
+ *         type: number
+ *         format: float
+ *       novoVn2_1: 
+ *         type: number
+ *         format: float
+ *       novoVn2_2: 
+ *         type: number
+ *         format: float
+ *       novoVn2_3: 
+ *         type: number
+ *         format: float
+ *       novoVn3: 
+ *         type: number
+ *         format: float
+ *       novoVn3_1: 
+ *         type: number
+ *         format: float
+ *       novoVn3_2: 
+ *         type: number
+ *         format: float
+ *       novoVn3_3: 
+ *         type: number
+ *         format: float
+ *       novoVn4: 
+ *         type: number
+ *         format: float
+ *       novoVn4_1: 
+ *         type: number
+ *         format: float
+ *       novoVn4_2: 
+ *         type: number
+ *         format: float
+ *       novoVn4_3: 
+ *         type: number
+ *         format: float
+ *       novoVn5: 
+ *         type: number
+ *         format: float
+ *       novoVn5_1: 
+ *         type: number
+ *         format: float
+ *       novoVn5_2: 
+ *         type: number
+ *         format: float
+ *       novoVn5_3: 
+ *         type: number
+ *         format: float
+ *       novoVn6: 
+ *         type: number
+ *         format: float
+ *       novoVn6_1: 
+ *         type: number
+ *         format: float
+ *       novoVn6_2: 
+ *         type: number
+ *         format: float
+ *       novoVn6_3: 
+ *         type: number
+ *         format: float
+ *       novoVn7: 
+ *         type: number
+ *         format: float
+ *       novoVn7_1: 
+ *         type: number
+ *         format: float
+ *       novoVn7_2: 
+ *         type: number
+ *         format: float
+ *       novoVn7_3: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra1: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra1_1: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra1_2: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra1_3: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra2: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra2_1: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra2_2: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra2_3: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra3: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra3_1: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra3_2: 
+ *         type: number
+ *         format: float
+ *       novoVnExtra3_3: 
+ *         type: number
+ *         format: float
+ * 
+ * 
+ * 
  * 
  * /incertezaPaq:
  *   post:
@@ -263,6 +389,73 @@
  *       500:
  *         description: Erro interno do servidor.
  *
+ * /calibrarParalelismo/{id}:
+ *    put: 
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: atualizar dados
+ *     description: atualizar dados de paralelismo do paquimetro
+ *     parameters: 
+ *       - in: path
+ *         name: id
+ *         type: number
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/modeloInserirParalelismo' 
+ *     responses:
+ *       200:
+ *         description: Paralelismo atualizado.
+ *       400:
+ *         description: Erro ao atualizar paralelismo.
+ *       404:
+ *         description: Relatório não encontrado
+ *       500:
+ *         description: Erro interno do servidor.
  * 
+ * /medicaoExterna:
+ *    post:
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: inserir dados
+ *     description: inserir dados da medicao externa do paquimetro
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/modeloMedicaoExterna' 
+ *     responses:
+ *       200:
+ *         description: Valor inserido com sucesso.
+ *       400:
+ *         description: Erro ao inserir
+ *       500:
+ *         description: Erro interno do servidor.
+ * 
+ * /medicaoExterna/{id}:
+ *    put:
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: atualizar dados
+ *     description: atualizar dados da medicao externa do paquimetro
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/modeloMedicaoExterna' 
+ *     responses:
+ *       200:
+ *         description: Medições externas atualizadas.
+ *       400:
+ *         description: Erro ao atualizar medições externas.
+ *       404:
+ *         description: Relatório não encontrado
+ *       500:
+ *         description: Erro interno do servidor.
  * 
  */
