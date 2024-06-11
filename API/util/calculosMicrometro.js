@@ -221,8 +221,8 @@ function controleDimensional(dadosControle, faixaCalibrada, req) {
 
   for (let index = 0; index < mediaValor.length; index++) {
     response[`resultadoControle${index + 1}`] = {
-      "media do valor": mediaValor[index],
-      "desvio padrao": desvioP[index],
+      "mediaValor": mediaValor[index],
+      "desvioPadrao": desvioP[index],
       "tendência ": tendencias[index],
     };
   }
