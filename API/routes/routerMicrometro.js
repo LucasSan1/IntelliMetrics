@@ -115,7 +115,7 @@ router
 
 
 // rota para atualizar o paralelismo micrometro
-.put("/updateMicrometerParallelism/:id", async(req, res) =>{
+.put("/insertMicrometroParalelismo/:id", async(req, res) =>{
     try{
         const { novovalorNominal1,  novovalorNominal2, novovalorNominal3,  novovalorNominal4,  novocMovelcFixo1,  novocMovelcFixo2,  novocMovelcFixo3,  novocMovelcFixo4,  novocMovelcFixo5,  novocMovelcFixo6}= req.body;
         const idParalelismo = req.params;

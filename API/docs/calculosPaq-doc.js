@@ -263,10 +263,12 @@
  *       500:
  *         description: Erro interno do servidor.
  *
+ * 
+ * 
  * /calibrarParalelismo/{id}:
  *    put: 
  *     tags:
- *       - Calibrar paralelismo paq
+ *       - Calculos paquimetro
  *     summary: inserir dados
  *     description: atualizar dados de paralelismo do paquimetro
  *     parameters: 
