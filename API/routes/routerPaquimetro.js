@@ -90,7 +90,7 @@ router
 })
 
 // rota para atualizar  os valores de paralelismo paquimetro
-.put("/caliperParallelismo/:id", async(req, res)=>{
+.put("/calibrarParalelismo/:id", async(req, res)=>{
   try{
     const { alterarValorNominalOrelha, alterarValorProxOrelha1, alterarValorProxOrelha2, alterarValorProxOrelha3, alterarValorAfasOrelha1, alterarValorAfasOrelha2, alterarValorAfasOrelha3, alterarValorNominalBico, alterarValorProxBico1, alterarValorProxBico2, alterarValorProxBico3, alterarValorAfasBico1, alterarValorAfasBico2,  alterarValorAfasBico3} = req.body;
     const pk_idParalelismoPaq = req.params;
