@@ -419,8 +419,8 @@ function incertezaUC(req) {
   const response = {
     UC: parseFloat(raiz),
     veff: parseFloat(veff.toFixed(0)),
-    "K=": parseFloat(K_Resposta),
-    "U=": parseFloat(U_Arredondado.toFixed(3)),
+    K: parseFloat(K_Resposta),
+    U: parseFloat(U_Arredondado.toFixed(3)),
   };
 
   return response;
@@ -454,7 +454,7 @@ function incetPara0_25(req) {
   const U = raizUC * K;
   const U_Arredondado = arredondarParaCima(U);
 
-  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incerteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))};
+  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incerteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),K: parseFloat(K_Resposta), U: parseFloat(U_Arredondado.toFixed(3))};
 
   return response;
 }
@@ -484,7 +484,7 @@ function incertplaneza0_25(req){
   const U = raizUC * K;
   const U_Arredondado = arredondarParaCima(U);
 
-  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incerteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))}
+  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incerteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),K: parseFloat(K_Resposta), U:parseFloat(U_Arredondado.toFixed(3))}
 
   return response
 }
@@ -515,7 +515,7 @@ function incetPara25_50(req) {
   const U = raizUC * K;
   const U_Arredondado = arredondarParaCima(U);
 
-  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incereteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))};
+  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incereteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),K: parseFloat(K_Resposta), U:parseFloat(U_Arredondado.toFixed(3))};
 
   return response;
 }
@@ -545,7 +545,7 @@ function incertplaneza25_50(req){
   const U = raizUC * K;
   const U_Arredondado = arredondarParaCima(U);
 
-  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incerteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))}
+  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incerteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),K: parseFloat(K_Resposta), U:parseFloat(U_Arredondado.toFixed(3))}
 
   return response
 }
@@ -580,7 +580,7 @@ function incetPara50_100(req) {
   const U = raizUC * K;
   const U_Arredondado = arredondarParaCima(U);
 
-  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), incerteza_Ubloco: parseFloat(incertUbloco.toFixed(5)) ,contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contriIncertezaUbloco: parseFloat(contriIncertezaUbloco.toFixed(5)),contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuoção_incereteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))};
+  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), incerteza_Ubloco: parseFloat(incertUbloco.toFixed(5)) ,contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contriIncertezaUbloco: parseFloat(contriIncertezaUbloco.toFixed(5)),contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuoção_incereteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),K: parseFloat(K_Resposta), U:parseFloat(U_Arredondado.toFixed(3))};
 
   return response;
 }
@@ -614,7 +614,7 @@ function incertplaneza50_100(req){
   const U = raizUC * K;
   const U_Arredondado = arredondarParaCima(U);
 
-  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), incerteza_Ubloco: parseFloat(incertUbloco.toFixed(5)) ,contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contriIncertezaUbloco: parseFloat(contriIncertezaUbloco.toFixed(5)) ,contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incerteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),"k=": parseFloat(K_Resposta), "U=":parseFloat(U_Arredondado.toFixed(3))}
+  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), incerteza_Ubloco: parseFloat(incertUbloco.toFixed(5)) ,contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contriIncertezaUbloco: parseFloat(contriIncertezaUbloco.toFixed(5)) ,contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incerteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),K: parseFloat(K_Resposta), U:parseFloat(U_Arredondado.toFixed(3))}
 
   return response
 }
