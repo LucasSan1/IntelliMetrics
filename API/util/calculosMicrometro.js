@@ -454,7 +454,7 @@ function incetPara0_25(req) {
   const U = raizUC * K;
   const U_Arredondado = arredondarParaCima(U);
 
-  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incerteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),K: parseFloat(K_Resposta), U:arseFloat(U_Arredondado.toFixed(3))};
+  const response = { incerteza_AU: parseFloat(incertezaAU.toFixed(5)), contribuiçao_incerteza: parseFloat(contriIncertezaAU.toFixed(5)), contribuiçao_incerteza_Up: parseFloat(contriIncertezaUp.toFixed(5)), contribuiçao_incerteza_Eres: parseFloat(contriIncertezaEres.toFixed(5)), Uc: parseFloat(raizUC), veff: parseFloat(veff),K: parseFloat(K_Resposta), U: parseFloat(U_Arredondado.toFixed(3))};
 
   return response;
 }
