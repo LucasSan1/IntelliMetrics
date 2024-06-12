@@ -32,33 +32,33 @@ router
 
 
             // calculo incerteza micromico 
-            !!faixaCalibrada == true ? response.incertez_medAU = incerteza_medAU(req) : response.incertez_medAU = "Sem dados"
+            !!faixaCalibrada == true ? response.incerteza_medAU = incerteza_medAU(req) : response.incertez_medAU = "Sem dados"
 
             !!valorDivResolucao == true ? response.incerteza_UP = incerteza_UP(req) :  response.incerteza_UP ="semm dados"
 
             !!valorDivResolucao == true ? response.incerteza_medEres = incerteza_medERES(valorDivResolucao, dig_anal, req) : response.incerteza_medERES = "Sem dados"
 
-            !!valorDivResolucao == true ? response.incertez_medl1 = incertez_medl1(req) : response.incertez_medl1 = "Sem dados"
+            !!valorDivResolucao == true ? response.incerteza_medl1 = incertez_medl1(req) : response.incertez_medl1 = "Sem dados"
             
-            !!valorDivResolucao == true ? response.incertez_medl2 = incertez_medl2(req) : response.incertez_medl2 = "Sem dados"
+            !!valorDivResolucao == true ? response.incerteza_medl2 = incertez_medl2(req) : response.incertez_medl2 = "Sem dados"
 
             !!valorDivResolucao == true ? response.incerteza_medPAR = incerteza_medPAR(valorDivResolucao, dig_anal, req) : response.incerteza_medPAR = "Sem dados"
 
-            !!valorDivResolucao == true ? response.incertez_medEader = incertez_medEader(req) : response.incertez_medEader =  "Sem dados"
+            !!valorDivResolucao == true ? response.incerteza_medEader = incertez_medEader(req) : response.incertez_medEader =  "Sem dados"
             
             !!valorDivResolucao == true ? response.incertezaUC = incertezaUC(req) : response.incertezaUC = "Sem dados"
 
-            !!valorDivResolucao == true ? response.incetPara0_25 = incetPara0_25(req) : response.incetPara0_25 = "Sem dados"
+            !!valorDivResolucao == true ? response.incertezaPara0_25 = incetPara0_25(req) : response.incetPara0_25 = "Sem dados"
 
-            !!valorDivResolucao == true ? response.incertplaneza0_25 = incertplaneza0_25(req) : response.incertplaneza0_25 = "Sem dados"
+            !!valorDivResolucao == true ? response.incertezaPlaneza0_25 = incertplaneza0_25(req) : response.incertplaneza0_25 = "Sem dados"
 
-            !!valorDivResolucao == true ? response.incetPara25_50 = incetPara25_50(req) : response.incetPara25_50 = "Sem dados"
+            !!valorDivResolucao == true ? response.incertezaPara25_50 = incetPara25_50(req) : response.incetPara25_50 = "Sem dados"
 
-            !!valorDivResolucao == true ? response.incertplaneza25_50 = incertplaneza25_50(req) : response.incertplaneza25_50 = "Sem dados"
+            !!valorDivResolucao == true ? response.incertezaPlaneza25_50 = incertplaneza25_50(req) : response.incertplaneza25_50 = "Sem dados"
 
-            !!valorDivResolucao == true ? response.incetPara50_100 = incetPara50_100(req) : response.incetPara50_100 = "Sem dados"
+            !!valorDivResolucao == true ? response.incertezaPara50_100 = incetPara50_100(req) : response.incetPara50_100 = "Sem dados"
 
-            !!valorDivResolucao == true ? response.incertplaneza50_100 = incertplaneza50_100(req) : response.incertplaneza50_100 = "Sem dados"
+            !!valorDivResolucao == true ? response.incertezaPlaneza50_100 = incertplaneza50_100(req) : response.incertplaneza50_100 = "Sem dados"
 
             return res.status(200).json(response)
             
