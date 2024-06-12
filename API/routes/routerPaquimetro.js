@@ -170,21 +170,21 @@ router
 })
 
 //rota para inserir os resultados de paquimetro
-.post ("/resultCaliper", async(req, res)=>{
+.post ("/resultadosPaquimetro", async(req, res)=>{
   try{
-    const {nrCertificado, idInstrumento,idParalelismoPaq, idMedExterna, idMedInterna,idMedRessalto, idMedProfundidade, novoTecnico, novoResponsável, novaDataCalibracao, novaInspecao, novoTipoEscala, novaVersaoMetodo,  novoTempInicial, novoTempFinal} = req.body;
+    const { nrCertificado, idInstrumento, idParalelismoPaq, idMedExterna, idMedInterna, idMedRessalto, idMedProfundidade, novoTecnico, novoResponsável, novaDataCalibracao, novaInspecao, novoTipoEscala, novaVersaoMetodo, novoTempInicial, novoTempFinal } = req.body;
 
     let result = await insertResultPaq(
-      nrCertificado, idInstrumento,idParalelismoPaq, idMedExterna, idMedInterna,idMedRessalto, idMedProfundidade, novoTecnico, novoResponsável, novaDataCalibracao, novaInspecao, novoTipoEscala, novaVersaoMetodo,  novoTempInicial, novoTempFinal
+      nrCertificado, idInstrumento, idParalelismoPaq, idMedExterna, idMedInterna, idMedRessalto, idMedProfundidade, novoTecnico, novoResponsável, novaDataCalibracao, novaInspecao, novoTipoEscala, novaVersaoMetodo,  novoTempInicial, novoTempFinal
 
     );
     switch (result) {
       case 200:
-        res.status(200).json(" valor inserido com sucesso")
+        res.status(200).json("Valor inserido com sucesso")
         break;
 
       case 400:
-        res.status(400).json('erro ao inserir ')
+        res.status(400).json('Erro ao inserir ')
         break;
 
       default:
@@ -196,7 +196,7 @@ router
 })
 
 //controller para alterar o resultado do paquimetro
-.put("/updateResultCaliper", async(req, res)=>{
+.put("/updateResultadoPaquimetro", async(req, res)=>{
   try{
     const {antigoNrCertificado,alterarNrCertificado,idInstrumento, idParalelismoPaq,idMedExterna, idMedInterna,  idMedRessalto, idMedProfundidade, alterarTecnico, alterarResponsável, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicial, alterarTempFinal}= req.body;
 
@@ -224,9 +224,9 @@ router
 })
 
 //rota para inserir medições internas
-.post("/internalMeasurements", async(req, res)=>{
+.post("/medicaoInterna", async(req, res)=>{
   try{
-    const {novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3,novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida, novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3}= req.body;
+    const {novaPrimeiraMedida, novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida, novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3} = req.body;
 
     let result = await insertMedInt(
       novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3,novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida, novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3
@@ -249,9 +249,9 @@ router
 
 })
 // rota para alterar as medições internas 
-.put("/internalMeasurements/:id", async(req, res)=>{
+.put("/medicaoInterna/:id", async(req, res)=>{
   try{
-    const { alterarPrimeiraMedida,alterarValorNominal1_1, alterarValorNominal1_2, alterarValorNominal1_3, alterarSegundaMedida, alterarValorNominal2_1, alterarValorNominal2_2, alterarValorNominal2_3, alterarTerceiraMedida,alterarValorNominal3_1, alterarValorNominal3_2, alterarValorNominal3_3 }= req.body;
+    const { alterarPrimeiraMedida, alterarValorNominal1_1, alterarValorNominal1_2, alterarValorNominal1_3, alterarSegundaMedida, alterarValorNominal2_1, alterarValorNominal2_2, alterarValorNominal2_3, alterarTerceiraMedida,alterarValorNominal3_1, alterarValorNominal3_2, alterarValorNominal3_3 }= req.body;
     const idMedicaoInterna = req.params;
 
     let atualiza = await upMedInt(
@@ -278,7 +278,7 @@ router
 })
 
 // rotas para inserir medições de ressaltos 
-.post("/insertBouncemeasurements", async(req, res)=>{
+.post("/medicaoRessalto", async(req, res)=>{
   try{
     const {novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1,  novoValorNominal2_2,  novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3} = req.body;
     
@@ -306,7 +306,7 @@ router
 
 
 // rota para alterar medições de ressalto
-.put("/updateBounceMeasurements", async (req, res) =>{
+.put("/medicaoRessalto/:id", async (req, res) =>{
   try{
     const {novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3} = req.body;
     const idMedicaoRessalto = req.params;
@@ -333,12 +333,12 @@ router
 })
 
 // rota para adicionar medições de profundidade
-.post("/insertDepthMeasurements", async (req, res) =>{
+.post("/medicaoProfundidade", async (req, res) =>{
   try{
-    const {nova_primeiraMedida,novo_valorNominal1_1,novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3, nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3} = req.body;
+    const {nova_primeiraMedida, novo_valorNominal1_1,novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3, nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3} = req.body;
 
     let result = await insertMedPro (
-      nova_primeiraMedida,novo_valorNominal1_1,novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3, nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3
+      nova_primeiraMedida, novo_valorNominal1_1,novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3, nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3
     );
     switch (result) {
       case 200:

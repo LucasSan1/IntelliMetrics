@@ -22,7 +22,7 @@
  *         type: array
  *         items:
  *           type: number
- *         minItems: 3
+ *         minItems: 6
  *       dadosControle:
  *         type: array
  *         items:
@@ -43,35 +43,68 @@
  *     properties:
  *       novovalorNominal1:
  *         type: number
- *         format: flot
+ *         format: float
  *       novovalorNominal2:
  *         type: number
- *         format: flot
+ *         format: float
  *       novovalorNominal3:
  *         type: number
- *         format: flot
+ *         format: float
  *       novovalorNominal4:
  *         type: number
- *         format: flot
+ *         format: float
  *       novocMovelcFixo1:
  *         type: number
- *         format: flot
+ *         format: float
  *       novocMovelcFixo2:
  *         type: number
- *         format: flot
+ *         format: float
  *       novocMovelcFixo3:
  *         type: number
- *         format: flot
+ *         format: float
  *       novocMovelcFixo4:
  *         type: number
- *         format: flot
+ *         format: float
  *       novocMovelcFixo5:
  *         type: number
- *         format: flot
+ *         format: float
  *       novocMovelcFixo6:
  *         type: number
- *         format: flot
+ *         format: float
  * 
+ *   incertMicroParalrlismo:
+ *     type: object
+ *     properties:
+ *       novovalorNominal1:
+ *         type: number
+ *         format: float
+ *       novovalorNominal2:
+ *         type: number
+ *         format: float
+ *       novovalorNominal3:
+ *         type: number
+ *         format: float
+ *       novovalorNominal4:
+ *         type: number
+ *         format: float
+ *       novocMovelcFixo1:
+ *          type: number
+ *          format: float
+ *       novocMovelcFixo2:
+ *          type: number
+ *          format: float
+ *       novocMovelcFixo3:
+ *          type: number
+ *          format: float
+ *       novocMovelcFixo4:
+ *          type: number
+ *          format: float
+ *       novocMovelcFixo5:
+ *          type: number
+ *          format: float
+ *       novocMovelcFixo6:
+ *          type: number
+ *          format: float
  *  
  * /calculateMicrometro:
  *   post:
@@ -90,11 +123,45 @@
  *         description: Retorna os resultados dos calculos.
  *       500:
  *         description: Erro interno da API.
- *
- * /insertMicrometerParallelism:
+ * 
+ * /insertMicrometroParalelismo:
  *   post:
  *     tags:
- *       - valores usados nos calculos
- *     summary: esses valores são usados para 
- *
+ *       - Calculos Micrometro
+ *     summary: Calculo para incerteza do paralelismo
+ *     description: valores para calculo de incerteza do micrometro
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/incertMicroParalrlismo'
+ *     responses:
+ *       200:
+ *         description: Retorna os resultados dos calculos.
+ *       500:
+ *         description: Erro interno da API.
+ * 
+ * /insertMicrometroParalelismo/{id}:
+ *   put:
+ *     tags:
+ *       - Calculos Micrometro
+ *     summary: atualiza valores do calculo do paralelismo
+ *     description: atualiza valores para calculo de incerteza do micrometro
+ *     parameters: 
+ *       - in: path
+ *         name: id
+ *         type: number
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/incertMicroParalrlismo'
+ *     responses:
+ *       200:
+ *         description: Retorna os resultados dos calculos.
+ *       500:
+ *         description: Erro interno da API.
  */

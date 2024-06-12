@@ -329,7 +329,132 @@
  *         type: number
  *         format: float
  * 
+ *   modeloResultPaquimetro:
+ *     type: object
+ *     properties:
+ *       nrCertificado:
+ *         type: number
+ *       idInstrumento:
+ *         type: number
+ *       idParalelismoPaq:
+ *         type: number
+ *       idMedExterna:
+ *         type: number
+ *       idMedInterna:
+ *         type: number
+ *       idMedRessalto:
+ *         type: number
+ *       idMedProfundidade:
+ *         type: number
+ *       novoTecnico:
+ *         type: number
+ *       novoResponsável:
+ *         type: number
+ *       novaDataCalibracao:
+ *         type: string
+ *         pattern: 2024-12-30
+ *       novaInspecao:
+ *         type: string
+ *         enum:
+ *           - ok
+ *           - nok
+ *       novoTipoEscala:
+ *         type: string
+ *         enum:
+ *           - analogico
+ *           - digital
+ *       novaVersaoMetodo:
+ *         type: number
+ *       novoTempInicial:
+ *         type: number
+ *         format: double
+ *         minimum: 0
+ *         maximum: 999.99
+ *       novoTempFinal:
+ *         type: number
+ *         format: double
+ *         minimum: 0
+ *         maximum: 999.99
  * 
+ *   modeloMedicaoInternaRessalto:
+ *     type: object
+ *     properties:
+ *       novaPrimeiraMedida: 
+ *         type: number
+ *         format: float
+ *       novoValorNominal1_1: 
+ *         type: number
+ *         format: float
+ *       novoValorNominal1_2: 
+ *         type: number
+ *         format: float
+ *       novoValorNominal1_3: 
+ *         type: number
+ *         format: float
+ *       novaSegundaMedida: 
+ *         type: number
+ *         format: float
+ *       novoValorNominal2_1: 
+ *         type: number
+ *         format: float
+ *       novoValorNominal2_2: 
+ *         type: number
+ *         format: float
+ *       novoValorNominal2_3: 
+ *         type: number
+ *         format: float
+ *       novaTerceiraMedida: 
+ *         type: number
+ *         format: float
+ *       novoValorNominal3_1: 
+ *         type: number
+ *         format: float
+ *       novoValorNominal3_2: 
+ *         type: number
+ *         format: float
+ *       novoValorNominal3_3: 
+ *         type: number
+ *         format: float
+ * 
+ *   modeloMedicaoProfundidade:
+ *     type: object
+ *     properties:
+ *       nova_primeiraMedida: 
+ *         type: number
+ *         format: float
+ *       novo_valorNominal1_1: 
+ *         type: number
+ *         format: float
+ *       novo_valorNominal1_2: 
+ *         type: number
+ *         format: float
+ *       novo_valorNominal1_3: 
+ *         type: number
+ *         format: float
+ *       nova_segundaMedida: 
+ *         type: number
+ *         format: float
+ *       novo_valorNominal2_1: 
+ *         type: number
+ *         format: float
+ *       novo_valorNominal2_2: 
+ *         type: number
+ *         format: float
+ *       novo_valorNominal2_3: 
+ *         type: number
+ *         format: float
+ *       nova_terceiraMedida: 
+ *         type: number
+ *         format: float
+ *       novo_valorNominal3_1: 
+ *         type: number
+ *         format: float
+ *       novo_valorNominal3_2: 
+ *         type: number
+ *         format: float
+ *       novo_valorNominal3_3: 
+ *         type: number
+ *         format: float
  * 
  * 
  * /incertezaPaq:
@@ -387,13 +512,13 @@
  *       400:
  *         description: Erro ao inserir
  *       500:
- *         description: Erro interno do servidor.
- *
+ *         description: Erro interno do servidor. * 
+ * 
  * /calibrarParalelismo/{id}:
  *    put: 
  *     tags:
- *       - Calculos paquimetro
- *     summary: atualizar dados
+ *       - Calibrar paralelismo paq
+ *     summary: inserir dados
  *     description: atualizar dados de paralelismo do paquimetro
  *     parameters: 
  *       - in: path
@@ -442,6 +567,11 @@
  *       - Calculos paquimetro
  *     summary: atualizar dados
  *     description: atualizar dados da medicao externa do paquimetro
+ *     parameters: 
+ *       - in: path
+ *         name: id
+ *         type: number
+ *         required: true
  *     requestBody:
  *       required: true
  *       content:
@@ -455,6 +585,171 @@
  *         description: Erro ao atualizar medições externas.
  *       404:
  *         description: Relatório não encontrado
+ *       500:
+ *         description: Erro interno do servidor.
+ * 
+ * /resultadoPaquimetro:
+ *   post:
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: inserir dados
+ *     description: inserir dados do resultado da calibracao
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/modeloResultPaquimetro' 
+ *     responses:
+ *       200:
+ *         description: Valor inserido com sucesso.
+ *       400:
+ *         description: Erro ao inserir
+ *       500:
+ *         description: Erro interno do servidor.
+ * 
+ * /resultadoPaquimetro/{id}:
+ *   put:
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: inserir dados
+ *     description: inserir dados do resultado do paquimetro
+ *     parameters: 
+ *       - in: path
+ *         name: id
+ *         type: number
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/modeloResultPaquimetro' 
+ *     responses:
+ *       200:
+ *         description: Valor inserido com sucesso.
+ *       400:
+ *         description: Erro ao inserir
+ *       404:
+ *         description: Relatório não encontrado
+ *       500:
+ *         description: Erro interno do servidor.
+ * 
+ * 
+ * /medicaoInterna:
+ *   post:
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: inserir dados
+ *     description: inserir dados da medição interna
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/modeloMedicaoInternaRessalto' 
+ *     responses:
+ *       200:
+ *         description: Valor inserido com sucesso.
+ *       400:
+ *         description: Erro ao inserir
+ *       500:
+ *         description: Erro interno do servidor.
+ * 
+ * /medicaoInterna/{id}:
+ *   put:
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: atualizar dados
+ *     description: atualizar dados da medição interna
+ *     parameters: 
+ *       - in: path
+ *         name: id
+ *         type: number
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/modeloMedicaoInternaRessalto' 
+ *     responses:
+ *       200:
+ *         description: Valor inserido com sucesso.
+ *       400:
+ *         description: Erro ao inserir
+ *       404:
+ *        description: Relatório não encontrado
+ *       500:
+ *         description: Erro interno do servidor.
+ * 
+ * 
+ * /medicaoRessalto:
+ *   post:
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: inserir dados
+ *     description: inserir dados da medição de ressalto
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/modeloMedicaoInternaRessalto' 
+ *     responses:
+ *       200:
+ *         description: Valor inserido com sucesso.
+ *       400:
+ *         description: Erro ao inserir
+ *       500:
+ *         description: Erro interno do servidor.
+ * 
+ * 
+ * /medicaoRessalto/{id}:
+ *   put:
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: atualizar dados
+ *     description: atualizar dados da medição interna
+ *     parameters: 
+ *       - in: path
+ *         name: id
+ *         type: number
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/modeloMedicaoInternaRessalto' 
+ *     responses:
+ *       200:
+ *         description: Medições de ressalto atualizadas.
+ *       400:
+ *         description: Erro ao atualizar as medições de ressalto
+ *       404:
+ *        description: Relatório não encontrado
+ *       500:
+ *         description: Erro interno do servidor.
+ * 
+ * 
+ * /medicaoProfundidade:
+ *   post:
+ *     tags:
+ *       - Calculos paquimetro
+ *     summary: inserir dados
+ *     description: inserir dados da medição de profundidade
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/modeloMedicaoProfundidade' 
+ *     responses:
+ *       200:
+ *         description: Valor inserido com sucesso.
+ *       400:
+ *         description: Erro ao inserir
  *       500:
  *         description: Erro interno do servidor.
  * 
