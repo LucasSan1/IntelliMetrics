@@ -223,7 +223,7 @@ router
                 res.status(500).json({ mensagem: "Erro ao inserir o token no banco de dados" });
                 return;
               }
-              res.json({ mensagem: "Login Efetuado com Sucesso", Nome: resultado[0].nome, cargo: resultado[0].cargo, token });
+              res.json({ mensagem: "Login Efetuado com Sucesso", Nome: resultado[0].nome, email: resultado[0].email, cargo: resultado[0].cargo, token });
             });
 
           });
