@@ -89,7 +89,7 @@ router
 
 
   // rota para inserir paralelismo do micrometro
-.post("/insertMicrometerParallelism", async (res, req) =>{
+.post("/insertMicrometroParalelismo", async (res, req) =>{
     try{
         const { novovalorNominal1,novovalorNominal2,novovalorNominal3,novovalorNominal4,novocMovelcFixo1, novocMovelcFixo2,novocMovelcFixo3,novocMovelcFixo4,novocMovelcFixo5, novocMovelcFixo6 } = req.body;
         
@@ -115,7 +115,7 @@ router
 
 
 // rota para atualizar o paralelismo micrometro
-.put("/insertMicrometroParalelismo/:id", async(req, res) =>{
+.put("/updateMicrometroParalelismo/:id", async(req, res) =>{
     try{
         const { novovalorNominal1,  novovalorNominal2, novovalorNominal3,  novovalorNominal4,  novocMovelcFixo1,  novocMovelcFixo2,  novocMovelcFixo3,  novocMovelcFixo4,  novocMovelcFixo5,  novocMovelcFixo6}= req.body;
         const idParalelismo = req.params;
@@ -144,7 +144,7 @@ router
 
 
 // rota para inserir controle dimencional 
-.post("/insertDimensionalControl", async (res, req) =>{
+.post("/inserirControleDimencional", async (res, req) =>{
     try{
         const { novoVp1,novoVp1_1,novoVp1_2, novoVp1_3,novoVp2,novoVp2_1,novoVp2_2,novoVp2_3,novoVp3,novoVp3_1,novoVp3_2, novoVp3_3,novoVp4,novoVp4_1, novoVp4_2, novoVp4_3,novoVp5, novoVp5_1, novoVp5_2,novoVp5_3, novoVp6,novoVp6_1, novoVp6_2,novoVp6_3, novoVp7,novoVp7_1, novoVp7_2, novoVp7_3,novoVp8,novoVp8_1, novoVp8_2, novoVp8_3,novoVp9, novoVp9_1, novoVp9_2, novoVp9_3,novoVp10,novoVp10_1, novoVp10_2, novoVp10_3, novoVp11, novoVp11_1, novoVp11_2, novoVp11_3 } = req.body;
         
@@ -170,9 +170,10 @@ router
 
 
 //rota para alterar o controle dimensional
-.put("/updateDimensionalControl", async(req, res) =>{
+.put("/updateResultadoMicrometro/:id", async(req, res) =>{
+    const antigoNrCertificad = req.params.id
     try{
-        const {antigoNrCertificad,alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal}= req.body;
+        const {alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal}= req.body;
         
 
         let atualiza = await upDimencionalMicro(
@@ -198,7 +199,7 @@ router
 })
 
 //  rota  para inserir o resultado do micrometro
-.post("/insertResultMicrometer", async (res, req) =>{
+.post("/inserirResultadoMicrometro", async (res, req) =>{
     try{
         const {nrCertificado,idControle,idPlaneza,idParalelismoMicro,idInstrumento,novoTecnico,novoResponsável,novaFaixaCalibradaNum,novaFaixaCalibradaUni, novaDataCalibracao,novaInspecao, novoTipoEscala, novaVersaoMetodo,novoTempInicial, novoTempFinal } = req.body;
         
@@ -224,32 +225,32 @@ router
 
 
 //  rota  para alterar o resultado do micrometro
-.put("/insertResult/:id", async(req, res) =>{
-    try{
-        const{alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal} = req.params;
-        const  antigoNrCertificad = req.params;
+// .put("/insertResult/:id", async(req, res) =>{
+//     try{
+//         const{alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal} = req.params;
+//         const  antigoNrCertificad = req.params;
 
-        let atualiza = await upResultMicro(
-            antigoNrCertificad,alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal
+//         let atualiza = await upResultMicro(
+//             antigoNrCertificad,alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal
 
-        );
-        switch(atualiza){
-            case 200:
-                res.status(200).json('Resultado do micrometro atualizado');
-                break;
-            case 400:
-                res.status(400).json('Erro ao atualizar resultado do micrometro');
-                break;
-            case 404:
-                res.status(404).json('Relatório não encontrado');
-                break;
-            default:
-                res.status(500).json('Erro interno do servidor');
-        }
-    }catch (error) {
-        console.log(error)
-      }
-})
+//         );
+//         switch(atualiza){
+//             case 200:
+//                 res.status(200).json('Resultado do micrometro atualizado');
+//                 break;
+//             case 400:
+//                 res.status(400).json('Erro ao atualizar resultado do micrometro');
+//                 break;
+//             case 404:
+//                 res.status(404).json('Relatório não encontrado');
+//                 break;
+//             default:
+//                 res.status(500).json('Erro interno do servidor');
+//         }
+//     }catch (error) {
+//         console.log(error)
+//       }
+// })
 
 // inserção de planeza
 .post("/insertPlaneza", async (res, req) =>{
