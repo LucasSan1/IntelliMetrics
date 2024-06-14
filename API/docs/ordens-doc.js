@@ -118,34 +118,6 @@
  *      500:
  *        description: Erro interno do servidor.
  * 
- * /updateOrders:
- *   put:
- *     tags:
- *       - Ordens de serviço
- *     summary: atualizar dados
- *     description: atualiza os dados de uma ordem de serviço
- *     parameters:
- *       - in: path
- *         name: id
- *         type: number
- *         required: true
- *     requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/definitions/update'
- *     responses:
- *      200:
- *        description: Ordem atualizada
- *      400:
- *        description: Erro ao atualizar ordem
- *      404:
- *        description: Ordem não encontrada
- *      500:
- *        description: Erro interno do servidor
- * 
- * 
  * /completedOrders/{id}:
  *   put:
  *     tags:

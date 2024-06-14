@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const  validacaoCliente  = require("../validation/clientesVal")
+const  validacaoCliente = require("../validation/clientesVal")
+
 
 // Importa as funções do controlador relacionadas aos clientes
 const { registerCliente, getClientes, getClienteById, deleteCliente, updateCliente, activateclient } = require('../controllers/controllerCliente');
@@ -146,7 +147,8 @@ router
     .put("/updateClient/:id", async (req, res) => {
         try {
             const id_cliente = req.params.id;
-            const { nomeEmpresa, representante, email, telefone, endereco, cnpj, status} = req.body;
+            const { nomeEmpresa, representante, email, telefone, endereco, cnpj} = req.body;
+            
 
             const cliente = {
                 nomeEmpresa,
@@ -154,11 +156,12 @@ router
                 email,
                 telefone,
                 endereco,
-                cnpj,
-                status
+                cnpj
             }
             
+        
             try {
+                console.log("chegou")
                 const clienteValidado = validacaoCliente.parse(cliente);
 
                 // Chama a função para atualizar um cliente pelo ID
@@ -169,10 +172,9 @@ router
                     clienteValidado.email,
                     clienteValidado.telefone,
                     clienteValidado.endereco,
-                    clienteValidado.cnpj,
-                    clienteValidado.status
+                    clienteValidado.cnpj
                 )
-                console.log(resultUpdate)
+                console.log("nao passou", resultUpdate)
                 // Verifica o resultado da atualização e retorna a resposta adequada
                 if(resultUpdate){
                     res.status(200).json("Cliente atualizado");
@@ -181,6 +183,7 @@ router
                 }
             } catch (validationError) {
                 // Captura os erros de validação e envia como resposta
+                console.log(validationError)
                 return res.status(400).json({ error: validationError.errors });
             }
             
