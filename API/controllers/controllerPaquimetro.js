@@ -96,7 +96,7 @@ if(!insert){
 const upMedExt = async(idMedicaoExterna, alterarVn1,alterarVn1_1, alterarVn1_2, alterarVn1_3,alterarVn2, alterarVn2_1, alterarVn2_2, alterarVn2_3, alterarVn3, alterarVn3_1, alterarVn3_2, alterarVn3_3,alterarVn4,alterarVn4_1,alterarVn4_2, alterarVn4_3,alterarVn5, alterarVn5_1, alterarVn5_2, alterarVn5_3,alterarVn6,alterarVn6_1, alterarVn6_2, alterarVn6_3, alterarVn7, alterarVn7_1, alterarVn7_2, alterarVn7_3, alterarVnExtra1, alterarVnExtra1_1, alterarVnExtra1_2, alterarVnExtra1_3,  alterarVnExtra2,  alterarVnExtra2_1,  alterarVnExtra2_2,  alterarVnExtra2_3,  alterarVnExtra3,  alterarVnExtra3_1,  alterarVnExtra3_2,  alterarVnExtra3_3)=>{
 
   const existing = await new Promise((resolve, reject) =>{
-    db.query(`SELECT * FROM  medicoesExternas WHERE idMedicaoExterna = ? ;`, [idMedicaoExterna],
+    db.query(`SELECT * FROM  medicoesExternas WHERE pk_idMedicaoExterna = ? ;`, [idMedicaoExterna],
     (error, results) =>{
       if(error){
         reject(error);
@@ -110,13 +110,14 @@ const upMedExt = async(idMedicaoExterna, alterarVn1,alterarVn1_1, alterarVn1_2, 
   }
 
   return new Promise((resolve, reject) =>{
-    db.query(` CALL  alterarMedicoesExternas('${idMedicaoExterna}','${alterarVn1}','${alterarVn1_1}','${alterarVn1_2}','${alterarVn1_3}','${alterarVn2}','${alterarVn2_1}','${alterarVn2_2}','${alterarVn2_3}','${alterarVn3}','${alterarVn3_1}','${alterarVn3_2}','${alterarVn3_3}','${alterarVn4}','${alterarVn4_1}','${alterarVn4_2}','${alterarVn4_3}','${alterarVn5}','${alterarVn5_1}','${alterarVn5_2}','${alterarVn5_3}','${alterarVn6}','${alterarVn6_1}','${alterarVn6_2}','${alterarVn6_3}','${alterarVn7}','${alterarVn7_1}','${alterarVn7_2}','${alterarVn7_3}','${alterarVnExtra1}','${alterarVnExtra1_1}','${alterarVnExtra1_2}','${alterarVnExtra1_3}','${ alterarVnExtra2}','${ alterarVnExtra2_1}','${alterarVnExtra2_2}','${alterarVnExtra2_3}','${ alterarVnExtra3}','${ alterarVnExtra3_1}','${ alterarVnExtra3_2}','${ alterarVnExtra3_3}',)`,
+    db.query(` CALL  alterarMedicoesExternas('${idMedicaoExterna}','${alterarVn1}','${alterarVn1_1}','${alterarVn1_2}','${alterarVn1_3}','${alterarVn2}','${alterarVn2_1}','${alterarVn2_2}','${alterarVn2_3}','${alterarVn3}','${alterarVn3_1}','${alterarVn3_2}','${alterarVn3_3}','${alterarVn4}','${alterarVn4_1}','${alterarVn4_2}','${alterarVn4_3}','${alterarVn5}','${alterarVn5_1}','${alterarVn5_2}','${alterarVn5_3}','${alterarVn6}','${alterarVn6_1}','${alterarVn6_2}','${alterarVn6_3}','${alterarVn7}','${alterarVn7_1}','${alterarVn7_2}','${alterarVn7_3}','${alterarVnExtra1}','${alterarVnExtra1_1}','${alterarVnExtra1_2}','${alterarVnExtra1_3}','${ alterarVnExtra2}','${ alterarVnExtra2_1}','${alterarVnExtra2_2}','${alterarVnExtra2_3}','${ alterarVnExtra3}','${ alterarVnExtra3_1}','${ alterarVnExtra3_2}','${ alterarVnExtra3_3}')`,
       (error, results) =>{
         if(error){
-          reject(400, error);
+          console.log(error)
+          reject(400);
           return;
         }
-        results(200);
+        resolve(200);
       }
     );
   });
