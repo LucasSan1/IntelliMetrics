@@ -89,9 +89,9 @@ router
 
 
   // rota para inserir paralelismo do micrometro
-.post("/insertMicrometroParalelismo", async (res, req) =>{
+.post("/inserirMicrometroParalelismo", async (req, res) =>{
     try{
-        const { novovalorNominal1,novovalorNominal2,novovalorNominal3,novovalorNominal4,novocMovelcFixo1, novocMovelcFixo2,novocMovelcFixo3,novocMovelcFixo4,novocMovelcFixo5, novocMovelcFixo6 } = req.body;
+        const { novovalorNominal1, novovalorNominal2, novovalorNominal3, novovalorNominal4, novocMovelcFixo1, novocMovelcFixo2, novocMovelcFixo3, novocMovelcFixo4, novocMovelcFixo5, novocMovelcFixo6 } = req.body
         
         let result = await insertMicrometro(
             novovalorNominal1,novovalorNominal2,novovalorNominal3,novovalorNominal4,novocMovelcFixo1, novocMovelcFixo2,novocMovelcFixo3,novocMovelcFixo4,novocMovelcFixo5, novocMovelcFixo6 
@@ -118,7 +118,8 @@ router
 .put("/updateMicrometroParalelismo/:id", async(req, res) =>{
     try{
         const { novovalorNominal1,  novovalorNominal2, novovalorNominal3,  novovalorNominal4,  novocMovelcFixo1,  novocMovelcFixo2,  novocMovelcFixo3,  novocMovelcFixo4,  novocMovelcFixo5,  novocMovelcFixo6}= req.body;
-        const idParalelismo = req.params;
+
+        const idParalelismo = req.params.id;
 
         let atualiza = await upMicroParalelismo(
             idParalelismo, novovalorNominal1,  novovalorNominal2, novovalorNominal3,  novovalorNominal4,  novocMovelcFixo1,  novocMovelcFixo2,  novocMovelcFixo3,  novocMovelcFixo4,  novocMovelcFixo5,  novocMovelcFixo6
@@ -144,9 +145,9 @@ router
 
 
 // rota para inserir controle dimencional 
-.post("/inserirControleDimencional", async (res, req) =>{
+.post("/inserirControleDimencional", async (req, res) =>{
     try{
-        const { novoVp1,novoVp1_1,novoVp1_2, novoVp1_3,novoVp2,novoVp2_1,novoVp2_2,novoVp2_3,novoVp3,novoVp3_1,novoVp3_2, novoVp3_3,novoVp4,novoVp4_1, novoVp4_2, novoVp4_3,novoVp5, novoVp5_1, novoVp5_2,novoVp5_3, novoVp6,novoVp6_1, novoVp6_2,novoVp6_3, novoVp7,novoVp7_1, novoVp7_2, novoVp7_3,novoVp8,novoVp8_1, novoVp8_2, novoVp8_3,novoVp9, novoVp9_1, novoVp9_2, novoVp9_3,novoVp10,novoVp10_1, novoVp10_2, novoVp10_3, novoVp11, novoVp11_1, novoVp11_2, novoVp11_3 } = req.body;
+        const { novoVp1,novoVp1_1,novoVp1_2, novoVp1_3,novoVp2,novoVp2_1,novoVp2_2,novoVp2_3,novoVp3,novoVp3_1,novoVp3_2, novoVp3_3,novoVp4,novoVp4_1, novoVp4_2, novoVp4_3,novoVp5, novoVp5_1, novoVp5_2,novoVp5_3, novoVp6,novoVp6_1, novoVp6_2,novoVp6_3, novoVp7,novoVp7_1, novoVp7_2, novoVp7_3,novoVp8,novoVp8_1, novoVp8_2, novoVp8_3,novoVp9, novoVp9_1, novoVp9_2, novoVp9_3,novoVp10,novoVp10_1, novoVp10_2, novoVp10_3, novoVp11, novoVp11_1, novoVp11_2, novoVp11_3 } = req.body
         
         let result = await insertDimensionalMicro(
             novoVp1,novoVp1_1,novoVp1_2, novoVp1_3,novoVp2,novoVp2_1,novoVp2_2,novoVp2_3,novoVp3,novoVp3_1,novoVp3_2, novoVp3_3,novoVp4,novoVp4_1, novoVp4_2, novoVp4_3,novoVp5, novoVp5_1, novoVp5_2,novoVp5_3, novoVp6,novoVp6_1, novoVp6_2,novoVp6_3, novoVp7,novoVp7_1, novoVp7_2, novoVp7_3,novoVp8,novoVp8_1, novoVp8_2, novoVp8_3,novoVp9, novoVp9_1, novoVp9_2, novoVp9_3,novoVp10,novoVp10_1, novoVp10_2, novoVp10_3, novoVp11, novoVp11_1, novoVp11_2, novoVp11_3
@@ -169,14 +170,14 @@ router
 }) 
 
 
-//rota para alterar o controle dimensional
+//rota para alterar o resultado
 .put("/updateResultadoMicrometro/:id", async(req, res) =>{
     const antigoNrCertificad = req.params.id
     try{
         const {alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal}= req.body;
         
 
-        let atualiza = await upDimencionalMicro(
+        let atualiza = await upResultMicro(
             antigoNrCertificad,alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal
 
         );
@@ -199,7 +200,7 @@ router
 })
 
 //  rota  para inserir o resultado do micrometro
-.post("/inserirResultadoMicrometro", async (res, req) =>{
+.post("/inserirResultadoMicrometro", async (req, res) =>{
     try{
         const {nrCertificado,idControle,idPlaneza,idParalelismoMicro,idInstrumento,novoTecnico,novoResponsável,novaFaixaCalibradaNum,novaFaixaCalibradaUni, novaDataCalibracao,novaInspecao, novoTipoEscala, novaVersaoMetodo,novoTempInicial, novoTempFinal } = req.body;
         
@@ -223,42 +224,13 @@ router
       }
 }) 
 
-
-//  rota  para alterar o resultado do micrometro
-// .put("/insertResult/:id", async(req, res) =>{
-//     try{
-//         const{alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal} = req.params;
-//         const  antigoNrCertificad = req.params;
-
-//         let atualiza = await upResultMicro(
-//             antigoNrCertificad,alterarNrCertificado,idControle, idPlaneza, idParalelismoMicro,  idInstrumento, alterarTecnico,  alterarResponsável, alterarFaixaCalibradaNum, alterarFaixaCalibradaUni, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicia, alterarTempFinal
-
-//         );
-//         switch(atualiza){
-//             case 200:
-//                 res.status(200).json('Resultado do micrometro atualizado');
-//                 break;
-//             case 400:
-//                 res.status(400).json('Erro ao atualizar resultado do micrometro');
-//                 break;
-//             case 404:
-//                 res.status(404).json('Relatório não encontrado');
-//                 break;
-//             default:
-//                 res.status(500).json('Erro interno do servidor');
-//         }
-//     }catch (error) {
-//         console.log(error)
-//       }
-// })
-
 // inserção de planeza
-.post("/insertPlaneza", async (res, req) =>{
+.post("/insertPlaneza", async (req, res) =>{
     try{
-        const { novoCMovel1,novoCMovel2, novoCMovel3, novoCFixo1, novoCFixo2, novoCFixo3 } = req.body;
+        const { CMovel1,CMovel2, CMovel3, CFixo1, CFixo2, CFixo3 } = req.body;
         
         let result = await insertPlaneza(
-            novoCMovel1,novoCMovel2, novoCMovel3, novoCFixo1, novoCFixo2, novoCFixo3
+            CMovel1, CMovel2, CMovel3, CFixo1, CFixo2, CFixo3
         );
         switch (result) {
             case 200:
@@ -281,11 +253,11 @@ router
 
 .put("/updatePlaneza/:id", async(req, res) =>{
     try{
-        const { alterarCMovel1,alterarCMovel2, alterarCMovel3,alterarCFixo1, alterarCFixo2, alterarCFixo3}= req.body;
-        const idPlaneza = req.params;
+        const { CMovel1, CMovel2, CMovel3, CFixo1, CFixo2, CFixo3}= req.body;
+        const idPlaneza = req.params.id;
 
         let atualiza = await upPlanezaMicro(
-            idPlaneza, alterarCMovel1,alterarCMovel2, alterarCMovel3,alterarCFixo1, alterarCFixo2, alterarCFixo3
+            idPlaneza, CMovel1, CMovel2, CMovel3, CFixo1, CFixo2, CFixo3
 
         );
         switch(atualiza){
