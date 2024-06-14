@@ -143,7 +143,7 @@
  *     responses:
  *       200:
  *         description: Cliente atualizado
- *       404:
+ *       409:
  *         description: Cliente não encontrado
  *       500:
  *         description: Erro interno do servidor

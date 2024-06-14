@@ -63,47 +63,263 @@ router
     } 
   })
 
-// rota para inserir o paralelismo do paquimetro
-.post("/inserirParalelismo", async (req, res) =>{
-  try{
-    const {novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, novoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3} = req.body;
-    
+  // rota para inserir o paralelismo do paquimetro
+  .post("/inserirParalelismo", async (req, res) =>{
+    try{
+      const {novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, novoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3} = req.body;
+      
 
-    let result = await paralelismoPaquimetro(
-      novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, novoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3
-    );
-    switch (result) {
-      case 200:
-        res.status(200).json(" valor inserido com sucesso")
-        break;
+      let result = await paralelismoPaquimetro(
+        novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, novoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3
+      );
+      switch (result) {
+        case 200:
+          res.status(200).json(" valor inserido com sucesso")
+          break;
 
-      case 400:
-        res.status(400).json('erro ao inserir ')
-        break;
+        case 400:
+          res.status(400).json('erro ao inserir ')
+          break;
 
-      default:
-        res.status(500).json('Erro interno do servidor')
+        default:
+          res.status(500).json('Erro interno do servidor')
+      }
+    }catch (error) {
+      console.log(error)
     }
-  }catch (error) {
-    console.log(error)
+  })
+
+  // rota para atualizar  os valores de paralelismo paquimetro
+  .put("/calibrarParalelismo/:id", async(req, res)=>{
+    try{
+      const { alterarValorNominalOrelha, alterarValorProxOrelha1, alterarValorProxOrelha2, alterarValorProxOrelha3, alterarValorAfasOrelha1, alterarValorAfasOrelha2, alterarValorAfasOrelha3, alterarValorNominalBico, alterarValorProxBico1, alterarValorProxBico2, alterarValorProxBico3, alterarValorAfasBico1, alterarValorAfasBico2,  alterarValorAfasBico3} = req.body;
+      const pk_idParalelismoPaq = req.params;
+
+      let atualiza = await upPaqParalelismo(
+        pk_idParalelismoPaq, alterarValorNominalOrelha, alterarValorProxOrelha1, alterarValorProxOrelha2, alterarValorProxOrelha3, alterarValorAfasOrelha1, alterarValorAfasOrelha2, alterarValorAfasOrelha3, alterarValorNominalBico, alterarValorProxBico1, alterarValorProxBico2, alterarValorProxBico3, alterarValorAfasBico1, alterarValorAfasBico2,  alterarValorAfasBico3
+      );
+      switch(atualiza){
+        case 200:
+            res.status(200).json('Paralelismo atualizado');
+            break;
+        case 400:
+            res.status(400).json('Erro ao atualizar Paralelismo');
+            break;
+        case 404:
+            res.status(404).json('Relatório não encontrado');
+            break;
+        default:
+            res.status(500).json('Erro interno do servidor');
+    }
+    }catch (error) {
+      console.log(error); // Registra o erro no console
   }
-})
+  })
 
-// rota para atualizar  os valores de paralelismo paquimetro
-.put("/calibrarParalelismo/:id", async(req, res)=>{
-  try{
-    const { alterarValorNominalOrelha, alterarValorProxOrelha1, alterarValorProxOrelha2, alterarValorProxOrelha3, alterarValorAfasOrelha1, alterarValorAfasOrelha2, alterarValorAfasOrelha3, alterarValorNominalBico, alterarValorProxBico1, alterarValorProxBico2, alterarValorProxBico3, alterarValorAfasBico1, alterarValorAfasBico2,  alterarValorAfasBico3} = req.body;
-    const pk_idParalelismoPaq = req.params;
+  // rota para inserir as medições externas 
+  .post ("/medicaoExterna", async(req, res)=>{
+    try{
+      const {novoVn1, novoVn1_1, novoVn1_2, novoVn1_3, novoVn2, novoVn2_1, novoVn2_2, novoVn2_3, novoVn3, novoVn3_1, novoVn3_2, novoVn3_3, novoVn4, novoVn4_1, novoVn4_2, novoVn4_3, novoVn5, novoVn5_1, novoVn5_2, novoVn5_3, novoVn6, novoVn6_1,  novoVn6_2,  novoVn6_3, novoVn7, novoVn7_1, novoVn7_2, novoVn7_3, novoVnExtra1, novoVnExtra1_1, novoVnExtra1_2, novoVnExtra1_3, novoVnExtra2, novoVnExtra2_1, novoVnExtra2_2, novoVnExtra2_3, novoVnExtra3, novoVnExtra3_1, novoVnExtra3_2, novoVnExtra3_3} = req.body;
+      
+      let result = await insertMedExt(
+        novoVn1, novoVn1_1, novoVn1_2, novoVn1_3, novoVn2, novoVn2_1, novoVn2_2, novoVn2_3, novoVn3, novoVn3_1, novoVn3_2, novoVn3_3, novoVn4,novoVn4_1, novoVn4_2, novoVn4_3, novoVn5, novoVn5_1, novoVn5_2, novoVn5_3,  novoVn6, novoVn6_1,  novoVn6_2,  novoVn6_3, novoVn7,novoVn7_1, novoVn7_2, novoVn7_3,  novoVnExtra1, novoVnExtra1_1, novoVnExtra1_2, novoVnExtra1_3, novoVnExtra2, novoVnExtra2_1, novoVnExtra2_2, novoVnExtra2_3, novoVnExtra3,novoVnExtra3_1, novoVnExtra3_2, novoVnExtra3_3
+      );
+      switch (result) {
+        case 200:
+          res.status(200).json(" valor inserido com sucesso")
+          break;
 
-    let atualiza = await upPaqParalelismo(
-      pk_idParalelismoPaq, alterarValorNominalOrelha, alterarValorProxOrelha1, alterarValorProxOrelha2, alterarValorProxOrelha3, alterarValorAfasOrelha1, alterarValorAfasOrelha2, alterarValorAfasOrelha3, alterarValorNominalBico, alterarValorProxBico1, alterarValorProxBico2, alterarValorProxBico3, alterarValorAfasBico1, alterarValorAfasBico2,  alterarValorAfasBico3
+        case 400:
+          res.status(400).json('erro ao inserir ')
+          break;
+
+        default:
+          res.status(500).json('Erro interno do servidor')
+      }
+    }catch (error) {
+      console.log(error)
+    }
+  })
+
+  // rota para atualizar a medição externa 
+  .put ("/medicaoExterna/:id", async(req, res)=>{
+    try{
+      const { alterarVn1,alterarVn1_1, alterarVn1_2, alterarVn1_3,alterarVn2, alterarVn2_1, alterarVn2_2, alterarVn2_3, alterarVn3, alterarVn3_1, alterarVn3_2, alterarVn3_3,alterarVn4,alterarVn4_1,alterarVn4_2, alterarVn4_3,alterarVn5, alterarVn5_1, alterarVn5_2, alterarVn5_3,alterarVn6,alterarVn6_1, alterarVn6_2, alterarVn6_3, alterarVn7, alterarVn7_1, alterarVn7_2, alterarVn7_3, alterarVnExtra1, alterarVnExtra1_1, alterarVnExtra1_2, alterarVnExtra1_3,  alterarVnExtra2,  alterarVnExtra2_1,  alterarVnExtra2_2,  alterarVnExtra2_3,  alterarVnExtra3,  alterarVnExtra3_1,  alterarVnExtra3_2,  alterarVnExtra3_3} = req.body;
+      const idMedicaoExterna = req.params;
+
+      let atualiza = await upMedExt(
+        idMedicaoExterna, alterarVn1,alterarVn1_1, alterarVn1_2, alterarVn1_3,alterarVn2, alterarVn2_1, alterarVn2_2, alterarVn2_3, alterarVn3, alterarVn3_1, alterarVn3_2, alterarVn3_3,alterarVn4,alterarVn4_1,alterarVn4_2, alterarVn4_3,alterarVn5, alterarVn5_1, alterarVn5_2, alterarVn5_3,alterarVn6,alterarVn6_1, alterarVn6_2, alterarVn6_3, alterarVn7, alterarVn7_1, alterarVn7_2, alterarVn7_3, alterarVnExtra1, alterarVnExtra1_1, alterarVnExtra1_2, alterarVnExtra1_3,  alterarVnExtra2,  alterarVnExtra2_1,  alterarVnExtra2_2,  alterarVnExtra2_3,  alterarVnExtra3,  alterarVnExtra3_1,  alterarVnExtra3_2,  alterarVnExtra3_3
+      );
+      switch(atualiza){
+        case 200:
+            res.status(200).json('Medições externas atualizada');
+            break;
+        case 400:
+            res.status(400).json('Erro ao atualizar Medições externas');
+            break;
+        case 404:
+            res.status(404).json('Relatório não encontrado');
+            break;
+        default:
+            res.status(500).json('Erro interno do servidor');
+    }
+
+    }catch (error) {
+      console.log(error); // Registra o erro no console
+  }
+  })
+
+  //rota para inserir os resultados de paquimetro
+  .post("/resultadoPaquimetro", async(req, res)=>{
+    try{
+      const { nrCertificado, idInstrumento, idParalelismoPaq, idMedExterna, idMedInterna, idMedRessalto, idMedProfundidade, novoTecnico, novoResponsável, novaDataCalibracao, novaInspecao, novoTipoEscala, novaVersaoMetodo, novoTempInicial, novoTempFinal } = req.body;
+
+      let result = await insertResultPaq(
+        nrCertificado, idInstrumento, idParalelismoPaq, idMedExterna, idMedInterna, idMedRessalto, idMedProfundidade, novoTecnico, novoResponsável, novaDataCalibracao, novaInspecao, novoTipoEscala, novaVersaoMetodo,  novoTempInicial, novoTempFinal
+
+      );
+      switch (result) {
+        case 200:
+          res.status(200).json("Valor inserido com sucesso")
+          break;
+
+        case 400:
+          res.status(400).json('Erro ao inserir ')
+          break;
+
+        default:
+          res.status(500).json('Erro interno do servidor')
+      }
+    }catch (error) {
+      console.log(error)
+    }
+  })
+
+  //controller para alterar o resultado do paquimetro
+  .put("/updateResultadoPaquimetro", async(req, res)=>{
+    try{
+      const {antigoNrCertificado,alterarNrCertificado,idInstrumento, idParalelismoPaq,idMedExterna, idMedInterna,  idMedRessalto, idMedProfundidade, alterarTecnico, alterarResponsável, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicial, alterarTempFinal}= req.body;
+
+      let atualiza = await upResultPaq(
+        antigoNrCertificado,alterarNrCertificado,idInstrumento, idParalelismoPaq,idMedExterna, idMedInterna,  idMedRessalto, idMedProfundidade, alterarTecnico, alterarResponsável, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicial, alterarTempFinal
+      );
+      switch(atualiza){
+        case 200:
+            res.status(200).json('Resultado paquimetro atualizado');
+            break;
+        case 400:
+            res.status(400).json('Erro ao atualizar o resultado do paquimetro');
+            break;
+        case 404:
+            res.status(404).json('Relatório não encontrado');
+            break;
+        default:
+            res.status(500).json('Erro interno do servidor');
+    }
+
+
+    }catch (error) {
+      console.log(error); // Registra o erro no console
+  }
+  })
+
+  //rota para inserir medições internas
+  .post("/medicaoInterna", async(req, res)=>{
+    try{
+      const {novaPrimeiraMedida, novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida, novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3} = req.body;
+
+      let result = await insertMedInt(
+        novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3,novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida, novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3
+      );
+      switch (result) {
+        case 200:
+          res.status(200).json(" valor inserido com sucesso")
+          break;
+
+        case 400:
+          res.status(401).json('erro ao inserir ')
+          break;
+
+        default:
+          res.status(500).json('Erro interno do servidor')
+      }
+    }catch (error) {
+      console.log(error)
+    }
+
+  })
+  // rota para alterar as medições internas 
+  .put("/medicaoInterna/:id", async(req, res)=>{
+    try{
+      const { alterarPrimeiraMedida, alterarValorNominal1_1, alterarValorNominal1_2, alterarValorNominal1_3, alterarSegundaMedida, alterarValorNominal2_1, alterarValorNominal2_2, alterarValorNominal2_3, alterarTerceiraMedida,alterarValorNominal3_1, alterarValorNominal3_2, alterarValorNominal3_3 }= req.body;
+      const idMedicaoInterna = req.params;
+
+      let atualiza = await upMedInt(
+        idMedicaoInterna, alterarPrimeiraMedida,alterarValorNominal1_1, alterarValorNominal1_2, alterarValorNominal1_3, alterarSegundaMedida, alterarValorNominal2_1, alterarValorNominal2_2, alterarValorNominal2_3, alterarTerceiraMedida,alterarValorNominal3_1, alterarValorNominal3_2, alterarValorNominal3_3 
+
+      );
+      switch(atualiza){
+        case 200:
+            res.status(200).json('Medições internas atualizado');
+            break;
+        case 400:
+            res.status(400).json('Erro ao atualizar as medições internas');
+            break;
+        case 404:
+            res.status(404).json('Relatório não encontrado');
+            break;
+        default:
+            res.status(500).json('Erro interno do servidor');
+    }
+
+    }catch (error) {
+      console.log(error); // Registra o erro no console
+  }
+  })
+
+  // rotas para inserir medições de ressaltos 
+  .post("/medicaoRessalto", async(req, res)=>{
+    try{
+      const {novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1,  novoValorNominal2_2,  novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3} = req.body;
+      
+      let result = await insertMedRes(
+        novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1,  novoValorNominal2_2,  novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3
+      );
+      switch (result) {
+        case 200:
+          res.status(200).json(" valor inserido com sucesso")
+          break;
+
+        case 400:
+          res.status(401).json('erro ao inserir ')
+          break;
+
+        default:
+          res.status(500).json('Erro interno do servidor')
+      }
+
+    }catch (error) {
+      console.log(error)
+    }
+  })
+
+
+
+  // rota para alterar medições de ressalto
+  .put("/medicaoRessalto/:id", async (req, res) =>{
+    try{
+      const {novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3} = req.body;
+      const idMedicaoRessalto = req.params;
+
+    let atualiza = await upMedRes (
+      idMedicaoRessalto, novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3
     );
     switch(atualiza){
       case 200:
-          res.status(200).json('Paralelismo atualizado');
+          res.status(200).json('Medições de ressalto atualizado');
           break;
       case 400:
-          res.status(400).json('Erro ao atualizar Paralelismo');
+          res.status(400).json('Erro ao atualizar as medições de ressalto');
           break;
       case 404:
           res.status(404).json('Relatório não encontrado');
@@ -111,280 +327,64 @@ router
       default:
           res.status(500).json('Erro interno do servidor');
   }
-  }catch (error) {
-    console.log(error); // Registra o erro no console
-}
-})
+    }catch (error) {
+      console.log(error); // Registra o erro no console
+  }
+  })
 
-// rota para inserir as medições externas 
-.post ("/medicaoExterna", async(req, res)=>{
-  try{
-    const {novoVn1, novoVn1_1, novoVn1_2, novoVn1_3, novoVn2, novoVn2_1, novoVn2_2, novoVn2_3, novoVn3, novoVn3_1, novoVn3_2, novoVn3_3, novoVn4, novoVn4_1, novoVn4_2, novoVn4_3, novoVn5, novoVn5_1, novoVn5_2, novoVn5_3, novoVn6, novoVn6_1,  novoVn6_2,  novoVn6_3, novoVn7, novoVn7_1, novoVn7_2, novoVn7_3, novoVnExtra1, novoVnExtra1_1, novoVnExtra1_2, novoVnExtra1_3, novoVnExtra2, novoVnExtra2_1, novoVnExtra2_2, novoVnExtra2_3, novoVnExtra3, novoVnExtra3_1, novoVnExtra3_2, novoVnExtra3_3} = req.body;
-    
-    let result = await insertMedExt(
-      novoVn1, novoVn1_1, novoVn1_2, novoVn1_3, novoVn2, novoVn2_1, novoVn2_2, novoVn2_3, novoVn3, novoVn3_1, novoVn3_2, novoVn3_3, novoVn4,novoVn4_1, novoVn4_2, novoVn4_3, novoVn5, novoVn5_1, novoVn5_2, novoVn5_3,  novoVn6, novoVn6_1,  novoVn6_2,  novoVn6_3, novoVn7,novoVn7_1, novoVn7_2, novoVn7_3,  novoVnExtra1, novoVnExtra1_1, novoVnExtra1_2, novoVnExtra1_3, novoVnExtra2, novoVnExtra2_1, novoVnExtra2_2, novoVnExtra2_3, novoVnExtra3,novoVnExtra3_1, novoVnExtra3_2, novoVnExtra3_3
-    );
-    switch (result) {
-      case 200:
-        res.status(200).json(" valor inserido com sucesso")
-        break;
+  // rota para adicionar medições de profundidade
+  .post("/medicaoProfundidade", async (req, res) =>{
+    try{
+      const {nova_primeiraMedida, novo_valorNominal1_1,novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3, nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3} = req.body;
 
-      case 400:
-        res.status(400).json('erro ao inserir ')
-        break;
+      let result = await insertMedPro (
+        nova_primeiraMedida, novo_valorNominal1_1,novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3, nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3
+      );
+      switch (result) {
+        case 200:
+          res.status(200).json(" valor inserido com sucesso")
+          break;
 
-      default:
-        res.status(500).json('Erro interno do servidor')
+        case 400:
+          res.status(401).json('erro ao inserir ')
+          break;
+
+        default:
+          res.status(500).json('Erro interno do servidor')
+      }
+
+    }catch (error) {
+      console.log(error)
     }
-  }catch (error) {
-    console.log(error)
-  }
-})
+  })
 
-// rota para atualizar a medição externa 
-.put ("/medicaoExterna/:id", async(req, res)=>{
-  try{
-    const { alterarVn1,alterarVn1_1, alterarVn1_2, alterarVn1_3,alterarVn2, alterarVn2_1, alterarVn2_2, alterarVn2_3, alterarVn3, alterarVn3_1, alterarVn3_2, alterarVn3_3,alterarVn4,alterarVn4_1,alterarVn4_2, alterarVn4_3,alterarVn5, alterarVn5_1, alterarVn5_2, alterarVn5_3,alterarVn6,alterarVn6_1, alterarVn6_2, alterarVn6_3, alterarVn7, alterarVn7_1, alterarVn7_2, alterarVn7_3, alterarVnExtra1, alterarVnExtra1_1, alterarVnExtra1_2, alterarVnExtra1_3,  alterarVnExtra2,  alterarVnExtra2_1,  alterarVnExtra2_2,  alterarVnExtra2_3,  alterarVnExtra3,  alterarVnExtra3_1,  alterarVnExtra3_2,  alterarVnExtra3_3} = req.body;
-    const idMedicaoExterna = req.params;
+  // rota para alterar as medições de profundidade
 
-    let atualiza = await upMedExt(
-      idMedicaoExterna, alterarVn1,alterarVn1_1, alterarVn1_2, alterarVn1_3,alterarVn2, alterarVn2_1, alterarVn2_2, alterarVn2_3, alterarVn3, alterarVn3_1, alterarVn3_2, alterarVn3_3,alterarVn4,alterarVn4_1,alterarVn4_2, alterarVn4_3,alterarVn5, alterarVn5_1, alterarVn5_2, alterarVn5_3,alterarVn6,alterarVn6_1, alterarVn6_2, alterarVn6_3, alterarVn7, alterarVn7_1, alterarVn7_2, alterarVn7_3, alterarVnExtra1, alterarVnExtra1_1, alterarVnExtra1_2, alterarVnExtra1_3,  alterarVnExtra2,  alterarVnExtra2_1,  alterarVnExtra2_2,  alterarVnExtra2_3,  alterarVnExtra3,  alterarVnExtra3_1,  alterarVnExtra3_2,  alterarVnExtra3_3
-    );
-    switch(atualiza){
-      case 200:
-          res.status(200).json('Medições externas atualizada');
-          break;
-      case 400:
-          res.status(400).json('Erro ao atualizar Medições externas');
-          break;
-      case 404:
-          res.status(404).json('Relatório não encontrado');
-          break;
-      default:
-          res.status(500).json('Erro interno do servidor');
-  }
+  .put("/updateDepthMeasurements/:id", async (req, res) =>{
+    try{
+      const {nova_primeiraMedida, novo_valorNominal1_1, novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3,nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3 } = req.body;
+      const idMedicao = req.params.idMedicao;
 
-  }catch (error) {
-    console.log(error); // Registra o erro no console
-}
-})
-
-//rota para inserir os resultados de paquimetro
-.post ("/resultadosPaquimetro", async(req, res)=>{
-  try{
-    const { nrCertificado, idInstrumento, idParalelismoPaq, idMedExterna, idMedInterna, idMedRessalto, idMedProfundidade, novoTecnico, novoResponsável, novaDataCalibracao, novaInspecao, novoTipoEscala, novaVersaoMetodo, novoTempInicial, novoTempFinal } = req.body;
-
-    let result = await insertResultPaq(
-      nrCertificado, idInstrumento, idParalelismoPaq, idMedExterna, idMedInterna, idMedRessalto, idMedProfundidade, novoTecnico, novoResponsável, novaDataCalibracao, novaInspecao, novoTipoEscala, novaVersaoMetodo,  novoTempInicial, novoTempFinal
-
-    );
-    switch (result) {
-      case 200:
-        res.status(200).json("Valor inserido com sucesso")
-        break;
-
-      case 400:
-        res.status(400).json('Erro ao inserir ')
-        break;
-
-      default:
-        res.status(500).json('Erro interno do servidor')
+      let atualiza = await upMedPro(
+        nova_primeiraMedida, novo_valorNominal1_1, novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3,nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3 
+      );
+      switch(atualiza){
+        case 200:
+            res.status(200).json('Medições de profundidade atualizado');
+            break;
+        case 400:
+            res.status(400).json('Erro ao atualizar as medições de profundidade');
+            break;
+        case 404:
+            res.status(404).json('Relatório não encontrado');
+            break;
+        default:
+            res.status(500).json('Erro interno do servidor');
     }
-  }catch (error) {
-    console.log(error)
+    }catch (error) {
+      console.log(error); // Registra o erro no console
   }
-})
-
-//controller para alterar o resultado do paquimetro
-.put("/updateResultadoPaquimetro", async(req, res)=>{
-  try{
-    const {antigoNrCertificado,alterarNrCertificado,idInstrumento, idParalelismoPaq,idMedExterna, idMedInterna,  idMedRessalto, idMedProfundidade, alterarTecnico, alterarResponsável, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicial, alterarTempFinal}= req.body;
-
-    let atualiza = await upResultPaq(
-      antigoNrCertificado,alterarNrCertificado,idInstrumento, idParalelismoPaq,idMedExterna, idMedInterna,  idMedRessalto, idMedProfundidade, alterarTecnico, alterarResponsável, alterarDataCalibracao, alterarInspecao, alterarTipoEscala, alterarVersaoMetodo, alterarTempInicial, alterarTempFinal
-    );
-    switch(atualiza){
-      case 200:
-          res.status(200).json('Resultado paquimetro atualizado');
-          break;
-      case 400:
-          res.status(400).json('Erro ao atualizar o resultado do paquimetro');
-          break;
-      case 404:
-          res.status(404).json('Relatório não encontrado');
-          break;
-      default:
-          res.status(500).json('Erro interno do servidor');
-  }
-
-
-  }catch (error) {
-    console.log(error); // Registra o erro no console
-}
-})
-
-//rota para inserir medições internas
-.post("/medicaoInterna", async(req, res)=>{
-  try{
-    const {novaPrimeiraMedida, novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida, novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3} = req.body;
-
-    let result = await insertMedInt(
-      novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3,novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida, novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3
-    );
-    switch (result) {
-      case 200:
-        res.status(200).json(" valor inserido com sucesso")
-        break;
-
-      case 400:
-        res.status(401).json('erro ao inserir ')
-        break;
-
-      default:
-        res.status(500).json('Erro interno do servidor')
-    }
-  }catch (error) {
-    console.log(error)
-  }
-
-})
-// rota para alterar as medições internas 
-.put("/medicaoInterna/:id", async(req, res)=>{
-  try{
-    const { alterarPrimeiraMedida, alterarValorNominal1_1, alterarValorNominal1_2, alterarValorNominal1_3, alterarSegundaMedida, alterarValorNominal2_1, alterarValorNominal2_2, alterarValorNominal2_3, alterarTerceiraMedida,alterarValorNominal3_1, alterarValorNominal3_2, alterarValorNominal3_3 }= req.body;
-    const idMedicaoInterna = req.params;
-
-    let atualiza = await upMedInt(
-      idMedicaoInterna, alterarPrimeiraMedida,alterarValorNominal1_1, alterarValorNominal1_2, alterarValorNominal1_3, alterarSegundaMedida, alterarValorNominal2_1, alterarValorNominal2_2, alterarValorNominal2_3, alterarTerceiraMedida,alterarValorNominal3_1, alterarValorNominal3_2, alterarValorNominal3_3 
-
-    );
-    switch(atualiza){
-      case 200:
-          res.status(200).json('Medições internas atualizado');
-          break;
-      case 400:
-          res.status(400).json('Erro ao atualizar as medições internas');
-          break;
-      case 404:
-          res.status(404).json('Relatório não encontrado');
-          break;
-      default:
-          res.status(500).json('Erro interno do servidor');
-  }
-
-  }catch (error) {
-    console.log(error); // Registra o erro no console
-}
-})
-
-// rotas para inserir medições de ressaltos 
-.post("/medicaoRessalto", async(req, res)=>{
-  try{
-    const {novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1,  novoValorNominal2_2,  novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3} = req.body;
-    
-    let result = await insertMedRes(
-      novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1,  novoValorNominal2_2,  novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3
-    );
-    switch (result) {
-      case 200:
-        res.status(200).json(" valor inserido com sucesso")
-        break;
-
-      case 400:
-        res.status(401).json('erro ao inserir ')
-        break;
-
-      default:
-        res.status(500).json('Erro interno do servidor')
-    }
-
-  }catch (error) {
-    console.log(error)
-  }
-})
-
-
-
-// rota para alterar medições de ressalto
-.put("/medicaoRessalto/:id", async (req, res) =>{
-  try{
-    const {novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3} = req.body;
-    const idMedicaoRessalto = req.params;
-
-  let atualiza = await upMedRes (
-    idMedicaoRessalto, novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3
-  );
-  switch(atualiza){
-    case 200:
-        res.status(200).json('Medições de ressalto atualizado');
-        break;
-    case 400:
-        res.status(400).json('Erro ao atualizar as medições de ressalto');
-        break;
-    case 404:
-        res.status(404).json('Relatório não encontrado');
-        break;
-    default:
-        res.status(500).json('Erro interno do servidor');
-}
-  }catch (error) {
-    console.log(error); // Registra o erro no console
-}
-})
-
-// rota para adicionar medições de profundidade
-.post("/medicaoProfundidade", async (req, res) =>{
-  try{
-    const {nova_primeiraMedida, novo_valorNominal1_1,novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3, nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3} = req.body;
-
-    let result = await insertMedPro (
-      nova_primeiraMedida, novo_valorNominal1_1,novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3, nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3
-    );
-    switch (result) {
-      case 200:
-        res.status(200).json(" valor inserido com sucesso")
-        break;
-
-      case 400:
-        res.status(401).json('erro ao inserir ')
-        break;
-
-      default:
-        res.status(500).json('Erro interno do servidor')
-    }
-
-  }catch (error) {
-    console.log(error)
-  }
-})
-
-// rota para alterar as medições de profundidade
-
-.put("/updateDepthMeasurements/:id", async (req, res) =>{
-  try{
-    const {nova_primeiraMedida, novo_valorNominal1_1, novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3,nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3 } = req.body;
-    const idMedicao = req.params.idMedicao;
-
-    let atualiza = await upMedPro(
-      nova_primeiraMedida, novo_valorNominal1_1, novo_valorNominal1_2, novo_valorNominal1_3, nova_segundaMedida, novo_valorNominal2_1, novo_valorNominal2_2, novo_valorNominal2_3,nova_terceiraMedida, novo_valorNominal3_1, novo_valorNominal3_2, novo_valorNominal3_3 
-    );
-    switch(atualiza){
-      case 200:
-          res.status(200).json('Medições de profundidade atualizado');
-          break;
-      case 400:
-          res.status(400).json('Erro ao atualizar as medições de profundidade');
-          break;
-      case 404:
-          res.status(404).json('Relatório não encontrado');
-          break;
-      default:
-          res.status(500).json('Erro interno do servidor');
-  }
-  }catch (error) {
-    console.log(error); // Registra o erro no console
-}
-})
+  })
 
 
 //

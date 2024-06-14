@@ -114,19 +114,7 @@ router
 
   .put("/updateOrders", async (req, res) => {
     try {
-      const {
-        id_antigo,
-        id_order,
-        fk_idCliente,
-        fk_idUsuario,
-        titulo,
-        tipo,
-        descricao,
-        dataTermino,
-        contratante,
-        email,
-        telefone,
-      } = req.body;
+      const {id_antigo, id_order, idCliente, idUsuario, titulo, tipo, descricao, dataTermino, contratante, email, telefone } = req.body;
 
       const ordensVal = {
         titulo,
@@ -135,7 +123,7 @@ router
         dataTermino,
         contratante,
         email,
-        telefone,
+        telefone
       };
 
       try{ 
@@ -144,8 +132,8 @@ router
         let resultUpdate = await updateOrders(
           id_antigo,
           id_order,
-          fk_idCliente,
-          fk_idUsuario,
+          idCliente,
+          idUsuario,
           ordensValidadas.titulo,
           ordensValidadas.tipo,
           ordensValidadas.descricao,
@@ -161,6 +149,7 @@ router
           res.status(500).json("Erro interno do servidor");
         }
       } catch (validationError) {
+        console.log(validationError)
         // Captura os erros de validação e envia como resposta
         return res.status(400).json({ error: validationError.errors });
       }

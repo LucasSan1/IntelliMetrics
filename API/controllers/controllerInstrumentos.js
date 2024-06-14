@@ -64,9 +64,9 @@ const getInstrumentoById = async (id_instrumento) => {
 // Função para atualizar informações de um instrumento pelo seu ID
 const updateInstrumento = async (
   id_instrumento,
-  fk_idCliente,
-  fk_idOs,
-  fk_idCategoria,
+  idCliente,
+  idOs,
+  idCategoria,
   nome,
   nSerie,
   identificacaoCliente,
@@ -75,7 +75,8 @@ const updateInstrumento = async (
   faixaNominalUni,
   divisaoResolucaoNum,
   divisaoResolucaoUni,
-  orgaoResponsavel
+  orgaoResponsavel,
+  estadoEmbalagem
 ) => {
 
 const verificarInstru = await new Promise((resolve, reject) => {
@@ -97,9 +98,10 @@ const verificarInstru = await new Promise((resolve, reject) => {
 
   return new Promise((resolve, reject) => {
     db.query(
-      `CALL modificarInstrumento('${id_instrumento}', '${fk_idCliente}', '${fk_idOs}', '${fk_idCategoria}', '${nome}', '${nSerie}', '${identificacaoCliente}', '${fabricante}', '${faixaNominalNum}', '${faixaNominalUni}', '${divisaoResolucaoNum}', '${divisaoResolucaoUni}', '${orgaoResponsavel}')`,
+      `CALL modificarInstrumento('${id_instrumento}', '${idCliente}', '${idOs}', '${idCategoria}', '${nome}', '${nSerie}', '${identificacaoCliente}', '${fabricante}', '${faixaNominalNum}', '${faixaNominalUni}', '${divisaoResolucaoNum}', '${divisaoResolucaoUni}', '${orgaoResponsavel}', '${estadoEmbalagem}')`,
       (error, results) => {
         if (error) {
+          console.log(error)
           reject(error);
           return;
         }

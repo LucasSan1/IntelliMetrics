@@ -81,9 +81,9 @@ router
       const id_instrumento = req.params.id;
 
       const {
-        fk_idCliente,
-        fk_idOs,
-        fk_idCategoria,
+        idCliente,
+        idOs,
+        idCategoria,
         nome,
         nSerie,
         identificacaoCliente,
@@ -93,13 +93,13 @@ router
         divisaoResolucaoNum,
         divisaoResolucaoUni,
         orgaoResponsavel,
+        estadoEmbalagem
       } = req.body;
 
       const valInstrumento = {
-        id_instrumento,
-        fk_idCliente,
-        fk_idOs,
-        fk_idCategoria,
+        idCliente,
+        idOs,
+        idCategoria,
         nome,
         nSerie,
         identificacaoCliente,
@@ -109,6 +109,7 @@ router
         divisaoResolucaoNum,
         divisaoResolucaoUni,
         orgaoResponsavel,
+        estadoEmbalagem
       };
 
       try {
@@ -118,9 +119,9 @@ router
         // Chama a função para atualizar um instrumento pelo ID
         let resultUpdate = await updateInstrumento(
           id_instrumento,
-          instrumentoValidado.fk_idCliente,
-          instrumentoValidado.fk_idOs,
-          instrumentoValidado.fk_idCategoria,
+          instrumentoValidado.idCliente,
+          instrumentoValidado.idOs,
+          instrumentoValidado.idCategoria,
           instrumentoValidado.nome,
           instrumentoValidado.nSerie,
           instrumentoValidado.identificacaoCliente,
@@ -129,7 +130,8 @@ router
           instrumentoValidado.faixaNominalUni,
           instrumentoValidado.divisaoResolucaoNum,
           instrumentoValidado.divisaoResolucaoUni,
-          instrumentoValidado.orgaoResponsavel
+          instrumentoValidado.orgaoResponsavel,
+          instrumentoValidado.estadoEmbalagem
         );
 
         // Verifica o resultado da atualização e retorna a resposta adequada
