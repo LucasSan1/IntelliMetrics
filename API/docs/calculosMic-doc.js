@@ -245,7 +245,7 @@
  *     type: object
  *     properties:
  *       nrCertificado:
- *         type: munber
+ *         type: number
  *       idControle:
  *         type: number
  *       idPlaneza:
@@ -254,7 +254,7 @@
  *         type: number
  *       idInstrumento:
  *         type: number
- *       alterarTecnico:
+ *       novoTecnico:
  *         type: string
  *       novoResponsável:
  *         type: string
@@ -281,8 +281,6 @@
  *   novoResultadoMicrometro:
  *     type: object
  *     properties:
- *       antigoNrCertificad:
- *         type: munber
  *       alterarNrCertificado:
  *         type: number
  *       idControle:
@@ -293,7 +291,7 @@
  *         type: number
  *       idInstrumento:
  *         type: number
- *       alterarTecnico:
+ *       novoTecnico:
  *         type: string
  *       alterarResponsável:
  *         type: string
@@ -401,7 +399,7 @@
  *         description: Erro interno da API.
  * 
  * 
- * /incerirControleDimencional:
+ * /inserirControleDimencional:
  *   post:
  *     tags:
  *       - Calculos Micrometro
@@ -480,7 +478,7 @@
  *       500:
  *         description: Erro interno da API.
  * 
- * /updatePlaneza:
+ * /updatePlaneza/{id}:
  *   put:
  *     tags:
  *       - Calculos Micrometro
