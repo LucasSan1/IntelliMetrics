@@ -4,7 +4,7 @@ const db = require('../connector/conn')
 const paralelismoPaquimetro = async (novoValorNominalOrelha, novoValorProxOrelha1,novoValorProxOrelha2, novoValorProxOrelha3, novoValorAfasOrelha1, novoValorAfasOrelha2, novoValorAfasOrelha3, novoValorNominalBico, novoValorProxBico1, novoValorProxBico2, novoValorProxBico3, novoValorAfasBico1, novoValorAfasBico2, novoValorAfasBico3) =>{
   try{
     const insert = await new Promise(( resolve, reject ) => {
-      db.query(` CALL inserirParalelismoPaq('${novoValorNominalOrelha}', '${novoValorProxOrelha1}', '${novoValorProxOrelha2}', '${novoValorProxOrelha3}', '${novoValorAfasOrelha1}', '${novoValorAfasOrelha2}', '${novoValorAfasOrelha3}', '${novoValorNominalBico}', '${novoValorProxBico1}', '${novoValorProxBico2}', ${novoValorProxBico3}, '${novoValorAfasBico1}', '${novoValorAfasBico2}', '${novoValorAfasBico3}')`,
+      db.query(` CALL inserirParalelismoPaq('${novoValorNominalOrelha}', '${novoValorProxOrelha1}', '${novoValorProxOrelha2}', '${novoValorProxOrelha3}', '${novoValorAfasOrelha1}', '${novoValorAfasOrelha2}', '${novoValorAfasOrelha3}', '${novoValorNominalBico}', '${novoValorProxBico1}', '${novoValorProxBico2}', '${novoValorProxBico3}', '${novoValorAfasBico1}', '${novoValorAfasBico2}', '${novoValorAfasBico3}')`,
       
       (error, results) =>{
         if(error){
@@ -122,11 +122,13 @@ const upMedExt = async(idMedicaoExterna, alterarVn1,alterarVn1_1, alterarVn1_2, 
     );
   });
 }
+
+
 // controller para inserir os resultados de paquimetro
-const insertResultPaq = async (nrCertificado, idInstrumento,idParalelismoPaq, idMedExterna, idMedInterna,idMedRessalto, idMedProfundidade, novoTecnico, novoResponsável, novaDataCalibracao, novaInspecao, novoTipoEscala, novaVersaoMetodo,  novoTempInicial, novoTempFinal) =>{
+const insertResultPaq = async (nrCertificado, idInstrumento, idParalelismoPaq, idMedExterna, idMedInterna,idMedRessalto, idMedProfundidade, novoTecnico, novoResponsável, novaDataCalibracao, novaInspecao, novoTipoEscala, novaVersaoMetodo,  novoTempInicial, novoTempFinal) =>{
   try{
     const insert = await new Promise(( resolve, reject ) => {
-      db.query(` CALL inserirParalelismoPaq('${nrCertificado}', '${idInstrumento}', '${idParalelismoPaq}', '${idMedExterna}', '${idMedInterna}', '${idMedRessalto}', '${idMedProfundidade}', '${novoTecnico}', '${novoResponsável}', '${novaDataCalibracao}', '${novaInspecao}', '${novoTipoEscala}', '${novaVersaoMetodo}', '${ novoTempInicial}', '${ novoTempInicial}', '${novoTempFinal}')`,
+      db.query(` CALL criarResultadosPaquimetro('${nrCertificado}', '${idInstrumento}', '${idParalelismoPaq}', '${idMedExterna}', '${idMedInterna}', '${idMedRessalto}', '${idMedProfundidade}', '${novoTecnico}', '${novoResponsável}', '${novaDataCalibracao}', '${novaInspecao}', '${novoTipoEscala}', '${novaVersaoMetodo}', '${ novoTempInicial}', '${novoTempFinal}')`,
       
       (error, results) =>{
         if(error){
@@ -277,7 +279,7 @@ const upMedRes = async(idMedicaoRessalto,novaPrimeiraMedida,novoValorNominal1_1,
 
   const existing = await new Promise((resolve, reject) =>{
     db.query(`SELECT * FROM medicoesRessaltos
-    WHERE  idMedicaoRessalto = ? ;`, [idMedicaoRessalto],
+    WHERE  pk_idMedicaoRessalto = ? ;`, [idMedicaoRessalto],
     (error, results) =>{
       if(error){
         reject(error);

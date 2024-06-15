@@ -350,7 +350,7 @@ router
   .put("/medicaoRessalto/:id", async (req, res) =>{
     try{
       const {novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3} = req.body;
-      const idMedicaoRessalto = req.params;
+      const idMedicaoRessalto = req.params.id;
 
     let atualiza = await upMedRes (
       idMedicaoRessalto, novaPrimeiraMedida,novoValorNominal1_1, novoValorNominal1_2, novoValorNominal1_3, novaSegundaMedida, novoValorNominal2_1, novoValorNominal2_2, novoValorNominal2_3, novaTerceiraMedida,novoValorNominal3_1, novoValorNominal3_2, novoValorNominal3_3
