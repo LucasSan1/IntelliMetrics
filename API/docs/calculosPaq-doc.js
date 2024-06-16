@@ -106,103 +106,47 @@
  *     type: object
  *     properties:
  *       novoValorNominalOrelha: 
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorProxOrelha1:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorProxOrelha2:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorProxOrelha3:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorAfasOrelha1:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorAfasOrelha2:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorAfasOrelha3:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorNominalBico:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorProxBico1:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorProxBico2:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorProxBico3:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorAfasBico1:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorAfasBico2:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  *       novoValorAfasBico3:
- *         type: array
- *         items:
- *           type: array
- *           items:
- *             type: number
- *           minItems: 3
+ *         type: number
+ *         format: decimal
  * 
  * 
  *   modeloMedicaoExterna:

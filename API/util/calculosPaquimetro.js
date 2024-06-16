@@ -159,7 +159,7 @@ function calculoMedInterna(valorNominalMedInterna, valorIndicadoMedInterna) {
 
   for (let index = 0; index < tendencias.length; index++) {
 
-    response[`resultado${index + 1}`] = { "tendencia" : parseFloat(tendencias[index]), "desvpad": parseFloat(desvPads[index])}
+    response[`resultadoMedIn${index + 1}`] = { "tendencia" : parseFloat(tendencias[index]), "desvpad": parseFloat(desvPads[index])}
 
   }
   return response
@@ -190,7 +190,7 @@ function calculoMedRessalto( valorNominalMedRessalto, valorIndicadoMedRessalto) 
 
   for (let index = 0; index < tendencias.length; index++) {
 
-    response[`resultado${index + 1}`] = { "tendencia" : parseFloat(tendencias[index]), "desvpad": parseFloat(desvpads[index])}
+    response[`resultadoResal${index + 1}`] = { "tendencia" : parseFloat(tendencias[index]), "desvpad": parseFloat(desvpads[index])}
 
   }
 
@@ -223,7 +223,7 @@ function calculoMedProfundidade(valorIndicadoMedProf, valorNominalMedProf) {
 
   for (let index = 0; index < tendencias.length; index++) {
 
-    response[`resultado${index + 1}`] = { "tendencia" : parseFloat(tendencias[index]), "desvpad": parseFloat(desvpads[index])}
+    response[`resultadoProf${index + 1}`] = { "tendencia" : parseFloat(tendencias[index]), "desvpad": parseFloat(desvpads[index])}
 
   }
   return response
